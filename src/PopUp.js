@@ -9,6 +9,7 @@ import key from "./helpers/key";
 import { ReactComponent as CheckIcon } from "./icons/success-icon.svg";
 import { ReactComponent as ErrorIcon } from "./icons/error-icon.svg";
 import { ReactComponent as InfoIcon } from "./icons/info-icon.svg";
+const key = (text) => text.replaceAll(" ", "-");
 
 function PopUp({
   palette = "primary",
