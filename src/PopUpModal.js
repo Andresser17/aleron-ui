@@ -41,7 +41,6 @@ PopUpModal.propTypes = {
   palette: PropTypes.string,
   countdown: PropTypes.number,
   close: PropTypes.bool,
-  countdown: PropTypes.number,
 };
 
 export default PopUpModal;

@@ -34,6 +34,26 @@ function App() {
         {/* }} */}
       </Island>
       <PopUp mode="pending" />
+      <PopUp
+        palette="primary"
+        title="File Deleted"
+        description="That's all :)"
+        buttons={[{ text: "Okay, thank you" }]}
+      />
+      <PopUp
+        palette="warning"
+        mode="info"
+        title="Do you want delete?"
+        description="You can't restore this file"
+        buttons={[{ text: "Delete" }, { text: "Cancel" }]}
+      />
+      <PopUp
+        palette="danger"
+        mode="error"
+        title="Error"
+        description="Sorry"
+        buttons={[{ text: "Close" }]}
+      />
     </div>
   );
 }
