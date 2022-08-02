@@ -1,10 +1,8 @@
 import "./App.css";
-// import { useState } from "react";
 import Tabs from "./Tabs";
 import Island from "./Island";
 import PopUp from "./PopUp";
 // Icons
-// import { ReactComponent as ErrorIcon } from "./icons/error-icon.svg";
 
 function App() {
   return (
