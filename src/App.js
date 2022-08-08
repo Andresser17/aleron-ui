@@ -1,13 +1,15 @@
 import "./App.css";
-import Tooltip from "./Tooltip";
+import Toggle from "./Toggle";
 // Icons
 
 function App() {
+  const handleChange = (e) => {
+    console.log(e.target.name)
+  }
+
   return (
     <div className="App py-24 h-screen bg-green-300 flex items-start justify-center">
-      <Tooltip text="Tooltip text" position="bottom">
-        <div className="inline-block p-2">Hello World</div>
-      </Tooltip>
+      <Toggle name="accept-hello" onChange={handleChange} />
     </div>
   );
 }
