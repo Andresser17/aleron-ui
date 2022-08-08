@@ -1,21 +1,13 @@
 import "./App.css";
-// import { useState } from "react";
-import Tabs from "./Tabs";
+import Tooltip from "./Tooltip";
 // Icons
-// import { ReactComponent as ErrorIcon } from "./icons/error-icon.svg";
 
 function App() {
   return (
-    <div className="App p-4 h-screen bg-green-300 flex items-start justify-center">
-      <Tabs
-        tabs={["Apple", "Pearl", "Java"]}
-        size="sm"
-        horizontal
-        palette="primary"
-        getSelected={(t) => {
-          console.log(t);
-        }}
-      />
+    <div className="App py-24 h-screen bg-green-300 flex items-start justify-center">
+      <Tooltip text="Tooltip text" position="bottom">
+        <div className="inline-block p-2">Hello World</div>
+      </Tooltip>
     </div>
   );
 }

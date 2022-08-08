@@ -24,6 +24,7 @@ function PopUp({
     // close modal
     setClose(true);
   };
+
   const mappedButtons =
     buttons &&
     buttons.map((b, i) => {
