@@ -14,7 +14,7 @@ function Tooltip({ text, palette = "primary", position = "right", children }) {
     "bottom-[120%] left-0 right-0 after:top-full after:left-[50%] after:border-t-bg";
   const bottomStyle =
     "top-[120%] left-0 right-0 after:bottom-full after:left-[50%] after:border-b-bg";
-  const styles = `px-4 py-1 w-32 h-8 rounded-sm bg-bg text-text absolute inline-block z-10 text-center ${arrowStyle} ${palette}`;
+  const styles = `px-4 py-1 w-32 h-8 rounded-sm bg-bg text-text absolute inline-block z-10 text-center shadow-md ${arrowStyle} ${palette}`;
 
   useEffect(() => {
     if (position === "right")
