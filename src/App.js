@@ -1,15 +1,13 @@
 import "./App.css";
-import Toggle from "./Toggle";
+import Search from "./Search";
 // Icons
 
 function App() {
-  const handleChange = (e) => {
-    console.log(e.target.name)
-  }
-
   return (
     <div className="App py-24 h-screen bg-green-300 flex items-start justify-center">
-      <Toggle name="accept-hello" onChange={handleChange} />
+      <div className="w-96">
+        <Search placeholder="Search..." />
+      </div>
     </div>
   );
 }
