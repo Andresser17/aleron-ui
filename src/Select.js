@@ -9,7 +9,7 @@ function Option({ option, selected, setSelected }) {
   return (
     <span
       className={`w-full p-4 cursor-pointer text-left block hover:bg-hover focus:bg-focus ${
-        option.value === selected ? "bg-active" : ""
+        option.value === selected.value ? "bg-active" : ""
       }`}
       onClick={() => setSelected(option)}
     >
@@ -39,6 +39,7 @@ function Select({
   palette = "light",
   options = [],
   placeholder = "Search",
+  multiple = false,
   disabled,
   readOnly,
   defaultValue,
@@ -46,40 +47,20 @@ function Select({
   name,
 }) {
   const [value, setValue] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
   const [selected, setSelected] = useState({ label: "", value: "" });
   const [isFocus, setIsFocus] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   // Refs
   const containerRef = useRef();
+  const outsideSpanRef = useRef();
   const inputRef = useRef();
 
-  // check if input is focus, add focus to label
-  useEffect(() => {
-    const addClass = () =>
-      document.activeElement === inputRef.current && setIsFocus(true);
-    const removeClass = () => setIsFocus(false);
-    document.addEventListener("focusin", addClass);
-    document.addEventListener("focusout", removeClass);
-
-    return () => {
-      document.removeEventListener("focusin", addClass);
-      document.removeEventListener("focusout", removeClass);
-    };
-  }, []);
-
-  // toggle dropdown
-  const handleDropdown = () => setShowDropdown((prev) => !prev);
-
   // delete input and selected value
-  const deleteValue = () => {
+  const deleteValue = (e) => {
+    e.stopPropagation();
     setValue("");
     setSelected({ label: "", value: "" });
   };
-
-  // change value if option is selected
-  useEffect(() => {
-    if (selected.label && selected.label.length > 0) setValue(selected.label);
-  }, [selected, value]);
 
   // set default value
   useEffect(() => {
@@ -88,20 +69,11 @@ function Select({
     }
   }, [defaultValue]);
 
-  // Hide modal if user click outside
-  const handleOutsideClick = (e) => {
-    if (e.target === containerRef.current) setShowDropdown(false);
+  const handleSelection = (option) => {
+    if (!multiple) setShowDropdown(false);
+    setSelected(option);
+    setValue(option.label);
   };
-
-  // Manage outside module click
-  useEffect(() => {
-    window.addEventListener("click", handleOutsideClick);
-
-    // Unmount listener
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
 
   const handleChange = (e) => {
     // const mergeStatus = (newStatus) =>
@@ -112,51 +84,70 @@ function Select({
 
   return (
     <>
-      <label
-        className={`flex bg-bg text-text cursor-text p-4 w-full shadow-md rounded-sm relative z-10 ${
-          isFocus ? "outline outline-1" : ""
-        } ${palette}`}
-        htmlFor={name}
-      >
-        <input
-          ref={inputRef}
-          value={value}
-          onChange={handleChange}
-          type="search"
-          className="w-full bg-black/0 focus:outline-none placeholder:text-black/30"
-          {...{
-            disabled,
-            readOnly,
-            required,
-            placeholder,
-            name,
+      <div className={`bg-bg text-text relative z-10 ${palette}`}>
+        <div
+          ref={containerRef}
+          onClick={() => {
+            if (!isFocus) setIsFocus(true);
+            inputRef.current.focus();
+            setShowDropdown((prev) => !prev);
           }}
-        />
-        <DeleteIcon
-          onClick={deleteValue}
-          className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
-            value ? "visible" : "invisible"
+          className={`flex cursor-text p-4 w-full shadow-md rounded-sm ${
+            isFocus ? "outline outline-1" : ""
           }`}
-        />
-        {isFocus ? (
-          <TopArrow
-            onClick={() => setIsFocus((prev) => !prev)}
-            className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+        >
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={handleChange}
+            type="search"
+            className="w-full bg-black/0 focus:outline-none placeholder:text-black/0"
+            {...{
+              disabled,
+              readOnly,
+              required,
+              placeholder,
+              name,
+            }}
           />
-        ) : (
-          <BottomArrow
-            onClick={() => setIsFocus((prev) => !prev)}
-            className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+          <DeleteIcon
+            onClick={deleteValue}
+            className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
+              value ? "visible" : "invisible"
+            }`}
+          />
+          {showDropdown ? (
+            <TopArrow
+              className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+            />
+          ) : (
+            <BottomArrow
+              className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+            />
+          )}
+        </div>
+        {showDropdown && (
+          <Dropdown
+            options={options}
+            {...{ selected, setSelected: handleSelection }}
           />
         )}
-        {isFocus && (
-          <Dropdown options={options} {...{ selected, setSelected }} />
-        )}
-      </label>
+        <span
+          className={`text-gray-400 absolute ${
+            value.length > 0 ? "text-[0.7rem] top-[0.125rem]" : "top-[1rem]"
+          } pointer-events-none duration-500 left-4`}
+        >
+          {placeholder}
+        </span>
+      </div>
       {/* Handle outside click */}
       {isFocus && (
         <span
-          ref={containerRef}
+          onClick={() => {
+            setShowDropdown(false);
+            setIsFocus(false);
+          }}
+          ref={outsideSpanRef}
           className="fixed block top-0 left-0 w-full h-full bg-black/0"
         ></span>
       )}
@@ -167,6 +158,7 @@ Select.propTypes = {
   palette: PropTypes.string,
   options: PropTypes.array,
   placeholder: PropTypes.string,
+  multiple: PropTypes.bool,
   disabled: PropTypes.bool,
   defaultValue: PropTypes.string,
   readOnly: PropTypes.bool,
