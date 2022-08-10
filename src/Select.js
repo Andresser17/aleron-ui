@@ -18,11 +18,29 @@ function Option({ option, selected, setSelected }) {
   );
 }
 
-function Dropdown({ options, selected, setSelected }) {
+function Dropdown({
+  search = false,
+  inputValue = "",
+  options,
+  selected,
+  setSelected,
+}) {
   return (
-    <>
-      <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-bg text-text z-10">
-        {options.map((op) => (
+    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-bg text-text z-10">
+      {options
+        .filter((op) => {
+          const filter = inputValue.toUpperCase();
+          if (search) {
+            if (op.label.toUpperCase().indexOf(filter) > -1) {
+              return op;
+            }
+
+            return undefined;
+          }
+
+          return op;
+        })
+        .map((op) => (
           <Option
             key={op.value}
             option={op}
@@ -30,8 +48,7 @@ function Dropdown({ options, selected, setSelected }) {
             setSelected={setSelected}
           />
         ))}
-      </div>
-    </>
+    </div>
   );
 }
 
@@ -39,14 +56,13 @@ function Select({
   palette = "light",
   options = [],
   placeholder = "Search",
-  multiple = false,
   disabled,
-  readOnly,
   defaultValue,
   required,
   name,
 }) {
   const [value, setValue] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [selected, setSelected] = useState({ label: "", value: "" });
   const [isFocus, setIsFocus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -64,21 +80,21 @@ function Select({
 
   // set default value
   useEffect(() => {
-    if (defaultValue && defaultValue.length > 0) {
-      setValue(defaultValue);
+    if (defaultValue && defaultValue.label.length > 0) {
+      setValue(defaultValue.label);
+      setSelected(defaultValue);
     }
   }, [defaultValue]);
 
   const handleSelection = (option) => {
-    if (!multiple) setShowDropdown(false);
+    if (isSearching) setIsSearching(false);
+    setShowDropdown(false);
     setSelected(option);
     setValue(option.label);
   };
 
   const handleChange = (e) => {
-    // const mergeStatus = (newStatus) =>
-    //   setStatus((prev) => ({ ...prev, ...newStatus }));
-
+    if (!isSearching) setIsSearching(true);
     setValue(e.target.value);
   };
 
@@ -86,15 +102,17 @@ function Select({
     <>
       <div className={`bg-bg text-text relative z-10 ${palette}`}>
         <div
+          aria-disabled={disabled}
           ref={containerRef}
           onClick={() => {
+            if (disabled) return;
             if (!isFocus) setIsFocus(true);
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
           className={`flex cursor-text p-4 w-full shadow-md rounded-sm ${
             isFocus ? "outline outline-1" : ""
-          }`}
+          } ${disabled ? "pointer-events-none" : ""}`}
         >
           <input
             ref={inputRef}
@@ -104,7 +122,6 @@ function Select({
             className="w-full bg-black/0 focus:outline-none placeholder:text-black/0"
             {...{
               disabled,
-              readOnly,
               required,
               placeholder,
               name,
@@ -128,6 +145,8 @@ function Select({
         </div>
         {showDropdown && (
           <Dropdown
+            search={isSearching}
+            inputValue={value}
             options={options}
             {...{ selected, setSelected: handleSelection }}
           />
@@ -158,10 +177,8 @@ Select.propTypes = {
   palette: PropTypes.string,
   options: PropTypes.array,
   placeholder: PropTypes.string,
-  multiple: PropTypes.bool,
   disabled: PropTypes.bool,
-  defaultValue: PropTypes.string,
-  readOnly: PropTypes.bool,
+  defaultValue: PropTypes.object,
   required: PropTypes.bool,
   name: PropTypes.string,
 };
