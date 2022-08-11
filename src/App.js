@@ -1,5 +1,5 @@
 import "./App.css";
-import Select from "./Select";
+import SelectTag from "./SelectTag";
 // Icons
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App py-24 h-screen bg-green-300 flex items-start justify-center">
       <div className="w-96">
-        <Select defaultValue={options[0]} options={options} placeholder="Search..." />
+        <SelectTag disabled tagsPalette="success" options={options} placeholder="Search..." />
       </div>
     </div>
   );
