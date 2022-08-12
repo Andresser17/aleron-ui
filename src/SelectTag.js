@@ -4,16 +4,16 @@ import PropTypes from "prop-types";
 import { ReactComponent as TopArrow } from "icons/top-arrow.svg";
 import { ReactComponent as BottomArrow } from "icons/bottom-arrow.svg";
 import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
+import { ReactComponent as CheckmarkIcon } from "icons/success-icon.svg";
 
 function Option({ option, isSelected, setSelected }) {
   return (
     <span
-      className={`w-full p-4 cursor-pointer text-left block hover:bg-hover focus:bg-focus ${
-        option.value === isSelected.value ? "bg-active" : ""
-      }`}
-      onClick={() => setSelected(option)}
+      className="flex justify-between w-full p-4 cursor-pointer text-left block hover:bg-hover focus:bg-focus"
+      onClick={() => !isSelected && setSelected(option)}
     >
       {option.label}
+      {isSelected && <CheckmarkIcon className="w-4 h-4" />}
     </span>
   );
 }
@@ -40,14 +40,18 @@ function Dropdown({
 
           return op;
         })
-        .map((op) => (
-          <Option
-            key={op.value}
-            option={op}
-            isSelected={false}
-            setSelected={setSelected}
-          />
-        ))}
+        .map((op) => {
+          const isSelected = selectedTags.includes(op);
+
+          return (
+            <Option
+              key={op.value}
+              option={op}
+              isSelected={isSelected}
+              setSelected={setSelected}
+            />
+          );
+        })}
     </div>
   );
 }
@@ -128,8 +132,6 @@ function SelectTag({
   const handleSelection = (option) => {
     if (isSearching) setIsSearching(false);
     if (tags.length >= maxTags) return;
-    // check if options is already selected
-    if (tags.includes(option)) return;
 
     setShowDropdown(false);
     setTags((prev) => [...prev, option]);
