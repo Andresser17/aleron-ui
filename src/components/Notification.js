@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 // Icons
-import { ReactComponent as InfoIcon } from "./icons/info-icon.svg";
-import { ReactComponent as ErrorIcon } from "./icons/error-icon.svg";
-import { ReactComponent as SuccessIcon } from "./icons/success-icon.svg";
+import { ReactComponent as InfoIcon } from "icons/info-icon.svg";
+import { ReactComponent as ErrorIcon } from "icons/error-icon.svg";
+import { ReactComponent as SuccessIcon } from "icons/success-icon.svg";
 
 function Notification({
   palette,

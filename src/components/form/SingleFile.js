@@ -1,8 +1,9 @@
 import { useEffect, useRef, useReducer } from "react";
 import PropTypes from "prop-types";
+// Styles
 import filesStyle from "./SingleFile.module.css";
 // Icons
-import { ReactComponent as FileIcon } from "./icons/file-icon.svg";
+import { ReactComponent as FileIcon } from "icons/file-icon.svg";
 
 const reducer = (state, action) => {
   switch (action.type) {
