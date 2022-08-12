@@ -1,9 +1,9 @@
 import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 // Icons
-import { ReactComponent as DefaultIcon } from "./icons/division-icon.svg";
-import { ReactComponent as ParamIcon1 } from "./icons/graduation-hat-icon.svg";
-import { ReactComponent as ParamIcon2 } from "./icons/pencil-icon.svg";
+import { ReactComponent as DefaultIcon } from "icons/division-icon.svg";
+import { ReactComponent as ParamIcon1 } from "icons/graduation-hat-icon.svg";
+import { ReactComponent as ParamIcon2 } from "icons/pencil-icon.svg";
 
 function Island({
   palette,

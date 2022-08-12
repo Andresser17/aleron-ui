@@ -1,14 +1,14 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 // Components
-import PopUpModal from "./PopUpModal";
-import Button from "./Button";
+import PopUpModal from "components/modals/PopUpModal";
+import Button from "components/form/Button";
 // Helpers
-import key from "./helpers/key";
+import key from "helpers/key";
 // Icons
-import { ReactComponent as CheckIcon } from "./icons/success-icon.svg";
-import { ReactComponent as ErrorIcon } from "./icons/error-icon.svg";
-import { ReactComponent as InfoIcon } from "./icons/info-icon.svg";
+import { ReactComponent as CheckIcon } from "icons/success-icon.svg";
+import { ReactComponent as ErrorIcon } from "icons/error-icon.svg";
+import { ReactComponent as InfoIcon } from "icons/info-icon.svg";
 
 function PopUp({
   palette = "primary",

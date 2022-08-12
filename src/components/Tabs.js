@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 // Helpers
-import formatKey from "./helpers/key";
+import formatKey from "helpers/key";
 
 function Tab({ text, size, id, horizontal, selected, onSelected }) {
   const font =

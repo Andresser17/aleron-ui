@@ -1,6 +1,4 @@
-import "./App.css";
-import SelectTag from "./SelectTag";
-// Icons
+import SelectTag from "components/form/SelectTag";
 
 function App() {
   const options = [

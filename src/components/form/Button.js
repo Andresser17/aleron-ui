@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { ReactComponent as LoadingIcon } from "./icons/loading-icon.svg";
-import { ReactComponent as PlusIcon } from "./icons/plus-icon.svg";
+import { ReactComponent as LoadingIcon } from "icons/loading-icon.svg";
+import { ReactComponent as PlusIcon } from "icons/plus-icon.svg";
 
 function IconCircle({ children, disabled, styles, onClick }) {
   return (

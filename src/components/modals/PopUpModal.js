@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 // Icons
-import { ReactComponent as CloseIcon } from "./icons/error-icon.svg";
+import { ReactComponent as CloseIcon } from "icons/error-icon.svg";
 
 function PopUpModal({ palette = "primary", countdown = 0, close, children }) {
   // refs
