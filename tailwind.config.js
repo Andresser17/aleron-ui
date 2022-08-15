@@ -1,4 +1,5 @@
 module.exports = {
+  jit: true,
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -17,4 +18,8 @@ module.exports = {
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
+  prefix: "al-",
 };

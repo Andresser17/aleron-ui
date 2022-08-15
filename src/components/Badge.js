@@ -1,15 +1,19 @@
+import React from "react";
 import PropTypes from "prop-types";
 
 function Badge({ text, palette, rounded, border }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  // If rounded is not provided, is equal
-  const optRounded = rounded ? "rounded-3xl" : "rounded-sm";
-  // If border is active
-  const optBorder = border ? "border-2" : "";
-  const styles = `bg-bg ${optPalette} text-text ${optBorder} px-4 py-[0.08rem] ${optRounded} border-border shadow-md`;
+  // If aleron-rounded is not provided, is equal
+  const optRounded = rounded ? "al-rounded-3xl" : "al-rounded-sm";
+  // If aleron-border is active
+  const optBorder = border ? "al-border-2" : "";
 
-  return <span className={styles}>{text}</span>;
+  return (
+    <span
+      className={`al-bg-bg al-text-text ${optBorder} al-px-4 py-[0.08rem] ${optRounded} al-border-border al-shadow-md ${palette}`}
+    >
+      {text}
+    </span>
+  );
 }
 Badge.propTypes = {
   text: PropTypes.string,
