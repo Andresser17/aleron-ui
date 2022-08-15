@@ -1,4 +1,4 @@
-.Checkbox {
+.checkbox {
   appearance: none;
   margin: 0;
   font: inherit;
@@ -10,11 +10,11 @@
   place-content: center;
 }
 
-.Checkbox:disabled {
+.checkbox:disabled {
   pointer-events: none;
 }
 
-.Checkbox::before {
+.checkbox::before {
   content: "";
   width: 0.65em;
   height: 0.65em;
@@ -26,20 +26,7 @@
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
-/* input[type="checkbox"]:indeterminate { */
-/*   /1* background-color: CanvasText; *1/ */
-/* } */
-
-/* input[type=checkbox]:indeterminate::before { */
-/*     content: ""; */
-/*     display: block; */
-/*     color: white; */
-/*     width: 5rem; */
-/*     height: 5rem; */
-/*     background-color: #3B99FC; */
-/* } */
-
-.Checkbox:indeterminate::after {
+.checkbox:indeterminate::after {
   content: "";
   display: grid;
   place-content: center;
@@ -52,20 +39,15 @@
   /* left: 5px; */
 }
 
-.Checkbox:checked::before {
+.checkbox:checked::before {
   transform: scale(1);
 }
 
-/* input[type="checkbox"]:focus { */
-/*   /1* outline: max(2px, 0.15em) solid currentColor; *1/ */
-/*   /1* outline-offset: max(2px, 0.15em); *1/ */
-/* } */
-
-.Checkbox:disabled {
+.checkbox:disabled {
   color: #636363;
   cursor: not-allowed;
 }
 
-.Checkbox:disabled::before {
+.checkbox:disabled::before {
   box-shadow: inset 1em 1em #636363;
 }

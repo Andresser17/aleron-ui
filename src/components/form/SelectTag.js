@@ -9,11 +9,11 @@ import { ReactComponent as CheckmarkIcon } from "icons/success-icon.svg";
 function Option({ option, isSelected, setSelected }) {
   return (
     <span
-      className="flex justify-between w-full p-4 cursor-pointer text-left block hover:bg-hover focus:bg-focus"
+      className="al-flex al-justify-between al-w-full al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus"
       onClick={() => !isSelected && setSelected(option)}
     >
       {option.label}
-      {isSelected && <CheckmarkIcon className="w-4 h-4" />}
+      {isSelected && <CheckmarkIcon className="al-w-4 al-h-4" />}
     </span>
   );
 }
@@ -26,7 +26,7 @@ function Dropdown({
   setSelected,
 }) {
   return (
-    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-bg text-text z-10">
+    <div className="al-w-full al-shadow-lg al-rounded-sm al-absolute al-top-[110%] al-left-0 al-bg-bg al-text-text al-z-10">
       {options
         .filter((op) => {
           const filter = inputValue.toUpperCase();
@@ -59,12 +59,15 @@ function Dropdown({
 function Tag({ palette, text, close, readOnly }) {
   return (
     <span
-      className={`flex bg-bg text-text px-2 rounded-sm text-sm mb-1 mr-1 ${palette}`}
+      className={`al-flex al-bg-bg al-text-text al-px-2 al-rounded-sm al-text-sm al-mb-1 al-mr-1 ${palette}`}
     >
       {text}
       {/* close tag */}
       {!readOnly && (
-        <DeleteIcon onClick={close} className="ml-1 cursor-pointer w-4" />
+        <DeleteIcon
+          onClick={close}
+          className="al-ml-1 al-cursor-pointer al-w-4"
+        />
       )}
     </span>
   );
@@ -145,7 +148,7 @@ function SelectTag({
 
   return (
     <>
-      <div className={`bg-bg text-text relative z-10 ${palette}`}>
+      <div className={`al-bg-bg al-text-text al-relative al-z-10 ${palette}`}>
         <div
           aria-disabled={disabled}
           ref={containerRef}
@@ -155,11 +158,11 @@ function SelectTag({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`flex cursor-text p-4 w-full shadow-md rounded-sm ${
-            isFocus ? "outline outline-1" : ""
-          } ${disabled ? "pointer-events-none" : ""}`}
+          className={`al-flex al-cursor-text al-p-4 al-w-full al-shadow-md al-rounded-sm ${
+            isFocus ? "al-outline al-outline-1" : ""
+          } ${disabled ? "al-pointer-events-none" : ""}`}
         >
-          <div className="flex flex-wrap w-full">
+          <div className="al-flex al-flex-wrap al-w-full">
             <Tags
               tagsPalette={tagsPalette}
               tags={tags}
@@ -170,7 +173,7 @@ function SelectTag({
               value={value}
               onChange={handleChange}
               type="search"
-              className="w-auto flex flex-auto bg-black/0 focus:outline-none"
+              className="al-w-auto al-flex al-flex-auto al-bg-black/0 focus:al-outline-none"
               {...{
                 disabled,
                 required,
@@ -181,17 +184,17 @@ function SelectTag({
           </div>
           <DeleteIcon
             onClick={deleteValue}
-            className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
-              value || tags.length > 0 ? "visible" : "invisible"
+            className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
+              value || tags.length > 0 ? "al-visible" : "al-invisible"
             }`}
           />
           {showDropdown ? (
             <TopArrow
-              className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
             />
           ) : (
             <BottomArrow
-              className={`w-6 h-6 ml-2 text-black/30 hover:text-text cursor-pointer`}
+              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
             />
           )}
         </div>
@@ -213,7 +216,7 @@ function SelectTag({
             setIsFocus(false);
           }}
           ref={outsideSpanRef}
-          className="fixed block top-0 left-0 w-full h-full bg-black/0"
+          className="al-fixed al-block al-top-0 al-left-0 al-w-full al-h-full al-bg-black/0"
         ></span>
       )}
     </>

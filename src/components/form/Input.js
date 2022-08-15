@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 function Input({
-  palette,
+  palette = "primary",
   getData,
   placeholder,
   disabled,
@@ -15,16 +15,14 @@ function Input({
 }) {
   const [data, setData] = useState("");
   const [status, setStatus] = useState({ code: 0, message: "" });
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const notEmptyStyle = "text-[0.7rem] top-[0.125rem]";
-  const styles = `${optPalette} ${
+  const notEmptyStyle = "al-text-[0.7rem] al-top-[0.125rem]";
+  const styles = `${
     status.code === 1
-      ? "bg-green-200"
+      ? "al-bg-green-200"
       : status.code === 2
-      ? "bg-red-200"
-      : "bg-gray-100"
-  } py-4 px-4 w-full shadow-md rounded-sm hover:shadow-lg active:shadow-xl focus:outline-none disabled:opacity-90 disabled:shadow-md placeholder:text-black/0`;
+      ? "al-bg-red-200"
+      : "al-bg-gray-100"
+  } al-p-4 al-w-full al-shadow-md al-rounded-sm hover:al-shadow-lg active:al-shadow-xl focus:al-outline-none disabled:al-opacity-90 disabled:al-shadow-md placeholder:al-text-black/0 ${palette}`;
 
   useEffect(() => {
     if (defaultValue && defaultValue.length > 0) {
@@ -44,7 +42,10 @@ function Input({
     throw new Error("type property only accept text and password");
 
   return (
-    <label className="flex flex-col items-start relative text-sm" htmlFor={id}>
+    <label
+      className="al-flex al-flex-col al-items-start al-relative al-text-sm"
+      htmlFor={id}
+    >
       <input
         value={data}
         onChange={handleChange}
@@ -60,20 +61,20 @@ function Input({
       />
       {/* Description */}
       <span
-        className={`text-gray-400 absolute ${
-          data.length > 0 ? notEmptyStyle : "top-[0.9rem]"
-        } pointer-events-none duration-500 left-4`}
+        className={`al-text-gray-400 al-absolute ${
+          data.length > 0 ? notEmptyStyle : "al-top-[0.9rem]"
+        } al-pointer-events-none al-duration-500 al-left-4`}
       >
         {placeholder}
       </span>
       <span
         className={`${
           status.code === 1 && status.message.length > 0
-            ? "text-bg success"
+            ? "al-text-bg success"
             : status.code === 2 && status.message.length > 0
-            ? "text-bg danger"
-            : "text-gray-400"
-        } mt-1`}
+            ? "al-text-bg danger"
+            : "al-text-gray-400"
+        } al-mt-1`}
       >
         {status.code > 0 && status.message.length > 0
           ? status.message

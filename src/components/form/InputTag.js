@@ -5,11 +5,14 @@ import { ReactComponent as ErrorIcon } from "icons/error-icon.svg";
 
 function Tag({ text, close, readOnly }) {
   return (
-    <span className="flex bg-bg text-text px-2 rounded-sm text-sm mr-1">
+    <span className="al-flex al-bg-bg al-text-text al-px-2 al-rounded-sm al-text-sm al-mr-1">
       {text}
       {/* close tag */}
       {!readOnly && (
-        <ErrorIcon onClick={close} className="ml-1 cursor-pointer w-4" />
+        <ErrorIcon
+          onClick={close}
+          className="al-ml-1 al-cursor-pointer al-w-4"
+        />
       )}
     </span>
   );
@@ -29,7 +32,7 @@ function Tags({ tags, deleteTag, readOnly }) {
 }
 
 function InputTag({
-  palette,
+  palette = "primary",
   getInput,
   getTags,
   getRef,
@@ -45,18 +48,16 @@ function InputTag({
   const [value, setValue] = useState("");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState({ code: 0, message: "" });
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const disabledStyle = `opacity-90 pointer-events-none`;
+  const disabledStyle = `al-opacity-90 al-pointer-events-none`;
   const styles = `${
     status.code === 1
-      ? "bg-green-200"
+      ? "al-bg-green-200"
       : status.code === 2
-      ? "bg-red-200"
-      : "bg-gray-100"
-  } p-4 w-full shadow-md ${
+      ? "al-bg-red-200"
+      : "al-bg-gray-100"
+  } al-p-4 al-w-full al-shadow-md ${
     disabled ? disabledStyle : ""
-  } rounded-sm hover:shadow-lg active:shadow-xl flex p-4 flex-wrap`;
+  } al-rounded-sm hover:al-shadow-lg active:al-shadow-xl al-flex al-p-4 al-flex-wrap`;
 
   useEffect(() => {
     if (defaultTags && defaultTags.length > 0) {
@@ -98,7 +99,7 @@ function InputTag({
 
   return (
     <label
-      className={`flex flex-col items-start text-sm w-full ${optPalette}`}
+      className={`al-flex al-flex-col al-items-start al-text-sm al-w-full ${palette}`}
       htmlFor={id}
     >
       <div className={styles} aria-disabled={disabled}>
@@ -107,7 +108,7 @@ function InputTag({
           onKeyPress={addTag}
           value={value}
           onChange={handleChange}
-          className="bg-black/0 w-auto flex-auto inline-block focus:outline-none placeholder:text-gray-400"
+          className="al-bg-black/0 al-w-auto al-flex-auto al-inline-block focus:al-outline-none placeholder:al-text-gray-400"
           {...{
             disabled,
             type,
@@ -121,11 +122,11 @@ function InputTag({
       <span
         className={`${
           status.code === 1 && status.message.length > 0
-            ? "text-bg success"
+            ? "al-text-bg success"
             : status.code === 2 && status.message.length > 0
-            ? "text-bg danger"
-            : "text-gray-400"
-        } mt-1`}
+            ? "al-text-bg danger"
+            : "al-text-gray-400"
+        } al-mt-1`}
       >
         {status.code > 0 && status.message.length > 0
           ? status.message

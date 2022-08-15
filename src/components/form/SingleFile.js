@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useReducer } from "react";
 import PropTypes from "prop-types";
 // Styles
-import filesStyle from "./SingleFile.module.css";
+import styles from "./SingleFile.module.css";
 // Icons
 import { ReactComponent as FileIcon } from "icons/file-icon.svg";
 
@@ -99,12 +99,12 @@ function ListFiles({ data, uploadFiles, deleteFiles, fileInput, dispatch }) {
   if (!data.file) return;
 
   return (
-    <div className="w-full h-full relative grid grid-cols-12 grid-rows-2">
-      <span className="block col-span-8 justify-self-start row-start-1">
+    <div className="al-w-full al-h-full al-relative al-grid al-grid-cols-12 al-grid-rows-2">
+      <span className="al-block al-col-span-8 al-justify-self-start al-row-start-1">
         {data.file.name}{" "}
-        <span className="text-gray-400">{convertToUnit(data.file.size)}</span>
+        <span className="al-text-gray-400">{convertToUnit(data.file.size)}</span>
       </span>
-      <span className="text-sm text-bg block col-span-8 justify-self-start self-end row-start-2">
+      <span className="al-text-sm al-text-bg al-block al-col-span-8 al-justify-self-start al-self-end al-row-start-2">
         {/* File Uploaded */}
         {data.response?.data?.status === 200 ? (
           <button onClick={() => handleDeleteFile(true)} className="text-bg">
@@ -120,15 +120,15 @@ function ListFiles({ data, uploadFiles, deleteFiles, fileInput, dispatch }) {
             </button>
             <button
               onClick={() => handleDeleteFile()}
-              className="text-bg ml-3 danger"
+              className="al-text-bg al-ml-3 danger"
             >
               Delete
             </button>
           </>
         )}
       </span>
-      <span className="w-10 p-3 flex justify-center row-span-2 col-start-12 mr-6 items-center rounded-[50%] bg-black/5 block h-10">
-        <FileIcon className="text-bg" />
+      <span className="al-w-10 al-p-3 al-flex al-justify-center al-row-span-2 al-col-start-12 al-mr-6 al-items-center al-rounded-[50%] al-bg-black/5 al-block al-h-10">
+        <FileIcon className="al-text-bg" />
       </span>
     </div>
   );
@@ -150,38 +150,42 @@ function Uploading({ dispatch, data, accept, maxFileSize }) {
   }, [data.response, dispatch]);
 
   return (
-    <div className="grid grid-cols-12 grid-rows-4 w-full h-full">
-      <span className="col-span-8 justify-self-start row-start-1 block text-bg">
+    <div className="al-grid al-grid-cols-12 al-grid-rows-4 al-w-full al-h-full">
+      <span className="al-col-span-8 al-justify-self-start al-row-start-1 al-block al-text-bg">
         Uploading
       </span>
       <span
-        className={`col-span-8 justify-self-start row-start-3 block text-sm ${
-          data.response.err ? "text-bg danger" : "text-gray-400"
+        className={`al-col-span-8 al-justify-self-start al-row-start-3 al-block al-text-sm ${
+          data.response.err ? "al-text-bg danger" : "al-text-gray-400"
         }`}
       >
         {data.response.err
           ? "An error has occurred, upload the file again"
           : `${printTypes(accept)} files up to ${maxFileSize} in size`}
       </span>
-      <span className="col-start-12 row-start-2 text-bg text-xl font-bold opacity-50 right-0">
+      <span className="al-col-start-12 al-row-start-2 al-text-bg al-text-xl al-font-bold al-opacity-50 al-right-0">
         {data.response.percent}%
       </span>
       <span
         ref={loadingBarRef}
-        className={`bg-bg absolute bottom-0 left-0 ${
-          data.response.percent === 100 ? "rounded-br-md" : "rounded-r-md"
-        } rounded-bl-md h-1`}
+        className={`al-bg-bg al-absolute al-bottom-0 al-left-0 ${
+          data.response.percent === 100 ? "al-rounded-br-md" : "al-rounded-r-md"
+        } al-rounded-bl-md al-h-1`}
       ></span>
     </div>
   );
 }
 
-function DragAndDrop({ dispatch, data, handleFileInput, palette, children }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const styles = `${
-    data.inDropZone ? "bg-bg" : "bg-gray-100"
-  } flex flex-col justify-center items-center rounded-md shadow-md relative hover:shadow-xl w-[40rem] h-20 p-4 ${optPalette}`;
+function DragAndDrop({
+  palette = "primary",
+  dispatch,
+  data,
+  handleFileInput,
+  children,
+}) {
+  const dropzoneStyle = `${
+    data.inDropZone ? "al-bg-bg" : "al-bg-gray-100"
+  } al-flex al-flex-col al-justify-center al-items-center al-rounded-md al-shadow-md al-relative hover:al-shadow-xl al-w-[40rem] al-h-20 al-p-4 ${palette}`;
   // Manage file drag and drop
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -234,14 +238,14 @@ function DragAndDrop({ dispatch, data, handleFileInput, palette, children }) {
 
   return (
     <div
-      className={`${filesStyle["drop-zone"]} ${styles}`}
+      className={`${styles["drop-zone"]} ${dropzoneStyle}`}
       onDragOver={handleDragOver}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
       {data.inDropZone ? (
-        <FileIcon className="h-6 w-6 block text-text" />
+        <FileIcon className="al-h-6 al-w-6 al-block al-text-text" />
       ) : (
         children
       )}
@@ -249,7 +253,7 @@ function DragAndDrop({ dispatch, data, handleFileInput, palette, children }) {
   );
 }
 
-function Files({ palette, maxFileSize, accept, onUpload, onDelete }) {
+function SingleFile({ palette = "primary", maxFileSize, accept, onUpload, onDelete }) {
   const [data, dispatch] = useReducer(reducer, {
     file: undefined,
     mode: 0,
@@ -340,13 +344,13 @@ function Files({ palette, maxFileSize, accept, onUpload, onDelete }) {
       );
 
     return (
-      <div className="grid grid-cols-12 grid-rows-4 w-full h-full">
-        <span className="col-span-8 justify-self-start row-start-1 block text-bg">
+      <div className="al-grid al-grid-cols-12 al-grid-rows-4 al-w-full al-h-full">
+        <span className="al-col-span-8 al-justify-self-start al-row-start-1 al-block al-text-bg">
           Select or drag a file
         </span>
         <span
-          className={`col-span-8 justify-self-start row-start-3 block text-sm ${
-            data.error.code === 1 ? "text-bg danger" : "text-gray-400"
+          className={`al-col-span-8 al-justify-self-start al-row-start-3 al-block al-text-sm ${
+            data.error.code === 1 ? "al-text-bg danger" : "al-text-gray-400"
           }`}
         >
           {data.error.code === 1
@@ -385,8 +389,8 @@ function Files({ palette, maxFileSize, accept, onUpload, onDelete }) {
         data-testid="upload-input"
         ref={fileInputRef}
         onChange={(e) => handleFileInput([...e.target.files])}
-        className={`${filesStyle["custom-file-input"]} ${
-          data.file ? "hidden" : ""
+        className={`${styles["custom-file-input"]} ${
+          data.file ? "al-hidden" : ""
         }`}
         type="file"
         id="myFile"
@@ -395,7 +399,7 @@ function Files({ palette, maxFileSize, accept, onUpload, onDelete }) {
     </DragAndDrop>
   );
 }
-Files.propTypes = {
+SingleFile.propTypes = {
   palette: PropTypes.string,
   maxFileSize: PropTypes.string,
   accept: PropTypes.array,
@@ -403,4 +407,4 @@ Files.propTypes = {
   onDelete: PropTypes.func,
 };
 
-export default Files;
+export default SingleFile;

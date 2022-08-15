@@ -1,33 +1,31 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import checkStyle from "./Checkbox.module.css";
+import styles from "./Checkbox.module.css";
 
 function Checkbox({
-  onClick,
+  palette = "primary",
   value,
   label,
-  palette,
   disabled,
   error,
   indeterminate,
+  onClick,
 }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const styles = `${checkStyle.Checkbox} shadow-md rounded-sm w-5 h-5 disabled:opacity-[var(--disabled-opacity)]`;
+  const checkboxStyle = `al-shadow-md al-rounded-sm al-w-5 al-h-5 disabled:al-opacity-[var(--disabled-opacity)] ${styles["checkbox"]}`;
   // Unselected State
   const unselected =
-    "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-100 focus:border focus:border-gray-400";
+    "al-bg-gray-100 hover:al-bg-gray-200 active:al-bg-gray-300 focus:al-bg-gray-100 focus:al-border focus:al-border-gray-400";
   // Selected State
   const selected =
-    "checked:bg-bg checked:hover:bg-hover checked:active:bg-active checked:focus:bg-focus checked:focus:border-focus-border";
+    "checked:al-bg-bg checked:hover:al-bg-hover checked:active:al-bg-active checked:focus:al-bg-focus checked:focus:al-border-focus-border";
   // Indeterminate State
   const inputIndeter =
-    "indeterminate:bg-bg indeterminate:hover:bg-hover indeterminate:active:bg-active indeterminate:focus:bg-focus indeterminate:focus:border-focus-border";
+    "indeterminate:al-bg-bg indeterminate:hover:al-bg-hover indeterminate:active:al-bg-active indeterminate:focus:al-bg-focus indeterminate:focus:al-border-focus-border";
   // Error state
-  const inputError = "bg-red-300";
-  const labelError = "text-red-300";
+  const inputError = "al-bg-red-300";
+  const labelError = "al-text-red-300";
   // Checkmark icon
-  const before = "before:bg-text";
+  const before = "before:al-bg-text";
   const checkboxRef = useRef();
   const labelRef = useRef();
 
@@ -46,12 +44,12 @@ function Checkbox({
   return (
     <div
       id={`cont-${label}`}
-      className={`flex justify-center items-center ${optPalette}`}
+      className={`al-flex al-justify-center al-items-center ${palette}`}
     >
       <input
         onClick={onClick}
         ref={checkboxRef}
-        className={`${styles} ${before} ${
+        className={`${checkboxStyle} ${before} ${
           error ? inputError : `${unselected} ${inputIndeter} ${selected}`
         }`}
         value={value}
@@ -60,9 +58,9 @@ function Checkbox({
       />
       <label
         ref={labelRef}
-        className={`ml-2 ${
-          disabled ? "opacity-[var(--disabled-opacity)]" : ""
-        } ${error ? labelError : "text-text"}`}
+        className={`al-ml-2 ${
+          disabled ? "al-opacity-[var(--disabled-opacity)]" : ""
+        } ${error ? labelError : "al-text-text"}`}
       >
         {label}
       </label>

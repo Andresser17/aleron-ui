@@ -5,8 +5,25 @@ import { ReactComponent as InfoIcon } from "icons/info-icon.svg";
 import { ReactComponent as ErrorIcon } from "icons/error-icon.svg";
 import { ReactComponent as SuccessIcon } from "icons/success-icon.svg";
 
+const deviceType = () => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return "tablet";
+  }
+
+  if (
+    /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+      ua
+    )
+  ) {
+    return "mobile";
+  }
+
+  return "desktop";
+};
+
 function Notification({
-  palette,
+  palette = "primary",
   header,
   buttons,
   description,
@@ -14,26 +31,7 @@ function Notification({
   onClose,
   onHelp,
 }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const styles = `${optPalette} flex items-start flex-col relative bg-gray-100 p-4 w-72 rounded-sm shadow-md`;
-
-  const deviceType = () => {
-    const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-      return "tablet";
-    }
-
-    if (
-      /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
-        ua
-      )
-    ) {
-      return "mobile";
-    }
-
-    return "desktop";
-  };
+  const styles = `al-flex al-items-start al-flex-col al-relative al-bg-gray-100 al-p-4 al-w-72 al-rounded-sm al-shadow-md ${palette}`;
 
   useEffect(() => {
     setTimeout(onClose, 1000 * 5);
@@ -44,26 +42,26 @@ function Notification({
       {mode === "success" && (
         <SuccessIcon
           role="success-icon"
-          className="w-8 w-8 top-[10%] right-[5%] absolute block text-bg success"
+          className="al-w-8 al-h-8 al-top-[10%] al-right-[5%] al-absolute al-block al-text-bg success"
         />
       )}
       {mode === "error" && (
         <ErrorIcon
           role="error-icon"
-          className="w-8 w-8 top-[10%] right-[5%] absolute block text-bg danger"
+          className="al-w-8 al-h-8 al-top-[10%] al-right-[5%] al-absolute al-block al-text-bg danger"
         />
       )}
       {mode === "info" && (
         <InfoIcon
           role="info-icon"
-          className="w-8 w-8 top-[10%] right-[5%] absolute opacity-100 block text-bg"
+          className="al-w-8 al-h-8 al-top-[10%] al-right-[5%] al-absolute al-opacity-100 al-block al-text-bg"
         />
       )}
-      {header?.length > 0 && <span className="font-bold">{header}</span>}
+      {header?.length > 0 && <span className="al-font-bold">{header}</span>}
       {description?.length > 0 && (
         <p
-          className={`${buttons ? "mb-4" : ""} ${
-            header?.length > 0 ? "mt-2" : ""
+          className={`${buttons ? "al-mb-4" : ""} ${
+            header?.length > 0 ? "al-mt-2" : ""
           }`}
         >
           {description}
@@ -77,13 +75,13 @@ function Notification({
         >
           <button
             onClick={onClose}
-            className="rounded-sm px-4 py-2 text-bg border-2 border-bg hover:border-hover hover:text-hover active:border-active active:text-active focus:border-focus focus:text-focus"
+            className="al-rounded-sm al-px-4 al-py-2 al-text-bg al-border-2 al-border-bg hover:al-border-hover hover:al-text-hover active:al-border-active active:al-text-active focus:al-border-focus focus:al-text-focus"
           >
             Close
           </button>
           <button
             onClick={onHelp}
-            className="ml-6 text-bg hover:border-hover hover:text-hover active:text-active focus:text-focus"
+            className="al-ml-6 al-text-bg hover:al-border-hover hover:al-text-hover active:al-text-active focus:al-text-focus"
           >
             Help
           </button>

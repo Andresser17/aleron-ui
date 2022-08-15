@@ -17,7 +17,7 @@ function Search({
   const [isFocus, setIsFocus] = useState(false);
   // Styles
   const styles =
-    "bg-bg text-text p-4 w-full shadow-md rounded-sm disabled:opacity-90 disabled:shadow-md placeholder:text-black/30";
+    "al-bg-bg al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm disabled:al-opacity-90 disabled:al-shadow-md placeholder:al-text-black/30";
   // Refs
   const inputRef = useRef();
 
@@ -54,20 +54,22 @@ function Search({
 
   return (
     <label
-      className={`flex ${
-        isFocus ? "outline outline-1" : ""
+      className={`al-flex ${
+        isFocus ? "al-outline al-outline-1" : ""
       } ${styles} ${palette}`}
       htmlFor={name}
     >
       <SearchIcon
-        className={`w-6 h-6 mr-2 ${isFocus ? "text-text" : "text-zinc-400"}`}
+        className={`al-w-6 al-h-6 al-mr-2 ${
+          isFocus ? "al-text-text" : "al-text-zinc-400"
+        }`}
       />
       <input
         ref={inputRef}
         value={value}
         onChange={handleChange}
         type="search"
-        className="w-full bg-black/0 focus:outline-none"
+        className="al-w-full al-bg-black/0 focus:al-outline-none"
         {...{
           disabled,
           readOnly,
@@ -78,8 +80,8 @@ function Search({
       />
       <DeleteIcon
         onClick={deleteValue}
-        className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
-          inputRef.current?.value ? "visible" : "invisible"
+        className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
+          inputRef.current?.value ? "al-visible" : "al-invisible"
         }`}
       />
     </label>
