@@ -1,4 +1,4 @@
-import { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import PropTypes from "prop-types";
 // Styles
 import filesStyle from "./SingleFile.module.css";

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 // Icons
 import { ReactComponent as CloseIcon } from "icons/error-icon.svg";

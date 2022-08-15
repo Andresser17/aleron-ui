@@ -5,10 +5,12 @@ import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
 import includePaths from "rollup-plugin-includepaths";
 import commonjs from "@rollup/plugin-commonjs";
+import svgr from "@svgr/rollup";
+import url from '@rollup/plugin-url';
 
 const includePathOptions = {
   include: {},
-  paths: ["src/components"],
+  paths: ["src"],
   external: [],
   extensions: [".js", ".json", ".html"],
 };
@@ -36,6 +38,8 @@ const config = [
           insertAt: "top",
         },
       }),
+      url(),
+      svgr(),
       babel({
         babelHelpers: "bundled",
         exclude: "**/node_modules/**",
