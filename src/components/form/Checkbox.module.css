@@ -10,10 +10,6 @@
   place-content: center;
 }
 
-.checkbox:disabled {
-  pointer-events: none;
-}
-
 .checkbox::before {
   content: "";
   width: 0.65em;
@@ -46,6 +42,7 @@
 .checkbox:disabled {
   color: #636363;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .checkbox:disabled::before {
