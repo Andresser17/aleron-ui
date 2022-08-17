@@ -50,6 +50,7 @@
     "postcss": "^8.4.12",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-hook-form": "^7.34.2",
     "rollup": "^2.78.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-includepaths": "^0.2.4",
@@ -60,7 +61,8 @@
   },
   "peerDependencies": {
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^18.1.0"
   },
   "dependencies": {
     "@babel/preset-env": "^7.18.10",
