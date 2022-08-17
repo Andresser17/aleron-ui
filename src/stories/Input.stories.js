@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import Input from "../components/form/Input";
+import Input from "components/form/Input";
 
 export default {
   title: "Input",

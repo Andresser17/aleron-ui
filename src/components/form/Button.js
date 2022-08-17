@@ -66,13 +66,19 @@ function Button({
   // If icon is true and text is empty
   const optPadding = !text && icon ? "" : "al-px-4 al-py-2";
   // If border is active
-  const optBorder = border ? "al-border-2" : "";
-  const styles = `al-bg-bg al-text-text ${optBorder} focus:al-border-[0.125rem] al-border-border hover:al-bg-hover active:al-bg-active focus:al-bg-focus focus:al-border-focus-border disabled:al-bg-bg disabled:al-opacity-[var(--disabled-opacity)] ${optPadding} ${palette}`;
+  const optBorder = border
+    ? "al-border-solid al-border al-border-border"
+    : "al-border-none";
+  const focusStyle =
+    "focus:al-outline focus:al-outline-1 focus:al-bg-focus focus:al-outline-outline";
+  const disabledStyle =
+    "disabled:al-bg-bg disabled:al-opacity-[var(--disabled-opacity)]";
+  const styles = `al-cursor-pointer al-bg-bg al-text-text hover:al-bg-hover active:al-bg-active ${optBorder} ${optPadding} ${disabledStyle} ${focusStyle} ${palette}`;
 
   // Default icons
   const loadingIcon = (
     <span className={`al-inline-block al-w-6 al-h-6`}>
-      <LoadingIcon className="al-animate-spin" />
+      <LoadingIcon />
     </span>
   );
   // If user provide a new icon like children replace customIcon
@@ -124,7 +130,6 @@ function Button({
   );
 }
 Button.propTypes = {
-  onClick: PropTypes.func,
   text: PropTypes.string,
   palette: PropTypes.string,
   icon: PropTypes.bool,
@@ -132,6 +137,7 @@ Button.propTypes = {
   border: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
   children: PropTypes.element,
 };
 
