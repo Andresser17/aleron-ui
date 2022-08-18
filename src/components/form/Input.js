@@ -27,7 +27,7 @@ function Input({
   return (
     <label
       className="al-flex al-flex-col al-items-start al-relative al-text-sm"
-      htmlFor={name}
+      htmlFor={props.name}
     >
       <input
         className={inputStyle}
@@ -36,7 +36,6 @@ function Input({
           type,
           readOnly,
           placeholder,
-          name,
           ...field,
           value: field.value ? field.value : "",
         }}
