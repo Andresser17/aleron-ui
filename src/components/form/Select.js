@@ -93,7 +93,9 @@ function Select({
 
   return (
     <>
-      <div className={`al-bg-bg al-text-text al-relative al-z-10 ${palette}`}>
+      <div
+        className={`al-bg-bg al-text-text al-relative al-z-10 al-rounded-sm ${palette}`}
+      >
         <div
           aria-disabled={disabled}
           ref={containerRef}
@@ -103,7 +105,7 @@ function Select({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`al-flex al-cursor-text al-p-4 al-shadow-md al-rounded-sm ${
+          className={`al-flex al-cursor-text al-p-4 al-shadow-md ${
             isFocus ? "al-outline al-outline-1" : ""
           } ${disabled ? "al-pointer-events-none" : ""}`}
         >
@@ -119,6 +121,10 @@ function Select({
                   field.ref(e);
                   inputRef.current = e;
                 },
+              },
+              onChange: (e) => {
+                if (!isSearching) setIsSearching(true);
+                field.onChange(e);
               },
               value: field.value ? field.value : "",
             }}

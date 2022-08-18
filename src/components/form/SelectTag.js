@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
 import { ReactComponent as TopArrow } from "icons/top-arrow.svg";
@@ -9,7 +10,7 @@ import { ReactComponent as CheckmarkIcon } from "icons/success-icon.svg";
 function Option({ option, isSelected, setSelected }) {
   return (
     <span
-      className="al-flex al-justify-between al-w-full al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus"
+      className="al-flex al-justify-between al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus"
       onClick={() => !isSelected && setSelected(option)}
     >
       {option.label}
@@ -95,12 +96,14 @@ function SelectTag({
   options = [],
   maxTags = 5,
   placeholder = "Search",
+  setValue = (name, value) => undefined,
   disabled,
-  defaultValue,
-  required,
-  name,
+  ...props
 }) {
-  const [value, setValue] = useState("");
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
   const [tags, setTags] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
@@ -117,13 +120,6 @@ function SelectTag({
     setTags([]);
   };
 
-  // set default value
-  useEffect(() => {
-    if (defaultValue && defaultValue.label.length > 0) {
-      setTags(defaultValue);
-    }
-  }, [defaultValue]);
-
   const handleTagClose = (e, index) => {
     e.stopPropagation();
     const newTags = tags.filter((_, i) => i !== index);
@@ -138,17 +134,14 @@ function SelectTag({
 
     setShowDropdown(false);
     setTags((prev) => [...prev, option]);
-    setValue("");
-  };
-
-  const handleChange = (e) => {
-    if (!isSearching) setIsSearching(true);
-    setValue(e.target.value);
+    setValue(props.name, "");
   };
 
   return (
     <>
-      <div className={`al-bg-bg al-text-text al-relative al-z-10 ${palette}`}>
+      <div
+        className={`al-bg-bg al-text-text al-relative al-z-10 al-rounded-sm ${palette}`}
+      >
         <div
           aria-disabled={disabled}
           ref={containerRef}
@@ -158,11 +151,11 @@ function SelectTag({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`al-flex al-cursor-text al-p-4 al-w-full al-shadow-md al-rounded-sm ${
+          className={`al-flex al-cursor-text al-p-4 al-shadow-md ${
             isFocus ? "al-outline al-outline-1" : ""
           } ${disabled ? "al-pointer-events-none" : ""}`}
         >
-          <div className="al-flex al-flex-wrap al-w-full">
+          <div className="al-flex al-flex-wrap">
             <Tags
               tagsPalette={tagsPalette}
               tags={tags}
@@ -170,38 +163,46 @@ function SelectTag({
             />
             <input
               ref={inputRef}
-              value={value}
-              onChange={handleChange}
               type="search"
-              className="al-w-auto al-flex al-flex-auto al-bg-black/0 focus:al-outline-none"
+              className="al-w-full al-text-text al-flex-auto al-bg-black/0 al-border-none focus:al-outline-none"
               {...{
                 disabled,
-                required,
                 placeholder,
-                name,
+                ...{
+                  ...field,
+                  ref(e) {
+                    field.ref(e);
+                    inputRef.current = e;
+                  },
+                },
+                onChange: (e) => {
+                  if (!isSearching) setIsSearching(true);
+                  field.onChange(e);
+                },
+                value: field.value ? field.value : "",
               }}
             />
           </div>
           <DeleteIcon
             onClick={deleteValue}
-            className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-              value || tags.length > 0 ? "al-visible" : "al-invisible"
+            className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
+              field.value || tags.length > 0 ? "al-visible" : "al-invisible"
             }`}
           />
           {showDropdown ? (
             <TopArrow
-              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
+              className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer`}
             />
           ) : (
             <BottomArrow
-              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
+              className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer`}
             />
           )}
         </div>
         {showDropdown && (
           <Dropdown
             search={isSearching}
-            inputValue={value}
+            inputValue={field.value}
             options={options}
             selectedTags={tags}
             setSelected={handleSelection}
@@ -231,6 +232,7 @@ SelectTag.propTypes = {
   disabled: PropTypes.bool,
   defaultValue: PropTypes.object,
   required: PropTypes.bool,
+  setValue: PropTypes.func,
   name: PropTypes.string,
 };
 
