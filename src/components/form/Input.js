@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 function Input({
   palette = "light",
+  description = "",
   placeholder,
   disabled,
   readOnly,
@@ -17,20 +18,22 @@ function Input({
   // Styles
   const notEmptyStyle = "al-text-[0.6rem] al-top-[0.125rem]";
   const disabledStyle = "disabled:al-opacity-90 disabled:al-shadow-md";
-  const inputStyle = `${
+  const focusStyle =
+    "focus:al-outline focus:outline-1 focus:outline-outline focus:al-shadow-lg";
+  const inputStyles = `${
     error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
-  } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg active:al-shadow-xl focus:al-outline-none placeholder:al-text-black/0 ${disabledStyle} ${palette}`;
+  } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
 
   if (type !== "text" && type !== "password")
     throw new Error("type property only accept text and password");
 
   return (
     <label
-      className="al-flex al-flex-col al-items-start al-relative al-text-sm"
+      className={`al-flex al-flex-col al-items-start al-relative al-text-sm ${palette}`}
       htmlFor={props.name}
     >
       <input
-        className={inputStyle}
+        className={inputStyles}
         {...{
           disabled,
           type,
@@ -49,9 +52,13 @@ function Input({
         {placeholder}
       </span>
       {/* Description */}
-      <span className="al-text-bg danger al-mt-1">
+      <span
+        className={`al-text-[0.7rem] al-my-1 ${
+          error?.message ? "al-text-bg danger" : "al-text-text"
+        }`}
+      >
         {error?.type === "required" ? "This field is required" : ""}
-        {error?.message ? error?.message : ""}
+        {error?.message ? error?.message : description}
       </span>
     </label>
   );
@@ -59,6 +66,7 @@ function Input({
 Input.propTypes = {
   palette: PropTypes.string,
   name: PropTypes.string,
+  description: PropTypes.string,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
