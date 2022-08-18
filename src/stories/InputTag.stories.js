@@ -12,7 +12,7 @@ export default {
 const Template = (args) => {
   const [tags, setTags] = useState([]);
   // validate fields on every change event
-  const { handleSubmit, resetField, control } = useForm({ mode: "onChange" });
+  const { handleSubmit, setValue, control } = useForm({ mode: "onChange" });
   const onSubmit = (data) => {
     // don't send if tags if empty
     console.log(tags);
@@ -31,7 +31,7 @@ const Template = (args) => {
       className="al-w-80 al-flex al-flex-col al-items-center"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <InputTag {...{ tags, setTags, control, resetField, ...args }} />
+      <InputTag {...{ tags, setTags, control, setValue, ...args }} />
 
       {/* <InputTag {...{ tags, setTags, control, resetField, ...{...args, name: "dogs2"} }} /> */}
       <Button text="Send" />

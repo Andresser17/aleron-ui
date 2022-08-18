@@ -19,7 +19,7 @@ function Input({
   const notEmptyStyle = "al-text-[0.6rem] al-top-[0.125rem]";
   const disabledStyle = "disabled:al-opacity-90 disabled:al-shadow-md";
   const focusStyle =
-    "focus:al-outline focus:outline-1 focus:outline-outline focus:al-shadow-lg";
+    "focus:al-outline focus:al-outline-1 focus:al-outline-outline focus:al-shadow-lg";
   const inputStyles = `${
     error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
   } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;

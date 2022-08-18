@@ -41,7 +41,7 @@ function InputTag({
   setTags,
   maxTags = 5,
   placeholder,
-  resetField = (name) => undefined,
+  setValue = (name, value) => undefined,
   disabled,
   readOnly,
   description,
@@ -84,7 +84,7 @@ function InputTag({
 
       setTags([...tags, field.value]);
       // clean input
-      resetField(props.name);
+      setValue(props.name, "");
     }
   };
 
@@ -152,7 +152,7 @@ InputTag.propTypes = {
   setTags: PropTypes.func,
   maxTags: PropTypes.number,
   placeholder: PropTypes.string,
-  resetField: PropTypes.func,
+  setValue: PropTypes.func,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
 };

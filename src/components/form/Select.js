@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
 import { ReactComponent as TopArrow } from "icons/top-arrow.svg";
@@ -8,7 +9,7 @@ import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
 function Option({ option, selected, setSelected }) {
   return (
     <span
-      className={`al-w-full al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus ${
+      className={`al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus ${
         option.value === selected.value ? "al-bg-active" : ""
       }`}
       onClick={() => setSelected(option)}
@@ -56,12 +57,15 @@ function Select({
   palette = "light",
   options = [],
   placeholder = "Search",
+  getSelected = (selected) => undefined,
   disabled,
-  defaultValue,
-  required,
-  name,
+  setValue = (name, value) => undefined,
+  ...props
 }) {
-  const [value, setValue] = useState("");
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
   const [isSearching, setIsSearching] = useState(false);
   const [selected, setSelected] = useState({ label: "", value: "" });
   const [isFocus, setIsFocus] = useState(false);
@@ -74,28 +78,17 @@ function Select({
   // delete input and selected value
   const deleteValue = (e) => {
     e.stopPropagation();
-    setValue("");
+    setValue(props.name, "");
     setSelected({ label: "", value: "" });
+    getSelected({ label: "", value: "" });
   };
-
-  // set default value
-  useEffect(() => {
-    if (defaultValue && defaultValue.label.length > 0) {
-      setValue(defaultValue.label);
-      setSelected(defaultValue);
-    }
-  }, [defaultValue]);
 
   const handleSelection = (option) => {
     if (isSearching) setIsSearching(false);
     setShowDropdown(false);
     setSelected(option);
-    setValue(option.label);
-  };
-
-  const handleChange = (e) => {
-    if (!isSearching) setIsSearching(true);
-    setValue(e.target.value);
+    getSelected(option);
+    setValue(props.name, option.label);
   };
 
   return (
@@ -110,50 +103,51 @@ function Select({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`al-flex al-cursor-text al-p-4 al-w-full al-shadow-md al-rounded-sm ${
+          className={`al-flex al-cursor-text al-p-4 al-shadow-md al-rounded-sm ${
             isFocus ? "al-outline al-outline-1" : ""
           } ${disabled ? "al-pointer-events-none" : ""}`}
         >
           <input
-            ref={inputRef}
-            value={value}
-            onChange={handleChange}
             type="search"
-            className="al-w-full al-bg-black/0 focus:al-outline-none placeholder:al-text-black/0"
+            className="al-w-full al-text-text al-flex-auto al-bg-black/0 al-border-none focus:al-outline-none placeholder:al-text-black/0"
             {...{
               disabled,
-              required,
               placeholder,
-              name,
+              ...{
+                ...field,
+                ref(e) {
+                  field.ref(e);
+                  inputRef.current = e;
+                },
+              },
+              value: field.value ? field.value : "",
             }}
           />
           <DeleteIcon
             onClick={deleteValue}
             className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-              value ? "al-visible" : "al-invisible"
+              field.value ? "al-visible" : "al-invisible"
             }`}
           />
           {showDropdown ? (
-            <TopArrow
-              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
-            />
+            <TopArrow className="al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer" />
           ) : (
-            <BottomArrow
-              className={`al-w-6 al-h-6 al-ml-2 al-text-black/30 hover:al-text-text al-cursor-pointer`}
-            />
+            <BottomArrow className="al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer" />
           )}
         </div>
         {showDropdown && (
           <Dropdown
             search={isSearching}
-            inputValue={value}
+            inputValue={field.value}
             options={options}
             {...{ selected, setSelected: handleSelection }}
           />
         )}
         <span
           className={`al-text-gray-400 al-absolute ${
-            value.length > 0 ? "al-text-[0.7rem] al-top-[0.125rem]" : "al-top-[1rem]"
+            field.value.length > 0
+              ? "al-text-[0.7rem] al-top-[0.125rem]"
+              : "al-top-[1rem]"
           } al-pointer-events-none al-duration-500 al-left-4`}
         >
           {placeholder}
@@ -179,6 +173,8 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   defaultValue: PropTypes.object,
+  getSelected: PropTypes.func,
+  setValue: PropTypes.func,
   required: PropTypes.bool,
   name: PropTypes.string,
 };

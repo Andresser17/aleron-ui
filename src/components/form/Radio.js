@@ -4,8 +4,8 @@ import styles from "./Radio.module.css";
 
 function RadioInput({ option, checked, setChecked, name, disabled }) {
   // Styles
-  const unselectedStyle = `al-bg-zinc-200 hover:al-bg-zinc-300`;
-  const selectedStyle = `al-bg-bg hover:al-bg-hover focus:al-border-2 focus:al-border-focus focus:al-bg-bg ${styles["radio-button-checked"]}`;
+  const unselectedStyle = `al-bg-black/0 hover:al-bg-black/20 al-outline al-outline-1 al-outline-outline`;
+  const selectedStyle = `al-bg-bg hover:al-bg-hover focus:al-outline focus:al-outline-2 focus:al-outline-focus focus:al-bg-bg ${styles["radio-button-checked"]}`;
   // Refs
   const inputRef = useRef();
 
@@ -17,7 +17,7 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
 
   return (
     <label
-      className={`al-relative al-flex al-items-center al-my-2 ${
+      className={`al-relative al-text-text al-flex al-items-center al-my-2 ${
         option.disabled ? "al-opacity-70 al-pointer-events-none" : ""
       }`}
       htmlFor={name}

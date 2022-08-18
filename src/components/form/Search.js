@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
 import { ReactComponent as SearchIcon } from "icons/search-icon.svg";
@@ -9,55 +10,38 @@ function Search({
   placeholder = "Search",
   disabled,
   readOnly,
-  defaultValue,
   required,
-  name,
+  setValue = (name, value) => undefined,
+  ...props
 }) {
-  const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
   // Styles
-  const styles =
-    "al-bg-bg al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm disabled:al-opacity-90 disabled:al-shadow-md placeholder:al-text-black/30";
+  const focusStyle = "al-outline al-outline-1 al-outline-outline al-shadow-lg";
+  const containerStyles = `al-bg-bg al-text-text al-cursor-text al-p-4 al-w-full al-shadow-md al-rounded-sm disabled:al-opacity-90 disabled:al-shadow-md placeholder:al-text-black/30`;
   // Refs
   const inputRef = useRef();
 
-  // check if input is focus
-  useEffect(() => {
-    const addClass = () =>
-      document.activeElement === inputRef.current && setIsFocus(true);
-    const removeClass = () => setIsFocus(false);
-    document.addEventListener("focusin", addClass);
-    document.addEventListener("focusout", removeClass);
-
-    return () => {
-      document.removeEventListener("focusin", addClass);
-      document.removeEventListener("focusout", removeClass);
-    };
-  }, []);
-
   // delete input value
-  const deleteValue = () => setValue("");
-
-  // set default value
-  useEffect(() => {
-    if (defaultValue && defaultValue.length > 0) {
-      setValue(defaultValue);
-    }
-  }, [defaultValue]);
-
-  const handleChange = (e) => {
-    // const mergeStatus = (newStatus) =>
-    //   setStatus((prev) => ({ ...prev, ...newStatus }));
-
-    setValue(e.target.value);
-  };
+  const deleteValue = () => setValue(props.name, "");
 
   return (
     <label
       className={`al-flex ${
-        isFocus ? "al-outline al-outline-1" : ""
-      } ${styles} ${palette}`}
-      htmlFor={name}
+        isFocus ? focusStyle : ""
+      } ${containerStyles} ${palette}`}
+      onClick={() => {
+        if (disabled) return;
+        if (!isFocus) setIsFocus(true);
+        inputRef.current.focus();
+      }}
+      onBlur={() => {
+        setIsFocus(false);
+      }}
+      htmlFor={props.name}
     >
       <SearchIcon
         className={`al-w-6 al-h-6 al-mr-2 ${
@@ -65,23 +49,26 @@ function Search({
         }`}
       />
       <input
-        ref={inputRef}
-        value={value}
-        onChange={handleChange}
         type="search"
-        className="al-w-full al-bg-black/0 focus:al-outline-none"
+        className="al-w-full al-text-text al-border-none al-bg-black/0 focus:al-outline-none"
         {...{
           disabled,
           readOnly,
-          required,
           placeholder,
-          name,
+          ...{
+            ...field,
+            ref(e) {
+              field.ref(e);
+              inputRef.current = e;
+            },
+          },
+          value: field.value ? field.value : "",
         }}
       />
       <DeleteIcon
         onClick={deleteValue}
         className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-          inputRef.current?.value ? "al-visible" : "al-invisible"
+          field.value ? "al-visible" : "al-invisible"
         }`}
       />
     </label>
@@ -89,12 +76,13 @@ function Search({
 }
 Search.propTypes = {
   palette: PropTypes.string,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool,
   defaultValue: PropTypes.string,
   readOnly: PropTypes.bool,
   required: PropTypes.bool,
-  name: PropTypes.string,
+  setValue: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default Search;
