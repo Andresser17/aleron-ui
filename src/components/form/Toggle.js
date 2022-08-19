@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./Toggle.module.css";
 
@@ -9,24 +9,35 @@ function Toggle({
   label,
   subtitle,
   checked,
+  readOnly,
   disabled = false,
   onChange,
 }) {
-  const ballStyle = "before:al-bg-bg before:al-rounded-[50%] before:al-w-4 before:al-h-4";
+  const [isChecked, setIsChecked] = useState(false);
+  const ballStyle =
+    "before:al-bg-bg before:al-rounded-[50%] before:al-w-4 before:al-h-4";
+
+  // if checked is provided, change state
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
+
+  const handleChange = (e) => {
+    if (readOnly) return;
+
+    onChange(e), setIsChecked((prev) => !prev);
+  };
 
   return (
     <div className={`al-flex ${disabled ? "al-opacity-70" : ""} ${palette}`}>
       <label className={`al-w-11 al-h-[1.4rem] ${styles["switch"]}`}>
         <input
           type="checkbox"
-          name={name}
-          value={value}
-          onChange={onChange}
-          checked={checked}
-          disabled={disabled}
+          onChange={handleChange}
+          {...{ disabled, value, name, checked: isChecked }}
         />
         <span
-          className={`al-shadow-md al-rounded-2xl ${ballStyle} ${styles["slider"]}`}
+          className={`al-shadow-md al-rounded-2xl al-outline al-outline-1 al-outline-focus ${ballStyle} ${styles["slider"]}`}
         ></span>
       </label>
       <div className="al-ml-2 al-text-left">
@@ -45,6 +56,7 @@ Toggle.propTypes = {
   label: PropTypes.string,
   subtitle: PropTypes.string,
   checked: PropTypes.bool,
+  readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
