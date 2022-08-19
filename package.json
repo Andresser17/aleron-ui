@@ -7,22 +7,12 @@
   "module": "dist/index.es.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
+    "build": "NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook",
-    "build-lib": "NODE_ENV=production rollup -c",
     "release": "auto shipit --base-branch=main"
   },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
-  },
-  "babel": {
-    "presets": [
-      [
-        "react-app",
-        {
-          "absoluteRuntime": false
-        }
-      ]
-    ]
   },
   "browserslist": {
     "production": [">0.2%", "not dead", "not op_mini all"],
@@ -52,11 +42,10 @@
     "autoprefixer": "^10.4.5",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
+    "babel-preset-react-app": "^10.0.1",
+    "cross-env": "^7.0.3",
     "msw": "^0.42.0",
     "postcss": "^8.4.12",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-hook-form": "^7.34.2",
     "rollup": "^2.78.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-includepaths": "^0.2.4",
