@@ -1,23 +1,14 @@
 {
-  "name": "aleron-ui",
+  "name": "@andresser17/aleron-ui",
   "version": "1.0.0",
   "private": true,
   "author": "Alejandro Serrano andresserserrano2020@gmail.com (https://andresser17.github.io)",
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^14.2.0",
-    "axios": "^0.27.2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "main": "dist/index.es.js",
+  "module": "dist/index.es.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "build-lib": "NODE_ENV=production rollup -c"
   },
   "eslintConfig": {
     "extends": [
@@ -38,9 +29,45 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-url": "^7.0.0",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "@svgr/rollup": "^6.3.1",
+    "@svgr/webpack": "^6.3.1",
     "autoprefixer": "^10.4.5",
+    "axios": "^0.27.2",
+    "babel-loader": "^8.2.5",
     "msw": "^0.42.0",
     "postcss": "^8.4.12",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^7.34.2",
+    "rollup": "^2.78.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-includepaths": "^0.2.4",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
     "tailwindcss": "^3.0.24"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^18.1.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1"
   }
 }

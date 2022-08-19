@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 // Icons
 import { ReactComponent as CloseIcon } from "icons/error-icon.svg";
@@ -24,13 +24,13 @@ function PopUpModal({ palette = "primary", countdown = 0, close, children }) {
   return (
     <div
       ref={modalRef}
-      className={`relative bg-gray-100 text-gray-800 px-2 py-4 min-w-[20rem] min-h-[4rem] rounded ${palette}`}
+      className={`al-relative al-bg-gray-100 al-text-gray-800 al-px-2 al-py-4 al-min-w-[20rem] al-min-h-[4rem] al-rounded ${palette}`}
     >
       <button
         onClick={closeModal}
-        className="w-6 block absolute top-1 right-1 rounded bg-bg text-text p-1"
+        className="al-w-6 al-block al-absolute al-top-1 al-right-1 al-rounded al-bg-bg al-text-text al-p-1"
       >
-        <CloseIcon className="w-full" />
+        <CloseIcon className="al-w-full" />
       </button>
       {/* children */}
       {children}

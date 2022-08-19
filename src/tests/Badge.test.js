@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Badge from "../Badge";
+import Badge from "components/Badge";
 
 describe("Test if props are working fine", () => {
   test("Text is displayed", () => {

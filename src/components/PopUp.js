@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 // Components
 import PopUpModal from "components/modals/PopUpModal";
@@ -33,7 +33,7 @@ function PopUp({
           <button
             onClick={() => clickButton(b.click)}
             key={key(b.text)}
-            className="mx-1 text-bg h-fit"
+            className="al-mx-1 al-text-bg al-h-fit"
           >
             {b.text}
           </button>
@@ -43,7 +43,7 @@ function PopUp({
         <span
           onClick={() => clickButton(b.click)}
           key={key(b.text)}
-          className="mx-1 block"
+          className="al-mx-1 al-block"
         >
           <Button text={b.text} palette={palette} />
         </span>
@@ -52,18 +52,18 @@ function PopUp({
 
   return (
     <PopUpModal countdown={countdown} close={close} palette={palette}>
-      <div className={`flex flex-col items-center ${palette}`}>
+      <div className={`al-flex al-flex-col al-items-center ${palette}`}>
         {mode === "error" && (
           <>
-            <span className="bg-red-600/25 block w-14 h-14 p-3 rounded-[50%]">
-              <ErrorIcon className="text-bg danger" />
+            <span className="al-bg-red-600/25 al-block al-w-14 al-h-14 al-p-3 al-rounded-[50%]">
+              <ErrorIcon className="al-text-bg danger" />
             </span>
 
-            <span className="mt-4 text-lg font-semibold">{title}</span>
+            <span className="al-mt-4 al-text-lg al-font-semibold">{title}</span>
 
-            <p className="text-[0.8rem]">{description}</p>
+            <p className="al-text-[0.8rem]">{description}</p>
 
-            <div className="mt-4 text-sm flex items-center">
+            <div className="al-mt-4 al-text-sm al-flex al-items-center">
               {mappedButtons}
             </div>
           </>
@@ -71,15 +71,15 @@ function PopUp({
 
         {mode === "info" && (
           <>
-            <span className="bg-yellow-200/25 block w-14 h-14 p-3 rounded-[50%]">
-              <InfoIcon className="text-bg warning" />
+            <span className="al-bg-yellow-200/25 al-block al-w-14 al-h-14 al-p-3 al-rounded-[50%]">
+              <InfoIcon className="al-text-bg warning" />
             </span>
 
-            <span className="mt-4 text-lg font-semibold">{title}</span>
+            <span className="al-mt-4 al-text-lg al-font-semibold">{title}</span>
 
-            <p className="text-[0.8rem]">{description}</p>
+            <p className="al-text-[0.8rem]">{description}</p>
 
-            <div className="mt-4 text-sm flex items-center">
+            <div className="al-mt-4 al-text-sm al-flex al-items-center">
               {mappedButtons}
             </div>
           </>
@@ -87,15 +87,15 @@ function PopUp({
 
         {mode === "success" && (
           <>
-            <span className="bg-green-600/25 block w-14 h-14 p-3 rounded-[50%]">
-              <CheckIcon className="text-bg success" />
+            <span className="al-bg-green-600/25 al-block al-w-14 al-h-14 al-p-3 al-rounded-[50%]">
+              <CheckIcon className="al-text-bg success" />
             </span>
 
-            <span className="mt-4 text-lg font-semibold">{title}</span>
+            <span className="al-mt-4 al-text-lg al-font-semibold">{title}</span>
 
-            <p className="text-[0.8rem]">{description}</p>
+            <p className="al-text-[0.8rem]">{description}</p>
 
-            <div className="mt-4 text-sm">{mappedButtons}</div>
+            <div className="al-mt-4 al-text-sm">{mappedButtons}</div>
           </>
         )}
       </div>

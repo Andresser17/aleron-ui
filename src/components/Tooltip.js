@@ -1,20 +1,21 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 function Tooltip({ text, palette = "primary", position = "right", children }) {
   // Ref
   const spanRef = useRef();
   // Styles
-  const arrowStyle = "after:absolute after:border-[5px] after:border-black/0";
+  const arrowStyle =
+    "after:al-absolute after:al-border-[5px] after:al-border-black/0";
   const rightStyle =
-    "top-0 bottom-0 left-[110%] m-auto after:top-[50%] after:right-full after:-mt-[5px] after:border-r-bg";
+    "al-top-0 al-bottom-0 al-left-[110%] al-m-auto after:al-top-[50%] after:al-right-full after:-al-mt-[5px] after:al-border-r-bg";
   const leftStyle =
-    "top-0 bottom-0 right-[110%] m-auto after:top-[50%] after:left-full after:-mt-[5px] after:border-l-bg";
+    "al-top-0 al-bottom-0 al-right-[110%] al-m-auto after:al-top-[50%] after:al-left-full after:-al-mt-[5px] after:al-border-l-bg";
   const topStyle =
-    "bottom-[120%] left-0 right-0 after:top-full after:left-[50%] after:border-t-bg";
+    "al-bottom-[120%] al-left-0 al-right-0 after:al-top-full after:al-left-[50%] after:al-border-t-bg";
   const bottomStyle =
-    "top-[120%] left-0 right-0 after:bottom-full after:left-[50%] after:border-b-bg";
-  const styles = `px-4 py-1 w-32 h-8 rounded-sm bg-bg text-text absolute inline-block z-10 text-center shadow-md ${arrowStyle} ${palette}`;
+    "al-top-[120%] al-left-0 al-right-0 after:al-bottom-full after:al-left-[50%] after:al-border-b-bg";
+  const styles = `al-px-4 al-py-1 al-w-32 al-h-8 al-rounded-sm al-bg-bg al-text-text al-absolute al-inline-block al-z-10 al-text-center al-shadow-md ${arrowStyle} ${palette}`;
 
   useEffect(() => {
     if (position === "right")
@@ -27,7 +28,7 @@ function Tooltip({ text, palette = "primary", position = "right", children }) {
   }, [position, styles]);
 
   return (
-    <div className="inline-block bg-red-600 relative">
+    <div className="al-inline-block al-bg-red-600 al-relative">
       {children}
       <span ref={spanRef}>{text}</span>
     </div>

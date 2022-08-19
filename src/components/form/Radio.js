@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./Radio.module.css";
 
 function RadioInput({ option, checked, setChecked, name, disabled }) {
   // Styles
-  const unselectedStyle = `bg-zinc-200 hover:bg-zinc-300`;
-  const selectedStyle = `bg-bg hover:bg-hover focus:border-2 focus:border-focus focus:bg-bg ${styles["radio-button-checked"]}`;
+  const unselectedStyle = `al-bg-black/0 hover:al-bg-black/20 al-outline al-outline-1 al-outline-outline`;
+  const selectedStyle = `al-bg-bg hover:al-bg-hover focus:al-outline focus:al-outline-2 focus:al-outline-focus focus:al-bg-bg ${styles["radio-button-checked"]}`;
   // Refs
   const inputRef = useRef();
 
@@ -17,15 +17,15 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
 
   return (
     <label
-      className={`relative flex items-center my-2 ${
-        option.disabled ? "opacity-70 pointer-events-none" : ""
+      className={`al-relative al-text-text al-flex al-items-center al-my-2 ${
+        option.disabled ? "al-opacity-70 al-pointer-events-none" : ""
       }`}
       htmlFor={name}
     >
       {/* Radio button */}
       <input
         ref={inputRef}
-        className="invisible absolute top-0 left-0"
+        className="al-invisible al-absolute al-top-0 al-left-0"
         value={option.value}
         type="radio"
         {...{ name, disabled }}
@@ -33,12 +33,12 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
       <i
         tabIndex="1"
         onClick={() => setChecked(option.value)}
-        className={`relative shadow-md before:bg-text ${
+        className={`al-relative al-shadow-md before:al-bg-text ${
           styles["radio-button"]
         } ${option.value === checked ? selectedStyle : unselectedStyle}`}
       ></i>
       {/* Label text */}
-      <span className="ml-2">{option.label}</span>
+      <span className="al-ml-2">{option.label}</span>
     </label>
   );
 }
@@ -63,8 +63,8 @@ function Radio({ palette = "primary", options = [], name = "", disabled }) {
 
   return (
     <div
-      className={`flex flex-col ${
-        disabled ? "opacity-70 pointer-events-none" : ""
+      className={`al-flex al-flex-col ${
+        disabled ? "al-opacity-70 al-pointer-events-none" : ""
       } ${palette}`}
     >
       {mapped}

@@ -1,33 +1,36 @@
-import { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import checkStyle from "./Checkbox.module.css";
+import styles from "./Checkbox.module.css";
 
 function Checkbox({
-  onClick,
+  palette = "primary-white",
+  label = "",
   value,
-  label,
-  palette,
   disabled,
+  checked,
+  readOnly,
   error,
   indeterminate,
+  onChange,
 }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const styles = `${checkStyle.Checkbox} shadow-md rounded-sm w-5 h-5 disabled:opacity-[var(--disabled-opacity)]`;
+  const [isChecked, setIsChecked] = useState(false);
+  // Styles
+  const checkboxStyle = `al-shadow-md al-rounded-sm al-w-5 al-h-5 focus:al-outline focus:al-outline-1 focus:al-outline-outline disabled:al-opacity-[var(--disabled-opacity)] ${styles["checkbox"]}`;
   // Unselected State
   const unselected =
-    "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-100 focus:border focus:border-gray-400";
+    "hover:al-bg-black/20 active:al-bg-black/30 focus:al-bg-black/40 al-border-solid al-border al-border-border";
   // Selected State
   const selected =
-    "checked:bg-bg checked:hover:bg-hover checked:active:bg-active checked:focus:bg-focus checked:focus:border-focus-border";
+    "checked:al-bg-bg checked:hover:al-bg-hover checked:active:al-bg-active checked:focus:al-bg-focus";
   // Indeterminate State
   const inputIndeter =
-    "indeterminate:bg-bg indeterminate:hover:bg-hover indeterminate:active:bg-active indeterminate:focus:bg-focus indeterminate:focus:border-focus-border";
+    "indeterminate:al-bg-bg indeterminate:hover:al-bg-hover indeterminate:active:al-bg-active indeterminate:focus:al-bg-focus";
   // Error state
-  const inputError = "bg-red-300";
-  const labelError = "text-red-300";
+  const inputError = "al-bg-red-300";
+  const labelError = "al-text-red-300";
   // Checkmark icon
-  const before = "before:bg-text";
+  const before = "before:al-bg-text";
+  // Refs
   const checkboxRef = useRef();
   const labelRef = useRef();
 
@@ -36,33 +39,34 @@ function Checkbox({
     checkboxRef.current.indeterminate = indeterminate;
   }, [indeterminate]);
 
-  // Assign id from label prop
+  // if checked is provided, change state
   useEffect(() => {
-    const newId = label.replaceAll(" ", "-");
-    labelRef.current.htmlFor = newId;
-    checkboxRef.current.id = newId;
-  }, [label]);
+    setIsChecked(checked);
+  }, [checked]);
+
+  const handleChange = (e) => {
+    if (readOnly) return;
+
+    onChange(e), setIsChecked((prev) => !prev);
+  };
 
   return (
-    <div
-      id={`cont-${label}`}
-      className={`flex justify-center items-center ${optPalette}`}
-    >
+    <div className={`al-flex al-justify-center al-items-center ${palette}`}>
       <input
-        onClick={onClick}
+        onChange={handleChange}
         ref={checkboxRef}
-        className={`${styles} ${before} ${
+        className={`${checkboxStyle} ${before} ${
           error ? inputError : `${unselected} ${inputIndeter} ${selected}`
         }`}
-        value={value}
         type="checkbox"
-        disabled={disabled}
+        checked={isChecked}
+        {...{ disabled, value }}
       />
       <label
         ref={labelRef}
-        className={`ml-2 ${
-          disabled ? "opacity-[var(--disabled-opacity)]" : ""
-        } ${error ? labelError : "text-text"}`}
+        className={`al-ml-2 ${
+          disabled ? "al-opacity-[var(--disabled-opacity)]" : ""
+        } ${error ? labelError : "al-text-text"}`}
       >
         {label}
       </label>
@@ -70,13 +74,16 @@ function Checkbox({
   );
 }
 Checkbox.propTypes = {
-  onClick: PropTypes.func,
-  value: PropTypes.string,
-  label: PropTypes.string,
   palette: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  name: PropTypes.string,
+  checked: PropTypes.bool,
+  readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
   indeterminate: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default Checkbox;

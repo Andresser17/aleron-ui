@@ -1,98 +1,78 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 
 function Input({
-  palette,
-  getData,
+  palette = "light",
+  description = "",
   placeholder,
   disabled,
   readOnly,
   type = "text",
-  description,
-  defaultValue,
-  required,
-  id,
+  ...props
 }) {
-  const [data, setData] = useState("");
-  const [status, setStatus] = useState({ code: 0, message: "" });
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
-  const notEmptyStyle = "text-[0.7rem] top-[0.125rem]";
-  const styles = `${optPalette} ${
-    status.code === 1
-      ? "bg-green-200"
-      : status.code === 2
-      ? "bg-red-200"
-      : "bg-gray-100"
-  } py-4 px-4 w-full shadow-md rounded-sm hover:shadow-lg active:shadow-xl focus:outline-none disabled:opacity-90 disabled:shadow-md placeholder:text-black/0`;
-
-  useEffect(() => {
-    if (defaultValue && defaultValue.length > 0) {
-      setData(defaultValue);
-    }
-  }, [defaultValue]);
-
-  const handleChange = (e) => {
-    const mergeStatus = (newStatus) =>
-      setStatus((prev) => ({ ...prev, ...newStatus }));
-
-    getData(e.target.value, mergeStatus);
-    setData(e.target.value);
-  };
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
+  // Styles
+  const notEmptyStyle = "al-text-[0.6rem] al-top-[0.125rem]";
+  const disabledStyle = "disabled:al-opacity-90 disabled:al-shadow-md";
+  const focusStyle =
+    "focus:al-outline focus:al-outline-1 focus:al-outline-outline focus:al-shadow-lg";
+  const inputStyles = `${
+    error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
+  } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
 
   if (type !== "text" && type !== "password")
     throw new Error("type property only accept text and password");
 
   return (
-    <label className="flex flex-col items-start relative text-sm" htmlFor={id}>
+    <label
+      className={`al-flex al-flex-col al-items-start al-relative al-text-sm ${palette}`}
+      htmlFor={props.name}
+    >
       <input
-        value={data}
-        onChange={handleChange}
-        className={styles}
+        className={inputStyles}
         {...{
           disabled,
           type,
           readOnly,
-          required,
           placeholder,
-          id,
+          ...field,
+          value: field.value ? field.value : "",
         }}
       />
-      {/* Description */}
+      {/* Placeholder */}
       <span
-        className={`text-gray-400 absolute ${
-          data.length > 0 ? notEmptyStyle : "top-[0.9rem]"
-        } pointer-events-none duration-500 left-4`}
+        className={`al-text-gray-400 al-absolute ${
+          field.value.length > 0 ? notEmptyStyle : "al-top-[0.9rem]"
+        } al-pointer-events-none al-duration-500 al-left-4`}
       >
         {placeholder}
       </span>
+      {/* Description */}
       <span
-        className={`${
-          status.code === 1 && status.message.length > 0
-            ? "text-bg success"
-            : status.code === 2 && status.message.length > 0
-            ? "text-bg danger"
-            : "text-gray-400"
-        } mt-1`}
+        className={`al-text-[0.7rem] al-my-1 ${
+          error?.message ? "al-text-bg danger" : "al-text-text"
+        }`}
       >
-        {status.code > 0 && status.message.length > 0
-          ? status.message
-          : description}
+        {error?.type === "required" ? "This field is required" : ""}
+        {error?.message ? error?.message : description}
       </span>
     </label>
   );
 }
 Input.propTypes = {
   palette: PropTypes.string,
-  getData: PropTypes.func,
+  name: PropTypes.string,
+  description: PropTypes.string,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool,
   defaultValue: PropTypes.string,
+  disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
   type: PropTypes.string,
-  required: PropTypes.bool,
-  id: PropTypes.string,
-  description: PropTypes.string,
+  rules: PropTypes.object,
 };
 
 export default Input;

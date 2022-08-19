@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { ReactComponent as LoadingIcon } from "icons/loading-icon.svg";
 import { ReactComponent as PlusIcon } from "icons/plus-icon.svg";
@@ -6,7 +7,7 @@ function IconCircle({ children, disabled, styles, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-10 h-10 flex justify-center items-center rounded-[50%] ${styles}`}
+      className={`al-w-10 al-h-10 al-flex al-justify-center al-items-center al-rounded-[50%] ${styles}`}
       disabled={disabled}
     >
       {children}
@@ -15,11 +16,11 @@ function IconCircle({ children, disabled, styles, onClick }) {
 }
 
 function Icon({ children, rounded, disabled, styles, onClick }) {
-  const optRounded = rounded ? "rounded-lg" : "rounded-sm";
+  const optRounded = rounded ? "al-rounded-lg" : "al-rounded-sm";
   return (
     <button
       onClick={onClick}
-      className={`px-2 h-9 flex items-center ${optRounded} ${styles}`}
+      className={`al-px-2 al-h-9 al-flex al-items-center ${optRounded} ${styles}`}
       disabled={disabled}
     >
       {children}
@@ -28,11 +29,11 @@ function Icon({ children, rounded, disabled, styles, onClick }) {
 }
 
 function LabelIcon({ children, rounded, disabled, styles, onClick }) {
-  const optRounded = rounded ? "rounded-lg" : "rounded-sm";
+  const optRounded = rounded ? "al-rounded-lg" : "al-rounded-sm";
   return (
     <button
       onClick={onClick}
-      className={`flex items-center ${optRounded} ${styles}`}
+      className={`al-flex al-items-center ${optRounded} ${styles}`}
       disabled={disabled}
     >
       {children}
@@ -41,11 +42,11 @@ function LabelIcon({ children, rounded, disabled, styles, onClick }) {
 }
 
 function Label({ rounded, disabled, styles, children, onClick }) {
-  const optRounded = rounded ? "rounded-lg" : "rounded-sm";
+  const optRounded = rounded ? "al-rounded-lg" : "al-rounded-sm";
   return (
     <button
       onClick={onClick}
-      className={`flex items-center ${optRounded} ${styles}`}
+      className={`al-flex al-items-center ${optRounded} ${styles}`}
       disabled={disabled}
     >
       {children}
@@ -55,31 +56,39 @@ function Label({ rounded, disabled, styles, children, onClick }) {
 
 function Button({
   text,
-  palette,
+  palette = "primary",
   loading,
   border,
   icon,
   children,
   ...restProps
 }) {
-  // If palette is not provided, is equal primary
-  const optPalette = palette ? palette : "primary";
   // If icon is true and text is empty
-  const optPadding = !text && icon ? "" : "px-4 py-2";
+  const optPadding = !text && icon ? "" : "al-px-4 al-py-2";
   // If border is active
-  const optBorder = border ? "border-2" : "";
-  const styles = `bg-bg ${optPalette} text-text ${optBorder} focus:border-[0.125rem] ${optPadding} border-border hover:bg-hover active:bg-active focus:bg-focus focus:border-focus-border disabled:bg-bg disabled:opacity-[var(--disabled-opacity)]`;
+  const optBorder = border
+    ? "al-border-solid al-border al-border-border"
+    : "al-border-none";
+  const focusStyle =
+    "focus:al-outline focus:al-outline-1 focus:al-bg-focus focus:al-outline-outline";
+  const disabledStyle =
+    "disabled:al-bg-bg disabled:al-opacity-[var(--disabled-opacity)]";
+  const styles = `al-cursor-pointer al-bg-bg al-text-text hover:al-bg-hover active:al-bg-active ${optBorder} ${optPadding} ${disabledStyle} ${focusStyle} ${palette}`;
 
   // Default icons
   const loadingIcon = (
-    <span className={`inline-block w-6 h-6`}>
-      <LoadingIcon className="animate-spin" />
+    <span className={`al-inline-block al-w-6 al-h-6`}>
+      <LoadingIcon />
     </span>
   );
   // If user provide a new icon like children replace customIcon
   const customIcon = (
-    <span className={`${text && "mr-2"} block w-6 h-6`}>
-      {children ? children : <PlusIcon className="align-middle w-6 h-6" />}
+    <span className={`${text && "al-mr-2"} al-block al-w-6 al-h-6`}>
+      {children ? (
+        children
+      ) : (
+        <PlusIcon className="al-align-middle al-w-6 al-h-6" />
+      )}
     </span>
   );
 
@@ -121,7 +130,6 @@ function Button({
   );
 }
 Button.propTypes = {
-  onClick: PropTypes.func,
   text: PropTypes.string,
   palette: PropTypes.string,
   icon: PropTypes.bool,
@@ -129,6 +137,7 @@ Button.propTypes = {
   border: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
   children: PropTypes.element,
 };
 
