@@ -11,7 +11,10 @@
     "build-lib": "NODE_ENV=production rollup -c"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "babel": {
     "presets": [
@@ -24,7 +27,11 @@
     ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -47,6 +54,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@svgr/rollup": "^6.3.1",
     "@svgr/webpack": "^6.3.1",
+    "auto": "^10.37.4",
     "autoprefixer": "^10.4.5",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
