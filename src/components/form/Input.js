@@ -40,13 +40,13 @@ function Input({
           readOnly,
           placeholder,
           ...field,
-          value: field.value ? field.value : "",
+          value: field.value || "",
         }}
       />
       {/* Placeholder */}
       <span
         className={`al-text-gray-400 al-absolute ${
-          field.value.length > 0 ? notEmptyStyle : "al-top-[0.9rem]"
+          field.value ? notEmptyStyle : "al-top-[0.9rem]"
         } al-pointer-events-none al-duration-500 al-left-4`}
       >
         {placeholder}
