@@ -17,6 +17,22 @@ Primary.args = {
   border: false,
 };
 
+export const PrimaryWhite = Template.bind({});
+PrimaryWhite.args = {
+  palette: "primary-white",
+  text: "Badge",
+  rounded: false,
+  border: false,
+};
+
+export const PrimaryDark = Template.bind({});
+PrimaryDark.args = {
+  palette: "primary-dark",
+  text: "Badge",
+  rounded: false,
+  border: false,
+};
+
 export const Secondary = Template.bind({});
 Secondary.args = {
   palette: "secondary",
