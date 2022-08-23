@@ -11,6 +11,7 @@ export { default as Search } from "components/form/Search";
 export { default as Select } from "components/form/Select";
 export { default as SelectTag } from "components/form/SelectTag";
 export { default as SingleFile } from "components/form/SingleFile";
+export { default as Textarea } from "components/form/Textarea";
 export { default as Toggle } from "components/form/Toggle";
 
 // modals
