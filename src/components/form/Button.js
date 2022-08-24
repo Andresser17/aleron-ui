@@ -28,7 +28,7 @@ function Icon({ children, rounded, disabled, styles, onClick }) {
   );
 }
 
-function LabelIcon({ children, rounded, disabled, styles, onClick }) {
+function LabelIcon({ loading, children, rounded, disabled, styles, onClick }) {
   const optRounded = rounded ? "al-rounded-lg" : "al-rounded-sm";
   return (
     <button
@@ -36,7 +36,7 @@ function LabelIcon({ children, rounded, disabled, styles, onClick }) {
       className={`al-flex al-items-center ${optRounded} ${styles}`}
       disabled={disabled}
     >
-      {children}
+      {loading ? loadingIcon : children}
     </button>
   );
 }
@@ -59,6 +59,7 @@ function Button({
   palette = "primary",
   loading,
   border,
+  bold,
   icon,
   children,
   ...restProps
@@ -73,7 +74,9 @@ function Button({
     "focus:al-outline focus:al-outline-1 focus:al-bg-focus focus:al-outline-outline";
   const disabledStyle =
     "disabled:al-bg-bg disabled:al-opacity-[var(--disabled-opacity)]";
-  const styles = `al-cursor-pointer al-bg-bg al-text-text hover:al-bg-hover active:al-bg-active ${optBorder} ${optPadding} ${disabledStyle} ${focusStyle} ${palette}`;
+  const styles = `al-cursor-pointer al-bg-bg al-text-text hover:al-bg-hover active:al-bg-active ${optBorder} ${optPadding} ${disabledStyle} ${focusStyle} ${
+    bold ? "al-font-semibold" : ""
+  } ${palette}`;
 
   // Default icons
   const loadingIcon = (
@@ -82,14 +85,10 @@ function Button({
     </span>
   );
   // If user provide a new icon like children replace customIcon
-  const customIcon = (
-    <span className={`${text && "al-mr-2"} al-block al-w-6 al-h-6`}>
-      {children ? (
-        children
-      ) : (
-        <PlusIcon className="al-align-middle al-w-6 al-h-6" />
-      )}
-    </span>
+  const customIcon = children ? (
+    children
+  ) : (
+    <PlusIcon className="al-align-middle al-w-6 al-h-6" />
   );
 
   // Icon Inside Perfect circle
@@ -111,15 +110,9 @@ function Button({
   // Label with Icon
   if (icon && text)
     return (
-      <LabelIcon styles={styles} {...restProps}>
-        {loading ? (
-          loadingIcon
-        ) : (
-          <>
-            {customIcon}
-            {text}
-          </>
-        )}
+      <LabelIcon styles={styles} {...{ ...restProps, loading }}>
+        {customIcon}
+        {text}
       </LabelIcon>
     );
 
@@ -135,6 +128,7 @@ Button.propTypes = {
   icon: PropTypes.bool,
   rounded: PropTypes.bool,
   border: PropTypes.bool,
+  bold: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
