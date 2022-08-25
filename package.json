@@ -2,7 +2,10 @@
   "name": "@andresser17/aleron-ui",
   "version": "1.0.0",
   "private": true,
-  "author": "Alejandro Serrano andresserserrano2020@gmail.com (https://andresser17.github.io)",
+  "author": {
+    "name": "Alejandro Serrano andresserserrano2020@gmail.com",
+    "url": "https://andresser17.github.io"
+  },
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "scripts": {
@@ -10,6 +13,7 @@
     "build": "NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook",
     "release": "auto shipit --base-branch=main"
+    "chromatic": "npx chromatic --project-token=3ba8541e3ec8"
   },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
@@ -44,6 +48,7 @@
     "babel-loader": "^8.2.5",
     "babel-preset-react-app": "^10.0.1",
     "cross-env": "^7.0.3",
+    "chromatic": "^6.7.4",
     "msw": "^0.42.0",
     "postcss": "^8.4.12",
     "rollup": "^2.78.0",
@@ -63,5 +68,7 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.18.6",
     "@rollup/plugin-babel": "^5.3.1"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "@andresser17/aleron-ui@1.0.0"
 }
