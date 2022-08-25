@@ -54,7 +54,7 @@ function Input({
       {/* Description */}
       <span
         className={`al-text-[0.7rem] al-my-1 ${
-          error?.message ? "al-text-bg danger" : "al-text-text primary"
+          error?.message ? "al-text-bg danger" : "al-text-bg"
         }`}
       >
         {error?.type === "required" ? "This field is required" : ""}

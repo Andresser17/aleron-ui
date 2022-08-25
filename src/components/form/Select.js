@@ -126,7 +126,7 @@ function Select({
                 if (!isSearching) setIsSearching(true);
                 field.onChange(e);
               },
-              value: field.value ? field.value : "",
+              value: field.value || "",
             }}
           />
           <DeleteIcon
@@ -149,6 +149,7 @@ function Select({
             {...{ selected, setSelected: handleSelection }}
           />
         )}
+        {/* Placeholder */}
         <span
           className={`al-text-gray-400 al-absolute ${
             field.value.length > 0
