@@ -15,7 +15,7 @@ function Checkbox({
 }) {
   const [isChecked, setIsChecked] = useState(false);
   // Styles
-  const checkboxStyle = `al-shadow-md al-rounded-sm al-w-5 al-h-5 focus:al-outline focus:al-outline-1 focus:al-outline-outline disabled:al-opacity-[var(--disabled-opacity)] ${styles["checkbox"]}`;
+  const checkboxStyle = `al-shadow-md al-rounded-sm al-w-5 al-h-5 focus:al-outline focus:al-outline-1 focus:al-outline-outline disabled:al-bg-bg/30 ${styles["checkbox"]}`;
   // Unselected State
   const unselected =
     "hover:al-bg-black/20 active:al-bg-black/30 focus:al-bg-black/40 al-border-solid al-border al-border-border";
@@ -65,8 +65,8 @@ function Checkbox({
       <label
         ref={labelRef}
         className={`al-ml-2 ${
-          disabled ? "al-opacity-[var(--disabled-opacity)]" : ""
-        } ${error ? labelError : "al-text-text"}`}
+          disabled ? "al-bg-bg/50" : ""
+        } ${error ? labelError : "al-text-bg"}`}
       >
         {label}
       </label>

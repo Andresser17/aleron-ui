@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import Button from "components/form/Button";
+import Checkbox from "components/form/Checkbox";
+import Radio from "components/form/Radio";
 import Input from "components/form/Input";
 import InputTag from "components/form/InputTag";
 import Select from "components/form/Select";
@@ -18,15 +21,15 @@ const Template = (args) => {
   });
   const { handleSubmit, setValue, control } = useForm({
     defaultValues: {
-      // name: "John Doe",
-      cities: ""
+      name: "John Doe",
     },
   });
-  const options = [
-    { label: "John Doe", value: "john-doe" },
-    { label: "Alex Doe", value: "alex-doe" },
-    { label: "Jane Doe", value: "jane-doe" },
+  const selectOptions = [
+    { label: "New York", value: "new-york" },
+    { label: "Madrid", value: "madrid" },
+    { label: "Tokyo", value: "tokyo" },
   ];
+  const radioOptions = [{ label: "Cat", value: "cat" }];
   const onSubmit = (data) => console.log(data);
 
   // prevent submit with enter if InputTag is focus
@@ -43,6 +46,51 @@ const Template = (args) => {
         className="al-w-80"
         onSubmit={handleSubmit(onSubmit)}
       >
+        {/* Button */}
+        <div className="al-flex al-mb-4">
+          <div className="al-mr-[5.5px]">
+            <Button text="Submit" />
+          </div>
+          <div className="al-mr-[5.5px]">
+            <Button palette="success" text="Submit" />
+          </div>
+          <div className="al-mr-[5.5px]">
+            <Button palette="danger" text="Submit" />
+          </div>
+          <div className="al-mr-[5.5px]">
+            <Button palette="warning" text="Submit" />
+          </div>
+        </div>
+        {/* Radio */}
+        <div className="al-flex al-mb-4">
+          <div className="al-mr-6">
+            <Radio options={radioOptions} />
+          </div>
+          <div className="al-mr-6">
+            <Radio palette="success" options={radioOptions} />
+          </div>
+          <div className="al-mr-6">
+            <Radio palette="danger" options={radioOptions} />
+          </div>
+          <div className="al-mr-6">
+            <Radio palette="info" options={radioOptions} />
+          </div>
+        </div>
+        {/* Checkbox */}
+        <div className="al-flex al-mb-4">
+          <div className="al-mr-6">
+            <Checkbox palette="primary" label="Dog" />
+          </div>
+          <div className="al-mr-6">
+            <Checkbox palette="success" label="Dog" />
+          </div>
+          <div className="al-mr-6">
+            <Checkbox palette="danger" label="Dog" />
+          </div>
+          <div className="al-mr-6">
+            <Checkbox palette="info" label="Dog" />
+          </div>
+        </div>
         <Input
           name="name"
           placeholder="Name"
@@ -58,8 +106,13 @@ const Template = (args) => {
         <Select
           name="cities"
           placeholder="Select a city"
-          description="Favorite city"
-          {...{ getSelected: setSelected, control, options, setValue, ...args }}
+          {...{
+            getSelected: setSelected,
+            control,
+            options: selectOptions,
+            setValue,
+            ...args,
+          }}
         />
       </form>
     </div>

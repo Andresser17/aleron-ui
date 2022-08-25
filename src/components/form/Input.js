@@ -47,7 +47,7 @@ function Input({
       <span
         className={`al-text-gray-400 al-absolute ${
           field.value ? notEmptyStyle : "al-top-[16px]"
-        } al-pointer-events-none al-duration-500 al-left-4`}
+        } al-pointer-events-none al-duration-500 al-left-[15.5px]`}
       >
         {placeholder}
       </span>
