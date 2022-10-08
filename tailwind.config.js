@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: ["class", '[class="dark"]'],
   jit: true,
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
