@@ -3,32 +3,25 @@ import React, { useMemo } from "react";
 import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
 import PropTypes from "prop-types";
 
-function Circle({
-  palette,
-  border,
-  bold,
-  disabled,
-  loading,
-  onClick,
-  children,
-}) {
+function Circle({ theme, border, bold, disabled, loading, onClick, children }) {
   const className = useMemo(() => {
     const styles = {
-      main:
-        "flex items-center cursor-pointer bg-bg text-text font-semibold hover:bg-hover active:bg-active" +
-        ` ${palette}`,
+      main: `flex items-center cursor-pointer bg-primary text-text ${theme}`,
+      hover: "hover:bg-primary/90",
+      active: "active:bg-primary/80",
+      focus:
+        "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
+      bold: bold ? "font-semibold" : "font-normal",
       rounded: "rounded-full",
       padding: "p-2",
-      disabled: "disabled:bg-bg/50",
-      focus:
-        "focus:outline focus:outline-1 focus:bg-focus focus:outline-outline",
+      disabled: "disabled:bg-primary/50",
       border: border ? "border-solid border border-border" : "border-none",
     };
 
     return Object.keys(styles)
       .map((key) => styles[key])
       .join(" ");
-  }, [palette, border]);
+  }, [theme, border]);
 
   return (
     <button {...{ onClick, disabled, className }}>
