@@ -94,7 +94,7 @@ function Select({
   return (
     <>
       <div
-        className={`al-bg-bg al-text-text al-relative al-z-10 al-rounded-sm ${palette}`}
+        className={`al-bg-bg al-text-text al-text-sm al-relative al-z-10 al-rounded-sm ${palette}`}
       >
         <div
           aria-disabled={disabled}
@@ -126,7 +126,7 @@ function Select({
                 if (!isSearching) setIsSearching(true);
                 field.onChange(e);
               },
-              value: field.value ? field.value : "",
+              value: field.value || "",
             }}
           />
           <DeleteIcon
@@ -149,12 +149,13 @@ function Select({
             {...{ selected, setSelected: handleSelection }}
           />
         )}
+        {/* Placeholder */}
         <span
           className={`al-text-gray-400 al-absolute ${
-            field.value.length > 0
+            field.value > 0
               ? "al-text-[0.7rem] al-top-[0.125rem]"
-              : "al-top-[1rem]"
-          } al-pointer-events-none al-duration-500 al-left-4`}
+              : "al-top-[19px]"
+          } al-pointer-events-none al-duration-500 al-left-[15px]`}
         >
           {placeholder}
         </span>

@@ -2,20 +2,31 @@
   "name": "@andresser17/aleron-ui",
   "version": "1.0.0",
   "private": true,
-  "author": "Alejandro Serrano andresserserrano2020@gmail.com (https://andresser17.github.io)",
+  "author": {
+    "name": "Alejandro Serrano andresserserrano2020@gmail.com",
+    "url": "https://andresser17.github.io"
+  },
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build": "NODE_ENV=production rollup -c",
+    "storybook": "npm i -D react react-dom react-hook-form && start-storybook -p 6006",
+    "build": "npm uninstall -D react react-dom react-hook-form && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook",
-    "release": "auto shipit --base-branch=main"
+    "release": "auto shipit --base-branch=main",
+    "chromatic": "npx chromatic --project-token=3ba8541e3ec8"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -43,9 +54,13 @@
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
     "babel-preset-react-app": "^10.0.1",
+    "chromatic": "^6.7.4",
     "cross-env": "^7.0.3",
     "msw": "^0.42.0",
     "postcss": "^8.4.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.38.0",
     "rollup": "^2.78.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-includepaths": "^0.2.4",
@@ -54,14 +69,17 @@
     "rollup-plugin-terser": "^7.0.2",
     "tailwindcss": "^3.0.24"
   },
-  "peerDependencies": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-hook-form": "^18.1.0"
-  },
   "dependencies": {
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.18.6",
-    "@rollup/plugin-babel": "^5.3.1"
-  }
+    "@rollup/plugin-babel": "^5.3.1",
+    "react-icons": "^4.6.0"
+  },
+  "peerDepencencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^7.34.2"
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "@andresser17/aleron-ui@1.0.0"
 }

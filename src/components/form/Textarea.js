@@ -2,13 +2,12 @@ import React from "react";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 
-function Input({
+function Textarea({
   palette = "light",
   description = "",
   placeholder,
   disabled,
   readOnly,
-  type = "text",
   ...props
 }) {
   const {
@@ -22,21 +21,17 @@ function Input({
     "focus:al-outline focus:al-outline-1 focus:al-outline-outline focus:al-shadow-lg";
   const inputStyles = `${
     error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
-  } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
-
-  if (type !== "text" && type !== "password")
-    throw new Error("type property only accept text and password");
+  } al-text-text al-h-48 al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
 
   return (
     <label
       className={`al-flex al-flex-col al-items-start al-relative al-text-sm ${palette}`}
       htmlFor={props.name}
     >
-      <input
+      <textarea
         className={inputStyles}
         {...{
           disabled,
-          type,
           readOnly,
           placeholder,
           ...field,
@@ -47,14 +42,14 @@ function Input({
       <span
         className={`al-text-gray-400 al-absolute ${
           field.value ? notEmptyStyle : "al-top-[16px]"
-        } al-pointer-events-none al-duration-500 al-left-[15.5px]`}
+        } al-pointer-events-none al-duration-500 al-left-4`}
       >
         {placeholder}
       </span>
       {/* Description */}
       <span
         className={`al-text-[0.7rem] al-my-1 ${
-          error?.message ? "al-text-bg danger" : "al-text-text dark:dark"
+          error?.message ? "al-text-bg danger" : "al-text-text primary"
         }`}
       >
         {error?.type === "required" ? "This field is required" : ""}
@@ -63,7 +58,7 @@ function Input({
     </label>
   );
 }
-Input.propTypes = {
+Textarea.propTypes = {
   palette: PropTypes.string,
   name: PropTypes.string,
   description: PropTypes.string,
@@ -75,4 +70,4 @@ Input.propTypes = {
   rules: PropTypes.object,
 };
 
-export default Input;
+export default Textarea;

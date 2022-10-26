@@ -38,7 +38,7 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
         } ${option.value === checked ? selectedStyle : unselectedStyle}`}
       ></i>
       {/* Label text */}
-      <span className="al-ml-2">{option.label}</span>
+      <span className="al-ml-2 al-text-bg">{option.label}</span>
     </label>
   );
 }

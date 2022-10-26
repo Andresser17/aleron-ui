@@ -62,7 +62,7 @@ function Search({
               inputRef.current = e;
             },
           },
-          value: field.value ? field.value : "",
+          value: field.value || "",
         }}
       />
       <DeleteIcon
