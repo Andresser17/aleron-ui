@@ -1,44 +1,55 @@
 import React from "react";
 import Button from "components/form/Button";
+import { ReactComponent as PlusIcon } from "icons/plus-icon.svg";
 
 export default {
   title: "Button",
   component: Button,
 };
 
-const Template = (args) => <Button {...args} />;
+const Template = (args) => (
+  <Button.Icon {...args}>
+    <PlusIcon className="al-w-8 al-h-4" />
+  </Button.Icon>
+);
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Label = (args) => <Button {...args} />;
+Label.args = {
   palette: "primary",
-  text: "Button",
-  icon: false,
   rounded: false,
+  bold: false,
+  text: "Submit",
   border: false,
   loading: false,
   disabled: false,
   onClick: () => console.log("clicked"),
-  children: null,
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
+export const LabelIcon = (args) => (
+  <Button.Icon {...args}>
+    <PlusIcon className="w-5 h-5" />
+  </Button.Icon>
+);
+LabelIcon.args = {
   palette: "secondary",
-  text: "Button",
-  icon: false,
   rounded: false,
+  bold: false,
+  text: "Plus",
   border: false,
   loading: false,
   disabled: false,
   onClick: () => console.log("clicked"),
   children: null,
 };
+LabelIcon.storyName = "Label + Icon";
 
-export const Success = Template.bind({});
-Success.args = {
+export const Icon = (args) => (
+  <Button.Icon {...args}>
+    <PlusIcon className="w-5 h-5" />
+  </Button.Icon>
+);
+Icon.args = {
   palette: "success",
-  text: "Button",
-  icon: false,
   rounded: false,
   border: false,
   loading: false,
@@ -47,77 +58,13 @@ Success.args = {
   children: null,
 };
 
-export const Danger = Template.bind({});
-Danger.args = {
+export const Circle = (args) => (
+  <Button.Circle {...args}>
+    <PlusIcon className="w-5 h-5" />
+  </Button.Circle>
+);
+Circle.args = {
   palette: "danger",
-  text: "Button",
-  icon: false,
-  rounded: false,
-  border: false,
-  loading: false,
-  disabled: false,
-  onClick: () => console.log("clicked"),
-  children: null,
-};
-
-export const Warning = Template.bind({});
-Warning.args = {
-  palette: "warning",
-  text: "Button",
-  icon: false,
-  rounded: false,
-  border: false,
-  loading: false,
-  disabled: false,
-  onClick: () => console.log("clicked"),
-  children: null,
-};
-
-export const Info = Template.bind({});
-Info.args = {
-  palette: "info",
-  text: "Button",
-  icon: false,
-  rounded: false,
-  border: false,
-  loading: false,
-  disabled: false,
-  onClick: () => console.log("clicked"),
-  children: null,
-};
-
-export const Light = Template.bind({});
-Light.args = {
-  palette: "light",
-  text: "Button",
-  icon: false,
-  rounded: false,
-  border: false,
-  loading: false,
-  disabled: false,
-  onClick: () => console.log("clicked"),
-  children: null,
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  palette: "dark",
-  text: "Button",
-  icon: false,
-  rounded: false,
-  border: false,
-  loading: false,
-  disabled: false,
-  onClick: () => console.log("clicked"),
-  children: null,
-};
-
-export const Flat = Template.bind({});
-Flat.args = {
-  palette: "flat",
-  text: "Button",
-  icon: false,
-  rounded: false,
   border: false,
   loading: false,
   disabled: false,

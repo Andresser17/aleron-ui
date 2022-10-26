@@ -19,5 +19,5 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  prefix: "al-",
+  // prefix: "al-",
 };
