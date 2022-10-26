@@ -7,15 +7,9 @@ export default {
   component: Button,
 };
 
-const Template = (args) => (
-  <Button.Icon {...args}>
-    <PlusIcon className="al-w-8 al-h-4" />
-  </Button.Icon>
-);
-
 export const Label = (args) => <Button {...args} />;
 Label.args = {
-  palette: "primary",
+  theme: "primary",
   rounded: false,
   bold: false,
   text: "Submit",
@@ -31,7 +25,7 @@ export const LabelIcon = (args) => (
   </Button.Icon>
 );
 LabelIcon.args = {
-  palette: "secondary",
+  theme: "secondary",
   rounded: false,
   bold: false,
   text: "Plus",
@@ -49,7 +43,7 @@ export const Icon = (args) => (
   </Button.Icon>
 );
 Icon.args = {
-  palette: "success",
+  theme: "success",
   rounded: false,
   border: false,
   loading: false,
@@ -64,7 +58,7 @@ export const Circle = (args) => (
   </Button.Circle>
 );
 Circle.args = {
-  palette: "danger",
+  theme: "danger",
   border: false,
   loading: false,
   disabled: false,
