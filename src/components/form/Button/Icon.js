@@ -1,59 +1,52 @@
-import React, { useMemo } from "react";
-// Icons
-import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
+import React from "react";
+import useStyles from "hooks/useStyles";
+// Components
+import Container from "./Container";
 import PropTypes from "prop-types";
 
 function Icon({
-  theme,
+  theme = "primary",
   text,
-  border,
-  bold,
-  rounded,
   disabled,
   loading,
+  styles = {},
   onClick,
   children,
 }) {
-  const className = useMemo(() => {
-    const styles = {
-      main: `flex items-center cursor-pointer bg-primary text-text ${theme}`,
+  const className = useStyles(
+    {
+      height: "h-9",
       hover: "hover:bg-primary/90",
       active: "active:bg-primary/80",
       focus:
         "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
-      bold: bold ? "font-semibold" : "font-normal",
-      rounded: rounded ? "rounded-md" : "rounded-sm",
+      disabled: "disabled:bg-primary/50 cursor-auto",
+      rounded: "rounded-sm",
       padding: !text ? "p-2" : "px-5 py-[0.3rem]",
-      disabled: "disabled:bg-primary/50",
-      border: border ? "border-solid border border-border" : "border-none",
-    };
-
-    return Object.keys(styles)
-      .map((key) => styles[key])
-      .join(" ");
-  }, [theme, bold, rounded, text, border]);
+      border: "border-none",
+    },
+    {
+      main: `flex items-center cursor-pointer bg-primary text-text relative ${theme}`,
+    },
+    styles
+  );
 
   return (
-    <button {...{ onClick, disabled, className }}>
-      {loading ? (
-        <LoadingIcon className="text-lg block w-5 h-5 animate-spin" />
-      ) : (
-        <>
-          {children}
-          {text && <span className="text-lg block ml-2">{text}</span>}
-        </>
-      )}
-    </button>
+    <Container
+      rounded={styles["rounded"] ? styles["rounded"] : "rounded-sm"}
+      {...{ disabled, loading, className, onClick }}
+    >
+      {children}
+      {text && <span className="text-lg block ml-2">{text}</span>}
+    </Container>
   );
 }
 Icon.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
   text: PropTypes.string,
-  rounded: PropTypes.bool,
-  border: PropTypes.bool,
-  bold: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  styles: PropTypes.object,
   onClick: PropTypes.func,
   children: PropTypes.element,
 };

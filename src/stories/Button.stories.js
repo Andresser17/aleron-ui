@@ -10,10 +10,7 @@ export default {
 export const Label = (args) => <Button {...args} />;
 Label.args = {
   theme: "primary",
-  rounded: false,
-  bold: false,
   text: "Submit",
-  border: false,
   loading: false,
   disabled: false,
   onClick: () => console.log("clicked"),
@@ -26,14 +23,10 @@ export const LabelIcon = (args) => (
 );
 LabelIcon.args = {
   theme: "secondary",
-  rounded: false,
-  bold: false,
   text: "Plus",
-  border: false,
   loading: false,
   disabled: false,
   onClick: () => console.log("clicked"),
-  children: null,
 };
 LabelIcon.storyName = "Label + Icon";
 
