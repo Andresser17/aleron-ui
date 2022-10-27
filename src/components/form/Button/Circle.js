@@ -25,7 +25,7 @@ function Circle({ theme, border, bold, disabled, loading, onClick, children }) {
 
   return (
     <button {...{ onClick, disabled, className }}>
-      {loading ? <LoadingIcon className="text-lg block w-5 h-5" /> : children}
+      {loading ? <LoadingIcon className="text-lg block w-5 h-5 animate-spin" /> : children}
     </button>
   );
 }

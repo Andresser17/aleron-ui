@@ -38,7 +38,7 @@ function Button({
   return (
     <button {...{ onClick, disabled, className }}>
       {loading ? (
-        <LoadingIcon className="text-lg block w-5 h-5" />
+        <LoadingIcon className="text-lg block w-5 h-5 animate-spin" />
       ) : (
         text && <span className="text-lg block">{text}</span>
       )}
