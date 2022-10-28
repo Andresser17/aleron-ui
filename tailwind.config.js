@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "rgb(var(--primary) / <alpha-value>)",
+        "prim-text": "rgb(var(--primary-text) / <alpha-value>)",
         bg: "rgb(var(--bg) / <alpha-value>)",
         card: "rgb(var(--card) / <alpha-value>)",
         text: "rgb(var(--text) / <alpha-value>)",

@@ -16,75 +16,71 @@ html {
 @layer base {
   :root {
     --primary: 37 99 235;
+    --primary-text: 242 242 242;
     --bg: 242 242 242;
     --card: 255 255 255;
-    --text: 243 244 246;
+    --text: 33 33 33;
     --border: 33 33 33;
     --notification: 255 69 58;
   }
 
   .primary {
     --primary: 37 99 235;
-    --text: 243 244 246;
   }
 
   .secondary {
     --primary: 75 85 99;
-    --text: 243 244 246;
     --border: 199 199 204;
   }
 
   .success {
     --primary: 22 163 74;
-    --text: 243 244 246;
     --border: 156 163 175;
   }
 
   .danger {
     --primary: 220 38 38;
-    --text: 243 244 246;
     --border: 161 161 170;
   }
 
   .warning {
     --primary: 250 204 21;
-    --text: 31 41 55;
+    --primary-text: 31 41 55;
     --border: 31 41 55;
   }
 
   .info {
     --primary: 34 211 238;
-    --text: 229 231 235;
     --border: 229 231 235;
   }
 
   .light {
     --primary: 243 244 246;
-    --text: 63 63 70;
+    --primary-text: 63 63 70;
     --border: 63 63 70;
   }
 
   .dark {
-    --bg: 243 244 246;
-    --text: 255 255 255;
+    --primary: 243 244 246;
+    --primary-text: 255 255 255;
     --border: 113 113 122;
   }
 
   .flat {
-    --bg: 0 0 0;
-    --text: 37 99 235;
+    --primary: 0 0 0;
+    --primary-text: 37 99 235;
     --border: 156 163 175;
   }
 
   .flat-white {
-    --bg: 0 0 0;
-    --text: 243 244 246;
+    --primary: 0 0 0;
+    --primary-text: 243 244 246;
     --border: 156 163 175;
   }
 
   .flat-dark {
-    --bg: 0 0 0;
-    --text: 17 24 39;
+    --primary: 0 0 0;
+    --primary-text: 17 24 39;
     --border: 156 163 175;
   }
 }

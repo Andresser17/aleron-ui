@@ -25,7 +25,7 @@ function Circle({
       border: "border-none",
     },
     {
-      main: `cursor-pointer bg-primary text-text relative ${theme}`,
+      main: `cursor-pointer bg-primary text-prim-text relative ${theme}`,
     },
     styles
   );
