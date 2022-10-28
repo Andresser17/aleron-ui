@@ -26,44 +26,62 @@ html {
 
   .primary {
     --primary: 37 99 235;
+    --primary-text: 242 242 242;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .secondary {
     --primary: 75 85 99;
-    --border: 199 199 204;
+    --primary-text: 242 242 242;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .success {
     --primary: 22 163 74;
-    --border: 156 163 175;
+    --primary-text: 242 242 242;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .danger {
     --primary: 220 38 38;
-    --border: 161 161 170;
+    --primary-text: 242 242 242;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .warning {
     --primary: 250 204 21;
     --primary-text: 31 41 55;
-    --border: 31 41 55;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .info {
     --primary: 34 211 238;
-    --border: 229 231 235;
-  }
-
-  .light {
-    --primary: 243 244 246;
-    --primary-text: 63 63 70;
-    --border: 63 63 70;
-  }
-
-  .dark {
-    --primary: 243 244 246;
-    --primary-text: 255 255 255;
-    --border: 113 113 122;
+    --primary-text: 242 242 242;
+    --bg: 242 242 242;
+    --card: 255 255 255;
+    --text: 33 33 33;
+    --border: 33 33 33;
+    --notification: 255 69 58;
   }
 
   .flat {
@@ -72,15 +90,14 @@ html {
     --border: 156 163 175;
   }
 
-  .flat-white {
-    --primary: 0 0 0;
-    --primary-text: 243 244 246;
-    --border: 156 163 175;
+  .light {
+    --bg: 243 244 246;
+    --text: 63 63 70;
   }
 
-  .flat-dark {
-    --primary: 0 0 0;
-    --primary-text: 17 24 39;
-    --border: 156 163 175;
+  .dark {
+    --bg: 63 63 70;
+    --card: 33 33 33;
+    --text: 243 244 246;
   }
 }

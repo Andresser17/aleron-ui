@@ -1,9 +1,11 @@
 import React from "react";
 import { useController } from "react-hook-form";
+import useStyles from "hooks/useStyles";
 import PropTypes from "prop-types";
 
 function Input({
-  palette = "light",
+  theme = "primary",
+  styles = {},
   description = "",
   placeholder,
   disabled,
@@ -15,25 +17,34 @@ function Input({
     field,
     fieldState: { error },
   } = useController(props);
-  // Styles
-  const notEmptyStyle = "al-text-[0.6rem] al-top-[0.125rem]";
-  const disabledStyle = "disabled:al-opacity-90 disabled:al-shadow-md";
-  const focusStyle =
-    "focus:al-outline focus:al-outline-1 focus:al-outline-outline focus:al-shadow-lg";
-  const inputStyles = `${
-    error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
-  } al-text-text al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
+  const className = useStyles(
+    {
+      width: "w-64",
+      hover: "shadow-lg",
+      focus:
+        "focus:outline focus:outline-1 focus:outline-outline focus:shadow-lg",
+      placeholder: "placeholder:text-black/0",
+      disabled: "disabled:opacity-90 disabled:shadow-md",
+      rounded: "rounded-sm",
+      border: "border-none",
+    },
+    {
+      main: "text-text p-4 shadow-md",
+      error: error?.message.length > 0 ? "bg-red-200" : "bg-card",
+    },
+    styles
+  );
 
   if (type !== "text" && type !== "password")
     throw new Error("type property only accept text and password");
 
   return (
     <label
-      className={`al-flex al-flex-col al-items-start al-relative al-text-sm ${palette}`}
+      className={`flex flex-col items-start relative text-sm ${theme}`}
       htmlFor={props.name}
     >
       <input
-        className={inputStyles}
+        className={className}
         {...{
           disabled,
           type,
@@ -45,16 +56,16 @@ function Input({
       />
       {/* Placeholder */}
       <span
-        className={`al-text-gray-400 al-absolute ${
-          field.value ? notEmptyStyle : "al-top-[16px]"
-        } al-pointer-events-none al-duration-500 al-left-[15.5px]`}
+        className={`text-gray-400 absolute ${
+          field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]"
+        } pointer-events-none duration-500 left-[15.5px]`}
       >
         {placeholder}
       </span>
       {/* Description */}
       <span
-        className={`al-text-[0.7rem] al-my-1 ${
-          error?.message ? "al-text-bg danger" : "al-text-text dark:dark"
+        className={`text-[0.7rem] my-1 ${
+          error?.message ? "text-red-600" : "text-text dark:dark"
         }`}
       >
         {error?.type === "required" ? "This field is required" : ""}
@@ -64,7 +75,8 @@ function Input({
   );
 }
 Input.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
+  styles: PropTypes.object,
   name: PropTypes.string,
   description: PropTypes.string,
   placeholder: PropTypes.string,
