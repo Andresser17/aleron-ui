@@ -41,7 +41,6 @@
 
 .checkbox:disabled {
   color: #636363;
-  cursor: not-allowed;
   pointer-events: none;
 }
 

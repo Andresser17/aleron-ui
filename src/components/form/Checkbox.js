@@ -1,35 +1,40 @@
 import React, { useState, useEffect, useRef } from "react";
+import useStyles from "hooks/useStyles";
 import PropTypes from "prop-types";
-import styles from "./Checkbox.module.css";
+import moduleStyles from "./Checkbox.module.css";
 
 function Checkbox({
-  palette = "primary-white",
+  theme = "primary",
   label = "",
+  styles = {},
   value,
   disabled,
   checked,
   readOnly,
   error,
+  setError = () => undefined,
   indeterminate,
   onChange,
 }) {
   const [isChecked, setIsChecked] = useState(false);
-  // Styles
-  const checkboxStyle = `al-shadow-md al-rounded-sm al-w-5 al-h-5 focus:al-outline focus:al-outline-1 focus:al-outline-outline disabled:al-bg-bg/30 ${styles["checkbox"]}`;
-  // Unselected State
-  const unselected =
-    "hover:al-bg-black/20 active:al-bg-black/30 focus:al-bg-black/40 al-border-solid al-border al-border-border";
-  // Selected State
-  const selected =
-    "checked:al-bg-bg checked:hover:al-bg-hover checked:active:al-bg-active checked:focus:al-bg-focus";
-  // Indeterminate State
-  const inputIndeter =
-    "indeterminate:al-bg-bg indeterminate:hover:al-bg-hover indeterminate:active:al-bg-active indeterminate:focus:al-bg-focus";
+  const checkboxClassName = useStyles(
+    {
+      unselected:
+        "hover:bg-black/20 active:bg-black/30 focus:bg-black/40 border-solid border border-border",
+    },
+    {
+      main: `shadow-md rounded-sm w-5 h-5 focus:outline focus:outline-1 focus:outline-outline disabled:bg-bg/30 ${moduleStyles["checkbox"]}`,
+      selected: error
+        ? "checked:bg-red-400"
+        : "checked:bg-primary checked:hover:bg-primary/90 checked:active:bg-primary/80 checked:focus:bg-primary/70",
+      indeterminate:
+        "indeterminate:bg-primary indeterminate:hover:bg-primary/90 indeterminate:active:bg-primary/80 indeterminate:focus:bg-primary/70",
+      checkmarkIcon: "before:bg-prim-text",
+    },
+    styles
+  );
   // Error state
   const inputError = "al-bg-red-300";
-  const labelError = "al-text-red-300";
-  // Checkmark icon
-  const before = "before:al-bg-text";
   // Refs
   const checkboxRef = useRef();
   const labelRef = useRef();
@@ -46,27 +51,26 @@ function Checkbox({
 
   const handleChange = (e) => {
     if (readOnly) return;
+    if (error) setError(false);
 
     onChange(e), setIsChecked((prev) => !prev);
   };
 
   return (
-    <div className={`al-flex al-justify-center al-items-center ${palette}`}>
+    <div className={`flex justify-center items-center w-fit ${theme}`}>
       <input
         onChange={handleChange}
         ref={checkboxRef}
-        className={`${checkboxStyle} ${before} ${
-          error ? inputError : `${unselected} ${inputIndeter} ${selected}`
-        }`}
+        className={checkboxClassName}
         type="checkbox"
         checked={isChecked}
         {...{ disabled, value }}
       />
       <label
         ref={labelRef}
-        className={`al-ml-2 ${
-          disabled ? "al-bg-bg/50" : ""
-        } ${error ? labelError : "al-text-bg"}`}
+        className={`ml-2 ${disabled ? "text-text/50" : ""} ${
+          error ? "text-red-400" : "text-text"
+        }`}
       >
         {label}
       </label>
@@ -74,7 +78,7 @@ function Checkbox({
   );
 }
 Checkbox.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
   name: PropTypes.string,
@@ -82,6 +86,7 @@ Checkbox.propTypes = {
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
+  setError: PropTypes.bool,
   indeterminate: PropTypes.bool,
   onChange: PropTypes.func,
 };
