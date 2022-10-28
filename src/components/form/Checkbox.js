@@ -14,7 +14,7 @@ function Checkbox({
   error,
   setError = () => undefined,
   indeterminate,
-  onChange,
+  onChange = () => undefined,
 }) {
   const [isChecked, setIsChecked] = useState(false);
   const checkboxClassName = useStyles(
@@ -84,7 +84,7 @@ Checkbox.propTypes = {
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
-  setError: PropTypes.bool,
+  setError: PropTypes.func,
   indeterminate: PropTypes.bool,
   onChange: PropTypes.func,
 };
