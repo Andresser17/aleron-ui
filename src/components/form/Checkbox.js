@@ -33,8 +33,6 @@ function Checkbox({
     },
     styles
   );
-  // Error state
-  const inputError = "al-bg-red-300";
   // Refs
   const checkboxRef = useRef();
   const labelRef = useRef();
