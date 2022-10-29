@@ -13,7 +13,7 @@
     "build": "npm uninstall -D react react-dom react-hook-form && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook",
     "release": "auto shipit --base-branch=main",
-    "chromatic": "npx chromatic --project-token=3ba8541e3ec8"
+    "chromatic": "npx chromatic"
   },
   "eslintConfig": {
     "extends": [
