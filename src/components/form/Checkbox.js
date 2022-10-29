@@ -17,6 +17,11 @@ function Checkbox({
   onChange = () => undefined,
 }) {
   const [isChecked, setIsChecked] = useState(false);
+  const containerClassName = useStyles(
+    { main: "flex justify-center items-center w-fit" },
+    {},
+    styles
+  );
   const checkboxClassName = useStyles(
     {
       unselected:
@@ -30,8 +35,7 @@ function Checkbox({
       indeterminate:
         "indeterminate:bg-primary indeterminate:hover:bg-primary/90 indeterminate:active:bg-primary/80 indeterminate:focus:bg-primary/70",
       checkmarkIcon: "before:bg-prim-text",
-    },
-    styles
+    }
   );
   // Refs
   const checkboxRef = useRef();
@@ -55,7 +59,7 @@ function Checkbox({
   };
 
   return (
-    <div className={`flex justify-center items-center w-fit ${theme}`}>
+    <div className={`${containerClassName} ${theme}`}>
       <input
         onChange={handleChange}
         ref={checkboxRef}
@@ -67,7 +71,7 @@ function Checkbox({
       <label
         ref={labelRef}
         className={`ml-2 ${disabled ? "text-text/50" : ""} ${
-          error ? "text-red-400" : "text-text"
+          error ? "text-red-400" : "text-text dark:dark"
         }`}
       >
         {label}

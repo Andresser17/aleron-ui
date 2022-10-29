@@ -1,4 +1,4 @@
- /* The switch - the box around the slider */
+/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -31,23 +31,24 @@
   bottom: 0;
   margin: auto 0;
   /* background-color: white; */
-  transition: .4s;
+  transition: 0.4s;
   transform: translateX(0.1rem);
 }
 
-input:checked + .slider {
-  border: none;
-  background-color: var(--bg);
-}
+/* input:checked + .slider { */
+/*   border: none; */
+/*   background-color: var(--primary); */
+/*   background-color: red; */
+/* } */
+
+/* input:checked + .slider:before { */
+/*   background-color: var(--text); */
+/* } */
+
+/* input:focus + .slider { */
+/*   box-shadow: 0 0 1px #2196F3; */
+/* } */
 
 input:checked + .slider:before {
-  background-color: var(--text);
-}
-
-input:focus + .slider {
-  /* box-shadow: 0 0 1px #2196F3; */
-}
-
-input:checked + .slider:before {
-  transform: translateX(1.6rem);
+  transform: translateX(1.5rem);
 }

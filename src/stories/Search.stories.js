@@ -23,23 +23,9 @@ const Template = (args) => {
   );
 };
 
-export const Light = Template.bind({});
-Light.args = {
-  palette: "light",
-  name: "name",
-  placeholder: "Name",
-  defaultValue: "John Doe",
-  readOnly: false,
-  disabled: false,
-  rules: {
-    required: true,
-    maxLength: { value: 15, message: "Max length is 15 char" },
-  },
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  palette: "dark",
+export const Primary = Template.bind({});
+Primary.args = {
+  palette: "primary",
   name: "name",
   placeholder: "Name",
   defaultValue: "John Doe",

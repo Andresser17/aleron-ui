@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import useStyles from "hooks/useStyles";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
@@ -6,7 +7,8 @@ import { ReactComponent as SearchIcon } from "icons/search-icon.svg";
 import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
 
 function Search({
-  palette = "light",
+  theme = "primary",
+  styles = {},
   placeholder = "Search",
   disabled,
   readOnly,
@@ -19,9 +21,17 @@ function Search({
     field,
     fieldState: { error },
   } = useController(props);
-  // Styles
-  const focusStyle = "al-outline al-outline-1 al-outline-outline al-shadow-lg";
-  const containerStyles = `al-bg-bg al-text-text al-cursor-text al-p-4 al-w-full al-shadow-md al-rounded-sm disabled:al-opacity-90 disabled:al-shadow-md placeholder:al-text-black/30`;
+  const containerClassName = useStyles(
+    {
+      width: "w-64",
+      focus: isFocus ? "outline outline-1 outline-border shadow-lg" : "",
+      disabled: "disabled:opacity-90 disabled:shadow-md",
+    },
+    {
+      main: "flex bg-card text-text cursor-text p-4 shadow-md rounded-sm  placeholder:text-gray-400",
+    },
+    styles
+  );
   // Refs
   const inputRef = useRef();
 
@@ -30,9 +40,7 @@ function Search({
 
   return (
     <label
-      className={`al-flex ${
-        isFocus ? focusStyle : ""
-      } ${containerStyles} ${palette}`}
+      className={`${containerClassName} ${theme}`}
       onClick={() => {
         if (disabled) return;
         if (!isFocus) setIsFocus(true);
@@ -44,13 +52,11 @@ function Search({
       htmlFor={props.name}
     >
       <SearchIcon
-        className={`al-w-6 al-h-6 al-mr-2 ${
-          isFocus ? "al-text-text" : "al-text-zinc-400"
-        }`}
+        className={`w-6 h-6 mr-2 ${isFocus ? "text-text" : "text-zinc-400"}`}
       />
       <input
         type="search"
-        className="al-w-full al-text-text al-border-none al-bg-black/0 focus:al-outline-none"
+        className="w-full text-text border-none bg-black/0 focus:outline-none"
         {...{
           disabled,
           readOnly,
@@ -67,15 +73,15 @@ function Search({
       />
       <DeleteIcon
         onClick={deleteValue}
-        className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-          field.value ? "al-visible" : "al-invisible"
+        className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
+          field.value ? "visible" : "invisible"
         }`}
       />
     </label>
   );
 }
 Search.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,

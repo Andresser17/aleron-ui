@@ -10,7 +10,7 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
       main: `relative shadow-md before:bg-prim-text ${radioStyles["radio-button"]}`,
       unselected:
         option.value !== checked
-          ? "bg-black/0 outline outline-1 outline-border hover:bg-black/20"
+      ? "bg-black/0 outline outline-1 outline-border hover:bg-black/20 dark:dark"
           : "",
       selected:
         option.value === checked
@@ -49,7 +49,7 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
         className={radioClassName}
       ></i>
       {/* Label text */}
-      <span className="ml-2 text-text">{option.label}</span>
+      <span className="ml-2 text-text dark:dark">{option.label}</span>
     </label>
   );
 }

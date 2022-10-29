@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import useStyles from "hooks/useStyles";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
@@ -9,8 +10,8 @@ import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
 function Option({ option, selected, setSelected }) {
   return (
     <span
-      className={`al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus ${
-        option.value === selected.value ? "al-bg-active" : ""
+      className={`p-4 cursor-pointer text-left block hover:bg-card/90 focus:bg-card/70 ${
+        option.value === selected.value ? "bg-card/70" : ""
       }`}
       onClick={() => setSelected(option)}
     >
@@ -27,7 +28,7 @@ function Dropdown({
   setSelected,
 }) {
   return (
-    <div className="al-w-full al-shadow-lg al-rounded-sm al-absolute al-top-[110%] al-left-0 al-bg-bg al-text-text al-z-10">
+    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-card text-text z-10">
       {options
         .filter((op) => {
           const filter = inputValue.toUpperCase();
@@ -54,7 +55,8 @@ function Dropdown({
 }
 
 function Select({
-  palette = "light",
+  theme = "primary",
+  styles = {},
   options = [],
   placeholder = "Search",
   getSelected = (selected) => undefined,
@@ -70,6 +72,13 @@ function Select({
   const [selected, setSelected] = useState({ label: "", value: "" });
   const [isFocus, setIsFocus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const containerClassName = useStyles(
+    { width: "w-64" },
+    {
+      main: `text-text text-sm relative z-10 ${theme}`,
+    },
+    styles
+  );
   // Refs
   const containerRef = useRef();
   const outsideSpanRef = useRef();
@@ -93,10 +102,9 @@ function Select({
 
   return (
     <>
-      <div
-        className={`al-bg-bg al-text-text al-text-sm al-relative al-z-10 al-rounded-sm ${palette}`}
-      >
+      <div className={containerClassName}>
         <div
+          tabIndex="1"
           aria-disabled={disabled}
           ref={containerRef}
           onClick={() => {
@@ -105,13 +113,14 @@ function Select({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`al-flex al-cursor-text al-p-4 al-shadow-md ${
-            isFocus ? "al-outline al-outline-1" : ""
-          } ${disabled ? "al-pointer-events-none" : ""}`}
+          className={`flex bg-card cursor-text p-4 shadow-md rounded-sm ${
+            isFocus ? "outline outline-1" : ""
+          } ${disabled ? "pointer-events-none" : ""}`}
         >
           <input
+            autoComplete="off"
             type="search"
-            className="al-w-full al-text-text al-flex-auto al-bg-black/0 al-border-none focus:al-outline-none placeholder:al-text-black/0"
+            className="w-full text-text flex-auto bg-black/0 border-none focus:outline-none placeholder:text-black/0"
             {...{
               disabled,
               placeholder,
@@ -131,14 +140,14 @@ function Select({
           />
           <DeleteIcon
             onClick={deleteValue}
-            className={`al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-              field.value ? "al-visible" : "al-invisible"
+            className={`w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer ${
+              field.value ? "visible" : "invisible"
             }`}
           />
           {showDropdown ? (
-            <TopArrow className="al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer" />
+            <TopArrow className="w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer" />
           ) : (
-            <BottomArrow className="al-w-6 al-h-6 al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer" />
+            <BottomArrow className="w-6 h-6 ml-2 text-zinc-400 hover:text-text cursor-pointer" />
           )}
         </div>
         {showDropdown && (
@@ -151,11 +160,9 @@ function Select({
         )}
         {/* Placeholder */}
         <span
-          className={`al-text-gray-400 al-absolute ${
-            field.value > 0
-              ? "al-text-[0.7rem] al-top-[0.125rem]"
-              : "al-top-[19px]"
-          } al-pointer-events-none al-duration-500 al-left-[15px]`}
+          className={`text-gray-400 absolute ${
+            field.value ? "text-[0.7rem] top-[0.125rem]" : "top-[19px]"
+          } pointer-events-none duration-500 left-[15px]`}
         >
           {placeholder}
         </span>
@@ -168,14 +175,14 @@ function Select({
             setIsFocus(false);
           }}
           ref={outsideSpanRef}
-          className="al-fixed al-block al-top-0 al-left-0 al-w-full al-h-full al-bg-black/0"
+          className="fixed block top-0 left-0 w-full h-full bg-black/0"
         ></span>
       )}
     </>
   );
 }
 Select.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
   options: PropTypes.array,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,

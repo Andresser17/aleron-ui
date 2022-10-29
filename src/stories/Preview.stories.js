@@ -29,7 +29,7 @@ const Template = (args) => {
     { label: "Madrid", value: "madrid" },
     { label: "Tokyo", value: "tokyo" },
   ];
-  const radioOptions = [{ label: "Cat", value: "cat" }];
+  const radioOptions = [{ label: "Cat", value: "cat", selected: true }];
   const onSubmit = (data) => console.log(data);
 
   // prevent submit with enter if InputTag is focus
@@ -40,56 +40,71 @@ const Template = (args) => {
   };
 
   return (
-    <div className="al-w-full al-min-h-screen al-bg-gray-900 al-flex al-justify-center al-items-center">
+    <div className="w-full min-h-screen bg-gray-900 flex justify-center items-center dark">
       <form
         onKeyPress={handleKeyPress}
-        className="al-w-80"
+        className="w-80 dark"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Button */}
-        <div className="al-flex al-mb-4">
-          <div className="al-mr-[5.5px]">
-            <Button text="Submit" />
-          </div>
-          <div className="al-mr-[5.5px]">
-            <Button palette="success" text="Submit" />
-          </div>
-          <div className="al-mr-[5.5px]">
-            <Button palette="danger" text="Submit" />
-          </div>
-          <div className="al-mr-[5.5px]">
-            <Button palette="warning" text="Submit" />
-          </div>
+        <div className="flex mb-4">
+          <Button styles={{ margin: "mr-[5.5px]" }} text="Submit" />
+          <Button
+            theme="success"
+            styles={{ margin: "mr-[5.5px]" }}
+            text="Submit"
+          />
+          <Button
+            theme="danger"
+            styles={{ margin: "mr-[5.5px]" }}
+            text="Submit"
+          />
+          <Button
+            theme="warning"
+            styles={{ margin: "mr-[5.5px]" }}
+            text="Submit"
+          />
         </div>
         {/* Radio */}
-        <div className="al-flex al-mb-4">
-          <div className="al-mr-6">
-            <Radio options={radioOptions} />
-          </div>
-          <div className="al-mr-6">
-            <Radio palette="success" options={radioOptions} />
-          </div>
-          <div className="al-mr-6">
-            <Radio palette="danger" options={radioOptions} />
-          </div>
-          <div className="al-mr-6">
-            <Radio palette="info" options={radioOptions} />
-          </div>
+        <div className="flex mb-4">
+          <Radio styles={{ margin: "mr-6" }} options={radioOptions} />
+          <Radio
+            theme="success"
+            styles={{ margin: "mr-6" }}
+            options={radioOptions}
+          />
+          <Radio
+            theme="danger"
+            styles={{ margin: "mr-6" }}
+            options={radioOptions}
+          />
+          <Radio
+            theme="info"
+            styles={{ margin: "mr-6" }}
+            options={radioOptions}
+          />
         </div>
         {/* Checkbox */}
-        <div className="al-flex al-mb-4">
-          <div className="al-mr-6">
-            <Checkbox palette="primary" label="Dog" />
-          </div>
-          <div className="al-mr-6">
-            <Checkbox palette="success" label="Dog" />
-          </div>
-          <div className="al-mr-6">
-            <Checkbox palette="danger" label="Dog" />
-          </div>
-          <div className="al-mr-6">
-            <Checkbox palette="info" label="Dog" />
-          </div>
+        <div className="flex mb-4">
+          <Checkbox styles={{ margin: "mr-6" }} checked label="Dog" />
+          <Checkbox
+            theme="success"
+            styles={{ margin: "mr-6" }}
+            checked
+            label="Cat"
+          />
+          <Checkbox
+            theme="danger"
+            styles={{ margin: "mr-6" }}
+            checked
+            label="Fish"
+          />
+          <Checkbox
+            theme="info"
+            styles={{ margin: "mr-6" }}
+            checked
+            label="Snake"
+          />
         </div>
         <Input
           name="name"
@@ -119,9 +134,8 @@ const Template = (args) => {
   );
 };
 
-export const Light = Template.bind({});
-Light.args = {
-  palette: "light",
+export const Primary = Template.bind({});
+Primary.args = {
   type: "text",
   readOnly: false,
   disabled: false,

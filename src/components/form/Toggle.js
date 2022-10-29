@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import useStyles from "hooks/useStyles";
 import PropTypes from "prop-types";
-import styles from "./Toggle.module.css";
+import toggleStyles from "./Toggle.module.css";
 
 function Toggle({
-  palette = "primary",
+  theme = "primary",
+  styles = {},
   name,
   value,
   label,
@@ -14,8 +16,14 @@ function Toggle({
   onChange,
 }) {
   const [isChecked, setIsChecked] = useState(false);
-  const ballStyle =
-    "before:al-bg-bg before:al-rounded-[50%] before:al-w-4 before:al-h-4";
+  const containerClassName = useStyles(
+    { main: "flex w-fit" },
+    { disabled: disabled ? "opacity-70" : "" },
+    styles
+  );
+  const ballStyle = `${
+    isChecked ? "before:bg-prim-text" : "before:bg-primary"
+  } before:rounded-[50%] before:w-4 before:h-4`;
 
   // if checked is provided, change state
   useEffect(() => {
@@ -29,20 +37,22 @@ function Toggle({
   };
 
   return (
-    <div className={`al-flex ${disabled ? "al-opacity-70" : ""} ${palette}`}>
-      <label className={`al-w-11 al-h-[1.4rem] ${styles["switch"]}`}>
+    <div className={`${containerClassName} ${theme}`}>
+      <label className={`w-11 h-[1.4rem] ${toggleStyles["switch"]}`}>
         <input
           type="checkbox"
           onChange={handleChange}
           {...{ disabled, value, name, checked: isChecked }}
         />
         <span
-          className={`al-shadow-md al-rounded-2xl al-outline al-outline-1 al-outline-focus ${ballStyle} ${styles["slider"]}`}
+          className={`shadow-md rounded-2xl outline outline-1 outline-primary/70 ${ballStyle} ${
+            isChecked ? "bg-primary" : "bg-card"
+          } ${toggleStyles["slider"]}`}
         ></span>
       </label>
-      <div className="al-ml-2 al-text-left">
-        <span className="al-block">{label}</span>
-        <span className="al-block al-text-[0.7rem] al-font-thin al-text-zinc-600">
+      <div className="ml-2 text-left">
+        <span className="block text-text dark:dark">{label}</span>
+        <span className="block text-[0.7rem] font-thin text-text/70 dark:dark">
           {subtitle}
         </span>
       </div>
@@ -50,7 +60,8 @@ function Toggle({
   );
 }
 Toggle.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
+  styles: PropTypes.object,
   name: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string,

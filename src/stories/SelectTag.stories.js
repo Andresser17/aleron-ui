@@ -21,7 +21,7 @@ const Template = (args) => {
   const onSubmit = (data) => console.log(selected);
 
   return (
-    <form className="al-w-80" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <SelectTag
         {...{ getSelected: setSelected, control, setValue, ...args }}
       />
@@ -29,28 +29,9 @@ const Template = (args) => {
   );
 };
 
-export const Light = Template.bind({});
-Light.args = {
-  palette: "light",
-  name: "name",
-  placeholder: "Name",
-  options: [
-    { label: "John Doe", value: "john-doe" },
-    { label: "Alex Doe", value: "alex-doe" },
-    { label: "Jane Doe", value: "jane-doe" },
-  ],
-  defaultValue: { label: "John Doe", value: "john-doe" },
-  readOnly: false,
-  disabled: false,
-  rules: {
-    required: true,
-    maxLength: { value: 15, message: "Max length is 15 char" },
-  },
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  palette: "dark",
+export const Primary = Template.bind({});
+Primary.args = {
+  theme: "primary",
   name: "name",
   placeholder: "Name",
   options: [

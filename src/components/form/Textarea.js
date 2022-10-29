@@ -1,9 +1,11 @@
 import React from "react";
+import useStyles from "hooks/useStyles";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 
 function Textarea({
-  palette = "light",
+  theme = "primary",
+  styles = {},
   description = "",
   placeholder,
   disabled,
@@ -14,22 +16,35 @@ function Textarea({
     field,
     fieldState: { error },
   } = useController(props);
-  // Styles
-  const notEmptyStyle = "al-text-[0.6rem] al-top-[0.125rem]";
-  const disabledStyle = "disabled:al-opacity-90 disabled:al-shadow-md";
-  const focusStyle =
-    "focus:al-outline focus:al-outline-1 focus:al-outline-outline focus:al-shadow-lg";
-  const inputStyles = `${
-    error?.message.length > 0 ? "al-bg-red-200" : "al-bg-bg"
-  } al-text-text al-h-48 al-p-4 al-w-full al-shadow-md al-rounded-sm al-border-none hover:al-shadow-lg placeholder:al-text-black/0 ${focusStyle} ${disabledStyle}`;
+  const containerClassName = useStyles(
+    { width: "w-64", height: "h-36" },
+    {
+      main: `flex flex-col items-start relative text-sm ${theme}`,
+    },
+    styles
+  );
+  const placeholderClassName = useStyles(
+    {},
+    {
+      notEmpty: field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]",
+      main: "text-gray-400 absolute pointer-events-none duration-500 left-4",
+    }
+  );
+  const inputClassName = useStyles(
+    {},
+    {
+      focus:
+      "focus:outline focus:outline-1 focus:outline-border focus:shadow-lg",
+      disabled: "disabled:opacity-90 disabled:shadow-md",
+      error: error?.message.length > 0 ? "bg-red-400" : "bg-card",
+      main: "text-text p-4 w-full h-full shadow-md rounded-sm border-none hover:shadow-lg placeholder:text-black/0",
+    }
+  );
 
   return (
-    <label
-      className={`al-flex al-flex-col al-items-start al-relative al-text-sm ${palette}`}
-      htmlFor={props.name}
-    >
+    <label className={containerClassName} htmlFor={props.name}>
       <textarea
-        className={inputStyles}
+        className={inputClassName}
         {...{
           disabled,
           readOnly,
@@ -39,17 +54,11 @@ function Textarea({
         }}
       />
       {/* Placeholder */}
-      <span
-        className={`al-text-gray-400 al-absolute ${
-          field.value ? notEmptyStyle : "al-top-[16px]"
-        } al-pointer-events-none al-duration-500 al-left-4`}
-      >
-        {placeholder}
-      </span>
+      <span className={placeholderClassName}>{placeholder}</span>
       {/* Description */}
       <span
-        className={`al-text-[0.7rem] al-my-1 ${
-          error?.message ? "al-text-bg danger" : "al-text-text primary"
+        className={`text-xs my-1 ${
+          error?.message ? "text-bg danger" : "text-text primary dark:dark"
         }`}
       >
         {error?.type === "required" ? "This field is required" : ""}
@@ -59,7 +68,8 @@ function Textarea({
   );
 }
 Textarea.propTypes = {
-  palette: PropTypes.string,
+  theme: PropTypes.string,
+  styles: PropTypes.object,
   name: PropTypes.string,
   description: PropTypes.string,
   placeholder: PropTypes.string,

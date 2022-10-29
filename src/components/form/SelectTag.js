@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import useStyles from "hooks/useStyles";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 // Icons
@@ -10,11 +11,11 @@ import { ReactComponent as CheckmarkIcon } from "icons/success-icon.svg";
 function Option({ option, isSelected, setSelected }) {
   return (
     <span
-      className="al-flex al-justify-between al-p-4 al-cursor-pointer al-text-left al-block hover:al-bg-hover focus:al-bg-focus"
+      className="flex justify-between p-4 cursor-pointer text-left block hover:bg-card/90 focus:bg-card/70"
       onClick={() => !isSelected && setSelected(option)}
     >
       {option.label}
-      {isSelected && <CheckmarkIcon className="al-w-4 al-h-4" />}
+      {isSelected && <CheckmarkIcon className="w-4 h-4" />}
     </span>
   );
 }
@@ -27,7 +28,7 @@ function Dropdown({
   setSelected,
 }) {
   return (
-    <div className="al-w-full al-shadow-lg al-rounded-sm al-absolute al-top-[110%] al-left-0 al-bg-bg al-text-text al-z-10">
+    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-card text-text z-10">
       {options
         .filter((op) => {
           const filter = inputValue.toUpperCase();
@@ -57,29 +58,23 @@ function Dropdown({
   );
 }
 
-function Tag({ palette, text, close, readOnly }) {
+function Tag({ text, close, readOnly }) {
   return (
-    <span
-      className={`al-flex al-bg-bg al-text-text al-px-2 al-rounded-sm al-text-sm al-mb-1 al-mr-1 ${palette}`}
-    >
+    <span className="flex bg-primary text-prim-text px-2 rounded-sm text-sm mb-1 mr-1">
       {text}
       {/* close tag */}
       {!readOnly && (
-        <DeleteIcon
-          onClick={close}
-          className="al-ml-1 al-cursor-pointer al-w-4"
-        />
+        <DeleteIcon onClick={close} className="ml-1 cursor-pointer w-4" />
       )}
     </span>
   );
 }
 
-function Tags({ tagsPalette, tags, deleteTag, readOnly }) {
+function Tags({ tags, deleteTag, readOnly }) {
   const mapped =
     tags.length > 0 &&
     tags.map((tag, i) => (
       <Tag
-        palette={tagsPalette}
         key={tag.value}
         text={tag.label}
         close={(event) => deleteTag(event, i)}
@@ -91,8 +86,8 @@ function Tags({ tagsPalette, tags, deleteTag, readOnly }) {
 }
 
 function SelectTag({
-  palette = "light",
-  tagsPalette = "primary",
+  theme = "primary",
+  styles = {},
   options = [],
   maxTags = 5,
   placeholder = "Search",
@@ -108,6 +103,11 @@ function SelectTag({
   const [isSearching, setIsSearching] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const containerClassName = useStyles(
+    { width: "w-64" },
+    { main: `bg-card text-text relative z-10 rounded-sm ${theme}` },
+    styles
+  );
   // Refs
   const containerRef = useRef();
   const outsideSpanRef = useRef();
@@ -139,9 +139,7 @@ function SelectTag({
 
   return (
     <>
-      <div
-        className={`al-bg-bg al-text-text al-relative al-z-10 al-rounded-sm ${palette}`}
-      >
+      <div className={containerClassName}>
         <div
           aria-disabled={disabled}
           ref={containerRef}
@@ -151,20 +149,17 @@ function SelectTag({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`al-flex al-cursor-text al-p-4 al-shadow-md ${
-            isFocus ? "al-outline al-outline-1" : ""
-          } ${disabled ? "al-pointer-events-none" : ""}`}
+          className={`flex cursor-text p-4 shadow-md ${
+            isFocus ? "outline outline-1" : ""
+          } ${disabled ? "pointer-events-none" : ""}`}
         >
-          <div className="al-flex al-flex-wrap">
-            <Tags
-              tagsPalette={tagsPalette}
-              tags={tags}
-              deleteTag={handleTagClose}
-            />
+          <div className="flex flex-wrap w-full">
+            <Tags tags={tags} deleteTag={handleTagClose} />
             <input
+              autoComplete="off"
               ref={inputRef}
               type="search"
-              className="al-w-full al-text-text al-flex-auto al-bg-black/0 al-border-none focus:al-outline-none"
+              className="w-full text-text flex-auto bg-black/0 border-none focus:outline-none"
               {...{
                 disabled,
                 placeholder,
@@ -185,18 +180,14 @@ function SelectTag({
           </div>
           <DeleteIcon
             onClick={deleteValue}
-            className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer ${
-              field.value || tags.length > 0 ? "al-visible" : "al-invisible"
+            className={`w-[1rem] h-[1rem] min-w-[1rem] min-h-[1rem] ml-2 text-zinc-400 hover:text-text cursor-pointer ${
+              field.value || tags.length > 0 ? "visible" : "invisible"
             }`}
           />
           {showDropdown ? (
-            <TopArrow
-              className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer`}
-            />
+            <TopArrow className="w-[1rem] h-[1rem] min-w-[1rem] min-h-[1rem] ml-2 text-zinc-400 hover:text-text cursor-pointer" />
           ) : (
-            <BottomArrow
-              className={`al-w-[1rem] al-h-[1rem] al-min-w-[1rem] al-min-h-[1rem] al-ml-2 al-text-zinc-400 hover:al-text-text al-cursor-pointer`}
-            />
+            <BottomArrow className="w-[1rem] h-[1rem] min-w-[1rem] min-h-[1rem] ml-2 text-zinc-400 hover:text-text cursor-pointer" />
           )}
         </div>
         {showDropdown && (
@@ -217,15 +208,15 @@ function SelectTag({
             setIsFocus(false);
           }}
           ref={outsideSpanRef}
-          className="al-fixed al-block al-top-0 al-left-0 al-w-full al-h-full al-bg-black/0"
+          className="fixed block top-0 left-0 w-full h-full bg-black/0"
         ></span>
       )}
     </>
   );
 }
 SelectTag.propTypes = {
-  palette: PropTypes.string,
-  tagsPalette: PropTypes.string,
+  theme: PropTypes.string,
+  styles: PropTypes.object,
   options: PropTypes.array,
   maxTags: PropTypes.number,
   placeholder: PropTypes.string,
