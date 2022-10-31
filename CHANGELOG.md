@@ -1,3 +1,18 @@
+# v1.0.2 (Mon Oct 31 2022)
+
+#### ⚠️ Pushed to `main`
+
+- build (andresserserrano2020@gmail.com)
+- build: remove Resources folder ([@Andresser17](https://github.com/Andresser17))
+- build: remove private ([@Andresser17](https://github.com/Andresser17))
+
+#### Authors: 2
+
+- Alejandro Serrano ([@Andresser17](https://github.com/Andresser17))
+- Andresser17 (andresserserrano2020@gmail.com)
+
+---
+
 # v1.0.4 (Mon Oct 31 2022)
 
 
