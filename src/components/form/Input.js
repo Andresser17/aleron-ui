@@ -17,10 +17,15 @@ function Input({
     field,
     fieldState: { error },
   } = useController(props);
-  const className = useStyles(
+  const containerClassName = useStyles(
+    { dimen: "w-64" },
+    { main: `flex flex-col items-start relative text-sm ${theme}` },
+    styles
+  );
+  const inputClassName = useStyles(
     {
-      width: "w-64",
-      hover: "shadow-lg",
+      dimen: "w-full",
+      hover: "hover:shadow-lg",
       focus:
         "focus:outline focus:outline-1 focus:outline-outline focus:shadow-lg",
       placeholder: "placeholder:text-black/0",
@@ -31,20 +36,16 @@ function Input({
     {
       main: "text-text p-4 shadow-md",
       error: error?.message.length > 0 ? "bg-red-200" : "bg-card",
-    },
-    styles
+    }
   );
 
   if (type !== "text" && type !== "password")
     throw new Error("type property only accept text and password");
 
   return (
-    <label
-      className={`flex flex-col items-start relative text-sm ${theme}`}
-      htmlFor={props.name}
-    >
+    <label className={containerClassName} htmlFor={props.name}>
       <input
-        className={className}
+        className={inputClassName}
         {...{
           disabled,
           type,
