@@ -1,11 +1,11 @@
 {
   "name": "@andresser17/aleron-ui",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": {
     "name": "Alejandro Serrano andresserserrano2020@gmail.com",
     "url": "https://andresser17.github.io"
   },
-  "main": "dist/index.es.js",
+  "main": "dist/index.js",
   "module": "dist/index.es.js",
   "scripts": {
     "storybook": "npm i -D react react-dom react-hook-form && start-storybook -p 6006",
@@ -15,12 +15,21 @@
     "chromatic": "npx chromatic"
   },
   "license": "MIT",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -52,6 +61,9 @@
     "cross-env": "^7.0.3",
     "msw": "^0.42.0",
     "postcss": "^8.4.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.38.0",
     "rollup": "^2.78.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-includepaths": "^0.2.4",

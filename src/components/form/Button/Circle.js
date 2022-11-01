@@ -6,26 +6,26 @@ import PropTypes from "prop-types";
 
 function Circle({
   theme = "primary",
+  styles = {},
   disabled,
   loading,
-  styles = {},
   onClick,
   children,
 }) {
   const className = useStyles(
     {
-      height: "h-9",
+      dimen: "w-10 h-10",
       hover: "hover:bg-primary/90",
       active: "active:bg-primary/80",
       focus:
         "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
       disabled: "disabled:bg-primary/50",
       rounded: "rounded-full",
-      padding: "p-2",
+      // padding: "p-2",
       border: "border-none",
     },
     {
-      main: `cursor-pointer bg-primary text-prim-text relative ${theme}`,
+      main: `flex justify-center items-center cursor-pointer bg-primary text-prim-text relative ${theme}`,
     },
     styles
   );
@@ -41,9 +41,9 @@ function Circle({
 }
 Circle.propTypes = {
   theme: PropTypes.string,
+  styles: PropTypes.object,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
-  styles: PropTypes.object,
   onClick: PropTypes.func,
   children: PropTypes.element,
 };

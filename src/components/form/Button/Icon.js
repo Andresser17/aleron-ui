@@ -6,16 +6,15 @@ import PropTypes from "prop-types";
 
 function Icon({
   theme = "primary",
+  styles = {},
   text,
   disabled,
   loading,
-  styles = {},
   onClick,
   children,
 }) {
   const className = useStyles(
     {
-      height: "h-9",
       hover: "hover:bg-primary/90",
       active: "active:bg-primary/80",
       focus:
@@ -28,7 +27,8 @@ function Icon({
     {
       main: `flex items-center cursor-pointer bg-primary text-prim-text relative ${theme}`,
     },
-    styles
+    styles,
+    { text }
   );
 
   return (
@@ -43,10 +43,10 @@ function Icon({
 }
 Icon.propTypes = {
   theme: PropTypes.string,
+  styles: PropTypes.object,
   text: PropTypes.string,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
-  styles: PropTypes.object,
   onClick: PropTypes.func,
   children: PropTypes.element,
 };
