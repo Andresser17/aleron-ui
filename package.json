@@ -8,28 +8,19 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "storybook": "npm i -D react react-dom react-hook-form && start-storybook -p 6006",
-    "build": "npm uninstall -D react react-dom react-hook-form && NODE_ENV=production rollup -c",
+    "storybook": "start-storybook -p 6006",
+    "build": "NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook",
     "release": "auto shipit --base-branch=main",
     "chromatic": "npx chromatic"
   },
   "license": "MIT",
-  "files": [
-    "/dist"
-  ],
+  "files": ["/dist"],
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
