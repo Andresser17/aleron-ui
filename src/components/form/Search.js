@@ -21,16 +21,23 @@ function Search({
     field,
     fieldState: { error },
   } = useController(props);
-  const containerClassName = useStyles(
+  const className = useStyles(
     {
-      width: "w-64",
-      focus: isFocus ? "outline outline-1 outline-border shadow-lg" : "",
-      disabled: "disabled:opacity-90 disabled:shadow-md",
+      container: {
+        dimen: "w-64",
+        focus: isFocus ? "outline outline-1 outline-border shadow-lg" : "",
+        disabled: "disabled:opacity-90 disabled:shadow-md",
+        main: "flex bg-card text-text cursor-text p-4 shadow-md rounded-sm  placeholder:text-gray-400",
+      },
+      input: {
+        dimen: "w-full",
+        focus: "focus:outline-none",
+        border: "border-none",
+        main: "text-text bg-black/0",
+      },
     },
-    {
-      main: "flex bg-card text-text cursor-text p-4 shadow-md rounded-sm  placeholder:text-gray-400",
-    },
-    styles
+    styles,
+    { isFocus }
   );
   // Refs
   const inputRef = useRef();
@@ -40,7 +47,7 @@ function Search({
 
   return (
     <label
-      className={`${containerClassName} ${theme}`}
+      className={`${className.container} ${theme}`}
       onClick={() => {
         if (disabled) return;
         if (!isFocus) setIsFocus(true);
@@ -56,7 +63,7 @@ function Search({
       />
       <input
         type="search"
-        className="w-full text-text border-none bg-black/0 focus:outline-none"
+        className={className.input}
         {...{
           disabled,
           readOnly,
@@ -82,6 +89,7 @@ function Search({
 }
 Search.propTypes = {
   theme: PropTypes.string,
+  styles: PropTypes.object,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,

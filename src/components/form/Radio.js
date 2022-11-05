@@ -1,23 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 import useStyles from "hooks/useStyles";
 import PropTypes from "prop-types";
-import radioStyles from "./Radio.module.css";
+import moduleStyles from "./Radio.module.css";
 
-function RadioInput({ option, checked, setChecked, name, disabled }) {
-  const radioClassName = useStyles(
-    {},
+function RadioInput({ styles, option, checked, setChecked, name, disabled }) {
+  const className = useStyles(
     {
-      main: `relative shadow-md before:bg-prim-text ${radioStyles["radio-button"]}`,
-      unselected:
-        option.value !== checked
-      ? "bg-black/0 outline outline-1 outline-border hover:bg-black/20 dark:dark"
-          : "",
-      selected:
-        option.value === checked
-          ? `bg-primary hover:bg-primary/90 focus:outline focus:outline-2 focus:al-outline-primary/80 focus:bg-primary/70 ${radioStyles["radio-button-checked"]}`
-          : "",
+      radio: {
+        unselected:
+          option.value !== checked
+            ? "bg-black/0 outline outline-1 outline-border hover:bg-black/20 dark:dark"
+            : "",
+        selected:
+          option.value === checked
+            ? `bg-primary hover:bg-primary/90 focus:outline focus:outline-2 focus:al-outline-primary/80 focus:bg-primary/70 ${moduleStyles["radio-button-checked"]}`
+            : "",
+
+        main: `relative shadow-md before:bg-prim-text ${moduleStyles["radio-button"]}`,
+      },
+      label: {
+        disabled: option.disabled ? "opacity-70 pointer-events-none" : "",
+        main: "relative text-text flex items-center my-2",
+      },
+      labelText: {
+        main: "ml-2 text-text dark:dark",
+      },
     },
-    {}
+    styles,
+    { option, moduleStyles }
   );
   // Refs
   const inputRef = useRef();
@@ -29,12 +39,7 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
   }, [checked, option]);
 
   return (
-    <label
-      className={`relative text-text flex items-center my-2 ${
-        option.disabled ? "opacity-70 pointer-events-none" : ""
-      }`}
-      htmlFor={name}
-    >
+    <label className={className.label} htmlFor={name}>
       {/* Radio button */}
       <input
         ref={inputRef}
@@ -46,10 +51,10 @@ function RadioInput({ option, checked, setChecked, name, disabled }) {
       <i
         tabIndex="1"
         onClick={() => setChecked(option.value)}
-        className={radioClassName}
+        className={className.radio}
       ></i>
       {/* Label text */}
-      <span className="ml-2 text-text dark:dark">{option.label}</span>
+      <span className={className.labelText}>{option.label}</span>
     </label>
   );
 }
@@ -62,14 +67,15 @@ function Radio({
   disabled,
 }) {
   const [checked, setChecked] = useState("");
-  const containerClassName = useStyles(
+  const className = useStyles(
     {
-      main: "flex flex-col",
+      container: {
+        main: "flex flex-col",
+        disabled: disabled ? "opacity-70 pointer-events-none" : "",
+      },
     },
-    {
-      disabled: disabled ? "opacity-70 pointer-events-none" : "",
-    },
-    styles
+    styles,
+    { disabled }
   );
   const mapped = options.map((op) => {
     // select option by default
@@ -77,6 +83,7 @@ function Radio({
 
     return (
       <RadioInput
+        styles={styles}
         key={op.value}
         option={op}
         name={name}
@@ -88,7 +95,7 @@ function Radio({
   });
 
   return (
-    <div tabIndex="1" className={`${containerClassName} ${theme}`}>
+    <div tabIndex="1" className={`${className.container} ${theme}`}>
       {mapped}
     </div>
   );

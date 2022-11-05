@@ -14,18 +14,17 @@ function Circle({
 }) {
   const className = useStyles(
     {
-      dimen: "w-10 h-10",
-      hover: "hover:bg-primary/90",
-      active: "active:bg-primary/80",
-      focus:
-        "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
-      disabled: "disabled:bg-primary/50",
-      rounded: "rounded-full",
-      // padding: "p-2",
-      border: "border-none",
-    },
-    {
-      main: `flex justify-center items-center cursor-pointer bg-primary text-prim-text relative ${theme}`,
+      button: {
+        dimen: "w-10 h-10",
+        hover: "hover:bg-primary/90",
+        active: "active:bg-primary/80",
+        focus:
+          "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
+        disabled: "disabled:bg-primary/50",
+        rounded: "rounded-full",
+        border: "border-none",
+        main: "flex justify-center items-center cursor-pointer bg-primary text-prim-text relative",
+      },
     },
     styles
   );
@@ -33,7 +32,7 @@ function Circle({
   return (
     <Container
       rounded={styles["rounded"] ? styles["rounded"] : "rounded-full"}
-      {...{ disabled, loading, className, onClick }}
+      {...{ theme, disabled, loading, className: className.button, onClick }}
     >
       {children}
     </Container>

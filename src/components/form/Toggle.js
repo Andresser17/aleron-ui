@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useStyles from "hooks/useStyles";
 import PropTypes from "prop-types";
-import toggleStyles from "./Toggle.module.css";
+import moduleStyles from "./Toggle.module.css";
 
 function Toggle({
   theme = "primary",
@@ -16,10 +16,36 @@ function Toggle({
   onChange,
 }) {
   const [isChecked, setIsChecked] = useState(false);
-  const containerClassName = useStyles(
-    { main: "flex w-fit" },
-    { disabled: disabled ? "opacity-70" : "" },
-    styles
+  const className = useStyles(
+    {
+      container: {
+        dimen: "w-fit",
+        disabled: disabled ? "opacity-70" : "",
+        main: "flex",
+      },
+      toggleContainer: {
+        dimen: "w-11 h-[1.4rem]",
+        main: `${moduleStyles["switch"]}`,
+      },
+      toggle: {
+        checked: isChecked ? "bg-primary" : "bg-transparent",
+        outline: "outline outline-1 outline-primary/70",
+        rounded: "rounded-2xl",
+        main: `shadow-md ${moduleStyles["slider"]}`,
+      },
+      label: {
+        margin: "ml-2",
+        main: "text-left",
+      },
+      labelText: {
+        main: "text-text dark:dark",
+      },
+      subtitle: {
+        main: "text-[0.7rem] font-thin text-text/70 dark:dark",
+      },
+    },
+    styles,
+    { disabled, isChecked, moduleStyles }
   );
   const ballStyle = `${
     isChecked ? "before:bg-prim-text" : "before:bg-primary"
@@ -37,25 +63,22 @@ function Toggle({
   };
 
   return (
-    <div className={`${containerClassName} ${theme}`}>
-      <label className={`w-11 h-[1.4rem] ${toggleStyles["switch"]}`}>
+    <div className={`${className.container} ${theme}`}>
+      <div className={className.toggleContainer}>
         <input
-          type="checkbox"
           onChange={handleChange}
+          type="checkbox"
           {...{ disabled, value, name, checked: isChecked }}
         />
         <span
-          className={`shadow-md rounded-2xl outline outline-1 outline-primary/70 ${ballStyle} ${
-            isChecked ? "bg-primary" : "bg-card"
-          } ${toggleStyles["slider"]}`}
+          onClick={handleChange}
+          className={`${className.toggle} ${ballStyle}`}
         ></span>
-      </label>
-      <div className="ml-2 text-left">
-        <span className="block text-text dark:dark">{label}</span>
-        <span className="block text-[0.7rem] font-thin text-text/70 dark:dark">
-          {subtitle}
-        </span>
       </div>
+      <label htmlFor={name} className={className.label}>
+        <p className={className.labelText}>{label}</p>
+        <p className={className.subtitle}>{subtitle}</p>
+      </label>
     </div>
   );
 }

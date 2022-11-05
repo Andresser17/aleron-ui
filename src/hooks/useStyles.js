@@ -1,30 +1,39 @@
 import React, { useMemo } from "react";
 
-function useStyles(
-  styles = {},
-  protectedStyles = {},
-  custom = {},
-  params = {}
-) {
+function extractValues(obj, tag, prop) {
+  if (Object.keys(obj).length > 0) {
+    if (!obj[tag]) return undefined;
+    return obj[tag][prop];
+  }
+}
+
+function useStyles(styles = {}, custom = {}, params = {}) {
   const className = useMemo(() => {
-    if (Object.keys(custom).length > 0) {
-      for (const [key, value] of Object.entries(custom)) {
-        if (typeof value === "function") {
-          custom[key] = value(params);
+    const className = {};
+
+    for (const [tag, properties] of Object.entries(styles)) {
+      const cssArr = [];
+
+      for (const [prop, css] of Object.entries(properties)) {
+        const customCSS = extractValues(custom, tag, prop);
+        // call function and pass params as argument
+        if (typeof customCSS === "function") {
+          cssArr.push(customCSS(params));
+          continue;
         }
+        // replace styles properties with custom properties
+        if (customCSS) {
+          cssArr.push(customCSS);
+          continue;
+        }
+        cssArr.push(css);
       }
 
-      const className = { ...styles, ...custom, ...protectedStyles };
-      return Object.keys(className)
-        .map((key) => className[key])
-        .join(" ");
+      className[tag] = cssArr.join(" ");
     }
 
-    const className = { ...styles, ...protectedStyles };
-    return Object.keys(className)
-      .map((key) => className[key])
-      .join(" ");
-  }, [styles, custom, protectedStyles]);
+    return className;
+  }, [styles, custom, params]);
 
   return className;
 }

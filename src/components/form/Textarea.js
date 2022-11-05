@@ -16,35 +16,45 @@ function Textarea({
     field,
     fieldState: { error },
   } = useController(props);
-  const containerClassName = useStyles(
-    { width: "w-64", height: "h-36" },
+  const className = useStyles(
     {
-      main: `flex flex-col items-start relative text-sm ${theme}`,
+      label: {
+        dimen: "w-64 h-36",
+        main: "flex flex-col items-start relative text-sm",
+      },
+      input: {
+        dimen: "w-full h-full",
+        hover: "hover:shadow-lg",
+        focus:
+          "focus:outline focus:outline-1 focus:outline-border focus:shadow-lg",
+        disabled: "disabled:opacity-90 disabled:shadow-md",
+        placeholder: "placeholder:text-black/0",
+        error: error?.message.length > 0 ? "bg-red-400" : "bg-card",
+        border: "border-none",
+        rounded: "rounded-sm",
+        padding: "p-4",
+        main: "text-text shadow-md",
+      },
+      placeholder: {
+        notEmpty: field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]",
+        main: "text-gray-400 absolute pointer-events-none duration-500 left-4",
+      },
+      description: {
+        error: error?.message
+          ? "text-bg danger"
+          : "text-text primary dark:dark",
+        margin: "my-1",
+        main: "text-xs",
+      },
     },
-    styles
-  );
-  const placeholderClassName = useStyles(
-    {},
-    {
-      notEmpty: field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]",
-      main: "text-gray-400 absolute pointer-events-none duration-500 left-4",
-    }
-  );
-  const inputClassName = useStyles(
-    {},
-    {
-      focus:
-      "focus:outline focus:outline-1 focus:outline-border focus:shadow-lg",
-      disabled: "disabled:opacity-90 disabled:shadow-md",
-      error: error?.message.length > 0 ? "bg-red-400" : "bg-card",
-      main: "text-text p-4 w-full h-full shadow-md rounded-sm border-none hover:shadow-lg placeholder:text-black/0",
-    }
+    styles,
+    { value: field.value, error }
   );
 
   return (
-    <label className={containerClassName} htmlFor={props.name}>
+    <label className={`${className.label} ${theme}`} htmlFor={props.name}>
       <textarea
-        className={inputClassName}
+        className={className.input}
         {...{
           disabled,
           readOnly,
@@ -54,13 +64,9 @@ function Textarea({
         }}
       />
       {/* Placeholder */}
-      <span className={placeholderClassName}>{placeholder}</span>
+      <span className={className.placeholder}>{placeholder}</span>
       {/* Description */}
-      <span
-        className={`text-xs my-1 ${
-          error?.message ? "text-bg danger" : "text-text primary dark:dark"
-        }`}
-      >
+      <span className={className.description}>
         {error?.type === "required" ? "This field is required" : ""}
         {error?.message ? error?.message : description}
       </span>

@@ -23,7 +23,7 @@ const Template = (args, opts) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input {...{ control, ...args }} />
-      <Button styles={{ margin: "mt-8" }} text="Submit" />
+      {/* <Button styles={{ margin: "mt-8" }} text="Submit" /> */}
     </form>
   );
 };

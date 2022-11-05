@@ -16,18 +16,18 @@ function Button({
 }) {
   const className = useStyles(
     {
-      hover: "hover:bg-primary/90",
-      active: "active:bg-primary/80",
-      focus:
-        "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
-      disabled: "disabled:bg-primary/50 disabled:cursor-auto",
-      rounded: "rounded-sm",
-      padding: "px-5 py-[0.3rem]",
-      font: "text-lg font-semibold",
-      border: "border-none",
-    },
-    {
-      main: `cursor-pointer bg-primary text-prim-text relative ${theme}`,
+      button: {
+        hover: "hover:bg-primary/90",
+        active: "active:bg-primary/80",
+        focus:
+          "focus:outline focus:outline-1 focus:bg-primary/70 focus:outline-border",
+        disabled: "disabled:bg-primary/50 disabled:cursor-auto",
+        rounded: "rounded-sm",
+        padding: "px-5 py-[0.3rem]",
+        font: "text-lg font-semibold",
+        border: "border-none",
+        main: "cursor-pointer bg-primary text-prim-text relative",
+      },
     },
     styles
   );
@@ -35,7 +35,7 @@ function Button({
   return (
     <Container
       rounded={styles["rounded"] ? styles["rounded"] : "rounded-sm"}
-      {...{ disabled, loading, className, onClick }}
+      {...{ theme, disabled, loading, className: className.button, onClick }}
     >
       {text}
     </Container>

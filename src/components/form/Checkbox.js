@@ -5,8 +5,8 @@ import moduleStyles from "./Checkbox.module.css";
 
 function Checkbox({
   theme = "primary",
-  label = "",
   styles = {},
+  label = "",
   value,
   disabled,
   checked,
@@ -17,24 +17,34 @@ function Checkbox({
   onChange = () => undefined,
 }) {
   const [isChecked, setIsChecked] = useState(false);
-  const containerClassName = useStyles(
-    { main: "flex justify-center items-center w-fit" },
-    {},
-    styles
-  );
-  const checkboxClassName = useStyles(
+  const className = useStyles(
     {
-      unselected:
-        "hover:bg-black/20 active:bg-black/30 focus:bg-black/40 border-solid border border-border",
+      container: {
+        main: "flex justify-center items-center w-fit",
+      },
+      checkbox: {
+        dimen: "w-5 h-5",
+        unselected:
+          "hover:bg-black/20 active:bg-black/30 focus:bg-black/40 border-solid border border-border",
+        selected: error
+          ? "checked:bg-red-400"
+          : "checked:bg-primary checked:hover:bg-primary/90 checked:active:bg-primary/80 checked:focus:bg-primary/70",
+        indeterminate:
+          "indeterminate:bg-primary indeterminate:hover:bg-primary/90 indeterminate:active:bg-primary/80 indeterminate:focus:bg-primary/70",
+        checkmarkIcon: "before:bg-prim-text",
+        main: `shadow-md rounded-sm focus:outline focus:outline-1 focus:outline-outline disabled:bg-bg/30 ${moduleStyles["checkbox"]}`,
+      },
+      description: {
+        disabled: disabled ? "text-text/50" : "",
+        error: error ? "text-red-400" : "text-text dark:dark",
+        main: "ml-2",
+      },
     },
+    styles,
     {
-      main: `shadow-md rounded-sm w-5 h-5 focus:outline focus:outline-1 focus:outline-outline disabled:bg-bg/30 ${moduleStyles["checkbox"]}`,
-      selected: error
-        ? "checked:bg-red-400"
-        : "checked:bg-primary checked:hover:bg-primary/90 checked:active:bg-primary/80 checked:focus:bg-primary/70",
-      indeterminate:
-        "indeterminate:bg-primary indeterminate:hover:bg-primary/90 indeterminate:active:bg-primary/80 indeterminate:focus:bg-primary/70",
-      checkmarkIcon: "before:bg-prim-text",
+      disabled,
+      error,
+      moduleStyles,
     }
   );
   // Refs
@@ -59,21 +69,16 @@ function Checkbox({
   };
 
   return (
-    <div className={`${containerClassName} ${theme}`}>
+    <div className={`${className.container} ${theme}`}>
       <input
         onChange={handleChange}
         ref={checkboxRef}
-        className={checkboxClassName}
+        className={className.checkbox}
         type="checkbox"
         checked={isChecked}
         {...{ disabled, value }}
       />
-      <label
-        ref={labelRef}
-        className={`ml-2 ${disabled ? "text-text/50" : ""} ${
-          error ? "text-red-400" : "text-text dark:dark"
-        }`}
-      >
+      <label ref={labelRef} className={className.description}>
         {label}
       </label>
     </div>
@@ -81,6 +86,7 @@ function Checkbox({
 }
 Checkbox.propTypes = {
   theme: PropTypes.string,
+  styles: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
   name: PropTypes.string,

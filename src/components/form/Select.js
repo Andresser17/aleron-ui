@@ -7,28 +7,49 @@ import { ReactComponent as TopArrow } from "icons/top-arrow.svg";
 import { ReactComponent as BottomArrow } from "icons/bottom-arrow.svg";
 import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
 
-function Option({ option, selected, setSelected }) {
+function Option({ styles, option, selected, setSelected }) {
+  const className = useStyles(
+    {
+      option: {
+        hover: "hover:bg-card/90",
+        focus: "focus:bg-card/70",
+        selected: option.value === selected.value ? "bg-card/70" : "",
+        padding: "p-4",
+        main: "cursor-pointer text-left block",
+      },
+    },
+    styles,
+    { option, selected }
+  );
+
   return (
-    <span
-      className={`p-4 cursor-pointer text-left block hover:bg-card/90 focus:bg-card/70 ${
-        option.value === selected.value ? "bg-card/70" : ""
-      }`}
-      onClick={() => setSelected(option)}
-    >
+    <span className={className.option} onClick={() => setSelected(option)}>
       {option.label}
     </span>
   );
 }
 
 function Dropdown({
+  styles,
   search = false,
   inputValue = "",
   options,
   selected,
   setSelected,
 }) {
+  const className = useStyles(
+    {
+      dropdown: {
+        dimen: "w-full",
+        position: "absolute top-[110%] left-0 z-10",
+        main: "shadow-lg rounded-sm bg-card text-text",
+      },
+    },
+    styles
+  );
+
   return (
-    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-card text-text z-10">
+    <div className={className.dropdown}>
       {options
         .filter((op) => {
           const filter = inputValue.toUpperCase();
@@ -72,12 +93,34 @@ function Select({
   const [selected, setSelected] = useState({ label: "", value: "" });
   const [isFocus, setIsFocus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const containerClassName = useStyles(
-    { width: "w-64" },
+  const className = useStyles(
     {
-      main: `text-text text-sm relative z-10 ${theme}`,
+      container: {
+        dimen: "w-64",
+        main: "text-text text-sm relative z-10",
+      },
+      input: {
+        dimen: "w-full",
+        focus: "focus:outline-none",
+        placeholder: "placeholder:text-black/0",
+        main: "text-text flex-auto bg-black/0 border-none",
+      },
+      inputContainer: {
+        focus: isFocus ? "outline outline-1" : "",
+        disabled: disabled ? "pointer-events-none" : "",
+        padding: "p-4",
+        rounded: "rounded-sm",
+        main: "flex bg-card cursor-text shadow-md",
+      },
+      placeholder: {
+        text: `left-[15px] ${
+          field.value ? "text-[0.7rem] top-[0.125rem]" : "top-[19px]"
+        }`,
+        main: "text-gray-400 absolute pointer-events-none duration-500",
+      },
     },
-    styles
+    styles,
+    { isFocus, disabled, value: field.value }
   );
   // Refs
   const containerRef = useRef();
@@ -102,7 +145,7 @@ function Select({
 
   return (
     <>
-      <div className={containerClassName}>
+      <div className={className.container}>
         <div
           tabIndex="1"
           aria-disabled={disabled}
@@ -113,14 +156,12 @@ function Select({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`flex bg-card cursor-text p-4 shadow-md rounded-sm ${
-            isFocus ? "outline outline-1" : ""
-          } ${disabled ? "pointer-events-none" : ""}`}
+          className={className.inputContainer}
         >
           <input
             autoComplete="off"
             type="search"
-            className="w-full text-text flex-auto bg-black/0 border-none focus:outline-none placeholder:text-black/0"
+            className={className.input}
             {...{
               disabled,
               placeholder,
@@ -155,17 +196,11 @@ function Select({
             search={isSearching}
             inputValue={field.value}
             options={options}
-            {...{ selected, setSelected: handleSelection }}
+            {...{ styles, selected, setSelected: handleSelection }}
           />
         )}
         {/* Placeholder */}
-        <span
-          className={`text-gray-400 absolute ${
-            field.value ? "text-[0.7rem] top-[0.125rem]" : "top-[19px]"
-          } pointer-events-none duration-500 left-[15px]`}
-        >
-          {placeholder}
-        </span>
+        <span className={className.placeholder}>{placeholder}</span>
       </div>
       {/* Handle outside click */}
       {isFocus && (
@@ -183,6 +218,7 @@ function Select({
 }
 Select.propTypes = {
   theme: PropTypes.string,
+  styles: PropTypes.object,
   options: PropTypes.array,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,

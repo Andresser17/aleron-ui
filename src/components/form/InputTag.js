@@ -43,20 +43,35 @@ function InputTag({
     field,
     fieldState: { error },
   } = useController(props);
-  const containerClassName = useStyles(
+  const className = useStyles(
     {
-      width: "w-64",
-      hover: "hover:shadow-lg p-4 flex flex-wrap cursor-text",
-      focus: isFocus
-        ? "outline outline-1 outline-border shadow-lg"
-        : "shadow-md",
-      disabled: disabled ? "opacity-90 pointer-events-none" : "",
+      container: {
+        dimen: "w-64",
+        hover: "hover:shadow-lg p-4 flex flex-wrap cursor-text",
+        focus: isFocus
+          ? "outline outline-1 outline-border shadow-lg"
+          : "shadow-md",
+        disabled: disabled ? "opacity-90 pointer-events-none" : "",
+        main: "text-text p-4 rounded-sm",
+        error: error?.message.length > 0 ? "bg-red-400" : "bg-card",
+      },
+      label: {
+        dimen: "w-fit",
+        main: "flex flex-col items-start text-sm text-text",
+      },
+      input: {
+        dimen: "w-auto",
+        focus: "focus:outline-none",
+        placeholder: "placeholder:text-gray-400",
+        main: "text-text bg-black/0 border-none w-auto flex-auto inline-block",
+      },
     },
+    styles,
     {
-      main: "text-text p-4 rounded-sm",
-      error: error?.message.length > 0 ? "bg-red-400" : "bg-card",
-    },
-    styles
+      isFocus,
+      disabled,
+      error,
+    }
   );
   // Refs
   const inputRef = useRef(null);
@@ -84,12 +99,9 @@ function InputTag({
   };
 
   return (
-    <label
-      className={`flex flex-col items-start text-sm text-text w-fit ${theme}`}
-      htmlFor={props.name}
-    >
+    <label className={`${className.label} ${theme}`} htmlFor={props.name}>
       <div
-        className={containerClassName}
+        className={className.container}
         aria-disabled={disabled}
         ref={containerRef}
         onClick={() => {
@@ -104,7 +116,7 @@ function InputTag({
         <Tags readOnly={readOnly} tags={tags} deleteTag={handleTagClose} />
         <input
           onKeyPress={addTag}
-          className="text-text bg-black/0 border-none w-auto flex-auto inline-block focus:outline-none placeholder:text-gray-400"
+          className={className.input}
           type="text"
           {...{
             disabled,

@@ -17,35 +17,35 @@ function Input({
     field,
     fieldState: { error },
   } = useController(props);
-  const containerClassName = useStyles(
-    { dimen: "w-64" },
-    { main: `flex flex-col items-start relative text-sm ${theme}` },
-    styles
-  );
-  const inputClassName = useStyles(
+  const className = useStyles(
     {
-      dimen: "w-full",
-      hover: "hover:shadow-lg",
-      focus:
-        "focus:outline focus:outline-1 focus:outline-outline focus:shadow-lg",
-      placeholder: "placeholder:text-black/0",
-      disabled: "disabled:opacity-90 disabled:shadow-md",
-      rounded: "rounded-sm",
-      border: "border-none",
+      label: {
+        dimen: "w-64",
+        main: "flex flex-col items-start relative text-sm",
+      },
+      input: {
+        dimen: "w-full",
+        hover: "hover:shadow-lg",
+        focus:
+          "focus:outline focus:outline-1 focus:outline-outline focus:shadow-lg",
+        placeholder: "placeholder:text-black/0",
+        disabled: "disabled:opacity-90 disabled:shadow-md",
+        rounded: "rounded-sm",
+        border: "border-none",
+        main: "text-text p-4 shadow-md",
+        error: error?.message.length > 0 ? "bg-red-200" : "bg-card",
+      },
     },
-    {
-      main: "text-text p-4 shadow-md",
-      error: error?.message.length > 0 ? "bg-red-200" : "bg-card",
-    }
+    styles
   );
 
   if (type !== "text" && type !== "password")
     throw new Error("type property only accept text and password");
 
   return (
-    <label className={containerClassName} htmlFor={props.name}>
+    <label className={`${className.label} ${theme}`} htmlFor={props.name}>
       <input
-        className={inputClassName}
+        className={className.input}
         {...{
           disabled,
           type,

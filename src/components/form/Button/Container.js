@@ -3,6 +3,7 @@ import React from "react";
 import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
 
 function Container({
+  theme,
   onClick,
   disabled,
   loading,
@@ -12,7 +13,8 @@ function Container({
 }) {
   return (
     <button
-      {...{ onClick, disabled: disabled ? disabled : loading, className }}
+      className={`${className} ${theme}`}
+      {...{ onClick, disabled: disabled ? disabled : loading }}
     >
       {loading && (
         <div

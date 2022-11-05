@@ -8,10 +8,22 @@ import { ReactComponent as BottomArrow } from "icons/bottom-arrow.svg";
 import { ReactComponent as DeleteIcon } from "icons/error-icon.svg";
 import { ReactComponent as CheckmarkIcon } from "icons/success-icon.svg";
 
-function Option({ option, isSelected, setSelected }) {
+function Option({ styles, option, isSelected, setSelected }) {
+  const className = useStyles(
+    {
+      option: {
+        hover: "hover:bg-card/90",
+        focus: "focus:bg-card/70",
+        padding: "p-4",
+        main: "flex justify-between cursor-pointer text-left",
+      },
+    },
+    styles
+  );
+
   return (
     <span
-      className="flex justify-between p-4 cursor-pointer text-left block hover:bg-card/90 focus:bg-card/70"
+      className={className.option}
       onClick={() => !isSelected && setSelected(option)}
     >
       {option.label}
@@ -21,14 +33,27 @@ function Option({ option, isSelected, setSelected }) {
 }
 
 function Dropdown({
+  styles,
   search = false,
   inputValue = "",
   options,
   selectedTags,
   setSelected,
 }) {
+  const className = useStyles(
+    {
+      dropdown: {
+        dimen: "w-full",
+        position: "absolute top-[110%] left-0 z-10",
+        rounded: "rounded-sm",
+        main: "bg-card text-text shadow-lg",
+      },
+    },
+    styles
+  );
+
   return (
-    <div className="w-full shadow-lg rounded-sm absolute top-[110%] left-0 bg-card text-text z-10">
+    <div className={className.dropdown}>
       {options
         .filter((op) => {
           const filter = inputValue.toUpperCase();
@@ -47,6 +72,7 @@ function Dropdown({
 
           return (
             <Option
+              styles={styles}
               key={op.value}
               option={op}
               isSelected={isSelected}
@@ -58,9 +84,21 @@ function Dropdown({
   );
 }
 
-function Tag({ text, close, readOnly }) {
+function Tag({ styles, text, close, readOnly }) {
+  const className = useStyles(
+    {
+      tag: {
+        padding: "px-2",
+        margin: "mb-1 mr-1",
+        rounded: "rounded-sm",
+        main: "flex bg-primary text-prim-text text-sm",
+      },
+    },
+    styles
+  );
+
   return (
-    <span className="flex bg-primary text-prim-text px-2 rounded-sm text-sm mb-1 mr-1">
+    <span className={className.tag}>
       {text}
       {/* close tag */}
       {!readOnly && (
@@ -70,11 +108,12 @@ function Tag({ text, close, readOnly }) {
   );
 }
 
-function Tags({ tags, deleteTag, readOnly }) {
+function Tags({ styles, tags, deleteTag, readOnly }) {
   const mapped =
     tags.length > 0 &&
     tags.map((tag, i) => (
       <Tag
+        styles={styles}
         key={tag.value}
         text={tag.label}
         close={(event) => deleteTag(event, i)}
@@ -103,10 +142,27 @@ function SelectTag({
   const [isSearching, setIsSearching] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const containerClassName = useStyles(
-    { width: "w-64" },
-    { main: `bg-card text-text relative z-10 rounded-sm ${theme}` },
-    styles
+  const className = useStyles(
+    {
+      container: {
+        dimen: "w-64",
+        main: "bg-card text-text relative z-10 rounded-sm",
+      },
+      inputContainer: {
+        focus: isFocus ? "outline outline-1" : "",
+        disabled: disabled ? "pointer-events-none" : "",
+        padding: "p-4",
+        main: "flex cursor-text shadow-md",
+      },
+      input: {
+        dimen: "w-full",
+        focus: "focus:outline-none",
+        border: "border-none",
+        main: "text-text flex-auto bg-black/0",
+      },
+    },
+    styles,
+    { isFocus, disabled }
   );
   // Refs
   const containerRef = useRef();
@@ -139,7 +195,7 @@ function SelectTag({
 
   return (
     <>
-      <div className={containerClassName}>
+      <div className={`${className.container} ${theme}`}>
         <div
           aria-disabled={disabled}
           ref={containerRef}
@@ -149,9 +205,7 @@ function SelectTag({
             inputRef.current.focus();
             setShowDropdown((prev) => !prev);
           }}
-          className={`flex cursor-text p-4 shadow-md ${
-            isFocus ? "outline outline-1" : ""
-          } ${disabled ? "pointer-events-none" : ""}`}
+          className={className.inputContainer}
         >
           <div className="flex flex-wrap w-full">
             <Tags tags={tags} deleteTag={handleTagClose} />
@@ -159,7 +213,7 @@ function SelectTag({
               autoComplete="off"
               ref={inputRef}
               type="search"
-              className="w-full text-text flex-auto bg-black/0 border-none focus:outline-none"
+              className={className.input}
               {...{
                 disabled,
                 placeholder,
@@ -192,6 +246,7 @@ function SelectTag({
         </div>
         {showDropdown && (
           <Dropdown
+            styles={styles}
             search={isSearching}
             inputValue={field.value}
             options={options}
