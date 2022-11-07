@@ -1,6 +1,6 @@
 {
   "name": "@andresser17/aleron-ui",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": {
     "name": "Alejandro Serrano andresserserrano2020@gmail.com",
     "url": "https://andresser17.github.io"
@@ -15,12 +15,21 @@
     "chromatic": "npx chromatic"
   },
   "license": "MIT",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
