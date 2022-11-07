@@ -1,29 +1,32 @@
 import React, { useMemo } from "react";
 
-function extractValues(obj, tag, prop) {
-  if (Object.keys(obj).length > 0) {
-    if (!obj[tag]) return undefined;
-    return obj[tag][prop];
+function applyCustom(styles = {}, custom = {}) {
+  const newStyles = {};
+
+  for (const [tag, properties] of Object.entries(custom)) {
+    if (!styles[tag]) continue;
+
+    newStyles[tag] = { ...styles[tag], ...properties };
   }
+
+  return newStyles;
 }
 
-function useStyles(styles = {}, custom = {}, params = {}) {
+function useStyles(componentStyles = {}, custom = {}, params = {}) {
   const className = useMemo(() => {
     const className = {};
+    const styles =
+      Object.keys(custom).length > 0
+        ? applyCustom(componentStyles, custom)
+        : componentStyles;
 
     for (const [tag, properties] of Object.entries(styles)) {
       const cssArr = [];
 
       for (const [prop, css] of Object.entries(properties)) {
-        const customCSS = extractValues(custom, tag, prop);
         // call function and pass params as argument
-        if (typeof customCSS === "function") {
-          cssArr.push(customCSS(params));
-          continue;
-        }
-        // replace styles properties with custom properties
-        if (customCSS) {
-          cssArr.push(customCSS);
+        if (typeof css === "function") {
+          cssArr.push(css(params));
           continue;
         }
         cssArr.push(css);
@@ -33,7 +36,7 @@ function useStyles(styles = {}, custom = {}, params = {}) {
     }
 
     return className;
-  }, [styles, custom, params]);
+  }, [componentStyles, custom, params]);
 
   return className;
 }

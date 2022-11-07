@@ -42,7 +42,6 @@ const config = [
         config: {
           path: "./postcss.config.js",
         },
-        modules: true,
         extensions: [".css"],
         minimize: true,
         inject: {
