@@ -1,37 +1,48 @@
-import babel from "@rollup/plugin-babel";
-import resolve from "@rollup/plugin-node-resolve";
+import { babel } from "@rollup/plugin-babel";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
 import includePaths from "rollup-plugin-includepaths";
-import commonjs from "@rollup/plugin-commonjs";
+import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
 import svgr from "@svgr/rollup";
-import url from '@rollup/plugin-url';
+import url from "@rollup/plugin-url";
 
-const includePathOptions = {
-  include: {},
-  paths: ["src"],
-  external: [],
-  extensions: [".js", ".json", ".html"],
-};
-
+const EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".json"];
 const config = [
   {
-    input: "./src/index.js",
+    external: ["react", "react-dom"],
+    input: "src/index.js",
     output: [
-      { file: "dist/index.js", format: "cjs" },
+      {
+        file: "dist/index.js",
+        format: "cjs",
+        exports: "named",
+        sourcemap: true,
+      },
       {
         file: "dist/index.es.js",
-        format: "es",
+        format: "esm",
         exports: "named",
+        sourcemap: true,
       },
     ],
     plugins: [
-      includePaths(includePathOptions),
+      excludeDependenciesFromBundle(),
+      external({ includeDependencies: false }),
+      includePaths({
+        include: {},
+        paths: ["src"],
+        external: [],
+        extensions: [".js", ".json", ".html"],
+      }),
       postcss({
         config: {
           path: "./postcss.config.js",
         },
+        modules: true,
         extensions: [".css"],
         minimize: true,
         inject: {
@@ -41,13 +52,26 @@ const config = [
       url(),
       svgr(),
       babel({
+        babelrc: false,
         babelHelpers: "bundled",
         exclude: "**/node_modules/**",
-        presets: ["@babel/preset-env", "@babel/preset-react"],
+        extensions: EXTENSIONS,
+        presets: [
+          ["@babel/preset-env", { modules: false }],
+          "@babel/preset-react",
+        ],
       }),
-      external(),
-      resolve(),
-      commonjs(),
+      commonjs({
+        include: /node_modules/,
+      }),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+        preventAssignment: true,
+      }),
+      nodeResolve({
+        extensions: EXTENSIONS,
+        preferBuiltins: false,
+      }),
       terser(),
     ],
   },

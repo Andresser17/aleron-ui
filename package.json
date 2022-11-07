@@ -9,7 +9,7 @@
   "module": "dist/index.es.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "rollup -c --bundleConfigAsCjs",
     "build-storybook": "build-storybook",
     "release": "auto shipit --base-branch=main",
     "chromatic": "npx chromatic"
@@ -29,8 +29,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
-    "@rollup/plugin-commonjs": "^22.0.2",
-    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-babel": "^6.0.2",
+    "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-url": "^7.0.0",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",
@@ -50,13 +52,9 @@
     "babel-preset-react-app": "^10.0.1",
     "chromatic": "^6.7.4",
     "cross-env": "^7.0.3",
-    "msw": "^0.42.0",
     "postcss": "^8.4.18",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.39.1",
-    "rollup": "^2.78.0",
-    "rollup-plugin-babel": "^4.4.0",
+    "rollup": "^3.2.5",
+    "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.23",
     "rollup-plugin-includepaths": "^0.2.4",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
@@ -66,7 +64,9 @@
   "dependencies": {
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.18.6",
-    "@rollup/plugin-babel": "^5.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.39.1",
     "react-icons": "^4.6.0"
   },
   "peerDepencencies": {
