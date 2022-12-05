@@ -41,7 +41,7 @@ function Dropdown({
     {
       dropdown: {
         dimen: "w-full",
-        position: "absolute top-[110%] left-0 z-10",
+        position: "absolute top-[110%] left-0 z-50",
         main: "shadow-lg rounded-sm bg-card text-text",
       },
     },
@@ -52,7 +52,7 @@ function Dropdown({
     <div className={className.dropdown}>
       {options
         .filter((op) => {
-          const filter = inputValue.toUpperCase();
+          const filter = inputValue ? inputValue.toUpperCase() : "";
           if (search) {
             if (op.label.toUpperCase().indexOf(filter) > -1) {
               return op;
@@ -97,7 +97,7 @@ function Select({
     {
       container: {
         dimen: "w-64",
-        main: "text-text text-sm relative z-10",
+        main: "text-text text-sm relative",
       },
       input: {
         dimen: "w-full",
@@ -123,8 +123,6 @@ function Select({
     { isFocus, disabled, value: field.value }
   );
   // Refs
-  const containerRef = useRef();
-  const outsideSpanRef = useRef();
   const inputRef = useRef();
 
   // delete input and selected value
@@ -145,11 +143,20 @@ function Select({
 
   return (
     <>
+      {/* Handle outside click */}
+      {isFocus && (
+        <span
+          onClick={() => {
+            setShowDropdown(false);
+            setIsFocus(false);
+          }}
+          className="fixed block top-0 left-0 w-full h-full bg-black/0"
+        ></span>
+      )}
       <div className={className.container}>
         <div
           tabIndex="1"
           aria-disabled={disabled}
-          ref={containerRef}
           onClick={() => {
             if (disabled) return;
             if (!isFocus) setIsFocus(true);
@@ -202,17 +209,6 @@ function Select({
         {/* Placeholder */}
         <span className={className.placeholder}>{placeholder}</span>
       </div>
-      {/* Handle outside click */}
-      {isFocus && (
-        <span
-          onClick={() => {
-            setShowDropdown(false);
-            setIsFocus(false);
-          }}
-          ref={outsideSpanRef}
-          className="fixed block top-0 left-0 w-full h-full bg-black/0"
-        ></span>
-      )}
     </>
   );
 }

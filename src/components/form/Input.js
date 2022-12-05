@@ -35,6 +35,17 @@ function Input({
         main: "text-text p-4 shadow-md",
         error: error?.message.length > 0 ? "bg-red-200" : "bg-card",
       },
+      placeholder: {
+        text: `left-[15px] ${
+          field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]"
+        }`,
+        main: "absolute text-gray-400 pointer-events-none duration-500",
+      },
+      description: {
+        margin: "my-1",
+        text: "text-[0.7rem]",
+        error: error?.message ? "text-red-600" : "text-text dark:dark",
+      },
     },
     styles
   );
@@ -56,19 +67,9 @@ function Input({
         }}
       />
       {/* Placeholder */}
-      <span
-        className={`text-gray-400 absolute ${
-          field.value ? "text-[0.6rem] top-[0.125rem]" : "top-[16px]"
-        } pointer-events-none duration-500 left-[15.5px]`}
-      >
-        {placeholder}
-      </span>
+      <span className={className.placeholder}>{placeholder}</span>
       {/* Description */}
-      <span
-        className={`text-[0.7rem] my-1 ${
-          error?.message ? "text-red-600" : "text-text dark:dark"
-        }`}
-      >
+      <span className={className.description}>
         {error?.type === "required" ? "This field is required" : ""}
         {error?.message ? error?.message : description}
       </span>

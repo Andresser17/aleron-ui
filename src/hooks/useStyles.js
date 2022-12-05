@@ -1,15 +1,13 @@
 import React, { useMemo } from "react";
 
 function applyCustom(styles = {}, custom = {}) {
-  const newStyles = {};
-
   for (const [tag, properties] of Object.entries(custom)) {
     if (!styles[tag]) continue;
 
-    newStyles[tag] = { ...styles[tag], ...properties };
+    styles[tag] = { ...styles[tag], ...properties };
   }
 
-  return newStyles;
+  return styles;
 }
 
 function useStyles(componentStyles = {}, custom = {}, params = {}) {
