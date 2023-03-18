@@ -52,7 +52,7 @@ function Dropdown({
     <div className={className.dropdown}>
       {options
         .filter((op) => {
-          const filter = inputValue ? inputValue.toUpperCase() : "";
+          const filter = inputValue ? String(inputValue).toUpperCase() : "";
           if (search) {
             if (op.label.toUpperCase().indexOf(filter) > -1) {
               return op;

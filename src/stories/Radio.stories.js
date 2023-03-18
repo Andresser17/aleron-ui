@@ -1,6 +1,6 @@
 import React from "react";
 
-import Radio from "components/form/Radio";
+import Radio from "components/atoms/Radio";
 
 export default {
   title: "Radio",

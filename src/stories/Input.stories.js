@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import Input from "components/form/Input";
-import Button from "components/form/Button";
+import Input from "components/atoms/Input";
+import Button from "components/atoms/Button";
 
 export default {
   title: "Input",

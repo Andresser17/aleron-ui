@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import Select from "components/form/Select";
+import Select from "components/organisms/Select";
 
 export default {
   title: "Select",

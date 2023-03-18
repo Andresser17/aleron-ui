@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Tabs from "components/Tabs";
+import Tabs from "components/atoms/Tabs";
 
 export default {
   title: "Tabs",

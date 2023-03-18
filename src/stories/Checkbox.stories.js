@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Checkbox from "components/form/Checkbox";
+import Checkbox from "components/atoms/Checkbox";
 
 export default {
   title: "Checkbox",

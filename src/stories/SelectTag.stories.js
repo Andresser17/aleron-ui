@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import SelectTag from "components/form/SelectTag";
+import SelectTag from "components/organisms/SelectTag";
 
 export default {
   title: "SelectTag",

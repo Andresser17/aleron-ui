@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import Search from "components/form/Search";
+import Search from "components/atoms/Search";
 
 export default {
   title: "Search",

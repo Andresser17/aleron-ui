@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "components/form/Button";
+import Button from "components/atoms/Button";
 import { ReactComponent as PlusIcon } from "icons/plus-icon.svg";
 
 export default {

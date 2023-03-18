@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import SingleFile from "components/form/SingleFile";
+import SingleFile from "components/organisms/SingleFile";
 
 export default {
   title: "SingleFile",

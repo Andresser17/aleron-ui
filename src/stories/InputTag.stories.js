@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import InputTag from "components/form/InputTag";
-import Button from "components/form/Button";
+import InputTag from "components/atoms/InputTag";
+import Button from "components/atoms/Button";
 
 export default {
   title: "InputTag",
