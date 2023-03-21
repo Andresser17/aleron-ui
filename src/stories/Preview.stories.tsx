@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import Button from "components/atoms/Button";
-import Checkbox from "components/atoms/Checkbox";
-import Radio from "components/atoms/Radio";
-import Input from "components/atoms/Input";
-import InputTag from "components/atoms/InputTag";
-import Select from "components/organisms/Select";
+import Button from "@/components/atoms/Button";
+import Checkbox from "@/components/atoms/Checkbox";
+import Radio from "@/components/atoms/Radio";
+import Input from "@/components/atoms/Input";
+import InputTag from "@/components/atoms/InputTag";
+import Select from "@/components/organisms/Select";
 
 export default {
   title: "Preview",

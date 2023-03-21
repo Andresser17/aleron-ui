@@ -42,8 +42,6 @@ function SelectTag({
     // getTags([...newTags], mergeData);
   };
 
-  console.log({selectedTags})
-
   const handleSelected = (option) => {
     if (selectedTags.length >= maxTags) return;
 

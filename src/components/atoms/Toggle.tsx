@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from "react";
-import useStyles from "hooks/useStyles";
-import PropTypes from "prop-types";
+// Hooks
+import useStyles from "@/hooks/useStyles";
+// Styles
 import moduleStyles from "./Toggle.module.css";
+
+interface Props {
+  theme: string;
+  styles: any;
+  name: string;
+  value: string;
+  label: string;
+  subtitle: string;
+  checked: boolean;
+  readOnly: boolean;
+  disabled: boolean;
+  onChange: (e: any) => void;
+}
 
 function Toggle({
   theme = "primary",
@@ -14,7 +28,7 @@ function Toggle({
   readOnly,
   disabled = false,
   onChange,
-}) {
+}: Props) {
   const [isChecked, setIsChecked] = useState(false);
   const className = useStyles(
     {
@@ -82,17 +96,5 @@ function Toggle({
     </div>
   );
 }
-Toggle.propTypes = {
-  theme: PropTypes.string,
-  styles: PropTypes.object,
-  name: PropTypes.string,
-  value: PropTypes.string,
-  label: PropTypes.string,
-  subtitle: PropTypes.string,
-  checked: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func,
-};
 
 export default Toggle;

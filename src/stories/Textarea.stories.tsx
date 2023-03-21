@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import Textarea from "components/atoms/Textarea";
-import Button from "components/atoms/Button";
+import Textarea from "@/components/atoms/Textarea";
+import Button from "@/components/atoms/Button";
 
 export default {
   title: "Textarea",

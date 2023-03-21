@@ -1,7 +1,20 @@
 import React from "react";
-import useStyles from "hooks/useStyles";
 import { useController } from "react-hook-form";
-import PropTypes from "prop-types";
+// Hooks
+import useStyles from "@/hooks/useStyles";
+
+interface Props {
+  theme: string,
+  styles: any,
+  name: string,
+  description: string,
+  placeholder: string,
+  defaultValue: string,
+  disabled: boolean,
+  readOnly: boolean,
+  type: string,
+  rules: any,
+};
 
 function Textarea({
   theme = "primary",
@@ -11,7 +24,7 @@ function Textarea({
   disabled,
   readOnly,
   ...props
-}) {
+}: Props) {
   const {
     field,
     fieldState: { error },
@@ -73,17 +86,5 @@ function Textarea({
     </label>
   );
 }
-Textarea.propTypes = {
-  theme: PropTypes.string,
-  styles: PropTypes.object,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  placeholder: PropTypes.string,
-  defaultValue: PropTypes.string,
-  disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  type: PropTypes.string,
-  rules: PropTypes.object,
-};
 
 export default Textarea;

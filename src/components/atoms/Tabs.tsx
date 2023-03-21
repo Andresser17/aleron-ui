@@ -1,67 +1,87 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useCallback } from "react";
+import useStyles from "@/hooks/useStyles";
 
-function Tab({ tab, size, vertical, selected, onSelected }) {
-  const hoverStyle = `al-border-solid ${
-    selected === tab.value
-      ? "al-border-bg hover:al-border-bg"
-      : "al-border-black/0 hover:al-border-zinc-500"
-  }`;
-  const verticalStyle = vertical
-    ? "al-border-l-2 al-pl-5 al-py-2"
-    : "al-border-b-2 al-px-4 al-py-3";
-  const fontStyle =
-    size === "sm" ? "al-text-sm" : size === "md" ? "al-text-md" : "al-text-lg";
+function Tab({ styles, tab, selected, vertical, handleSelected }) {
+  const className = useStyles(
+    {
+      tab: {
+        active:
+          selected?.value === tab.value
+            ? "border-primary hover:border-primary/80 border-solid"
+            : "border-black/0 hover:border-zinc-500 border-solid",
+        border: vertical ? "border-l-2" : "border-b-2",
+        padding: vertical ? "pl-5 py-2" : "px-4 py-3",
+        font: "text-sm",
+        main: "inline-block text-text cursor-pointer",
+      },
+    },
+    styles,
+    { tab, selected, vertical }
+  );
 
   return (
-    <span
-      onClick={() => onSelected(tab.value)}
-      className={`al-inline-block al-text-text al-cursor-pointer al-border-0 ${fontStyle} ${hoverStyle} ${verticalStyle}`}
-    >
+    <span onClick={() => handleSelected(tab)} className={className.tab}>
       {tab.label}
     </span>
   );
 }
 
-function Tabs({
-  palette = "primary",
-  tabs = [],
-  size = "sm",
-  vertical,
-  onClick = (value) => undefined,
-}) {
-  const [selected, setSelected] = useState("");
+interface Props {
+  theme: string;
+  styles: any;
+  tabs: Array<{ label: string; value: string }>;
+  vertical: boolean;
+  handleSelectedTab: (tab: { label: string; value: string }) => void;
+}
 
-  // if one tab is clicked, update selected
-  const handleSelected = (tab) => {
-    setSelected(tab);
-    // pass selected tab to parent
-    onClick(tab);
-  };
+function Tabs({
+  theme = "primary",
+  styles = {},
+  tabs = [],
+  vertical,
+  handleSelectedTab,
+}: Props) {
+  const [selected, setSelected] = useState<{ label: string; value: string }>();
+  const className = useStyles(
+    {
+      container: {
+        main: vertical ? "flex flex-col" : "",
+      },
+    },
+    styles,
+    { vertical }
+  );
+
+  const handleSelected = useCallback(
+    (tab) => {
+      setSelected(tab);
+      // pass selected tab to parent
+      handleSelectedTab(tab);
+    },
+    [handleSelectedTab, setSelected]
+  );
+
+  useEffect(() => {
+    if (!selected) {
+      tabs.map((tab) => {
+        if (tab.selected) handleSelected(tab);
+      });
+    }
+  }, [tabs, selected, handleSelected]);
 
   return (
-    <div className={`${vertical ? "al-flex al-flex-col" : ""} ${palette}`}>
+    <div className={`${className.container} ${theme}`}>
       {tabs &&
-        tabs.map((tab, i) => {
-          if (selected.length === 0 && tab.selected) setSelected(tab.value);
-
+        tabs.map((tab) => {
           return (
             <Tab
               key={tab.value}
-              onSelected={handleSelected}
-              {...{ tab, vertical, selected, size, selected }}
+              {...{ styles, tab, selected, vertical, handleSelected }}
             />
           );
         })}
     </div>
   );
 }
-Tabs.propTypes = {
-  palette: PropTypes.string,
-  tabs: PropTypes.array,
-  size: PropTypes.string,
-  vertical: PropTypes.bool,
-  onClick: PropTypes.func,
-};
 
 export default Tabs;
