@@ -23,14 +23,14 @@ export default function Filter({
         padding: "py-2 px-6",
         border: "border-solid border-2",
         font: "text-sm font-bold",
-        main: "block text-text cursor-pointer",
+        main: "block cursor-pointer",
       },
     },
     styles
   );
   // If item is active
   const activeStyle = "text-primary border-primary hover:border-hover";
-  const defaultStyle = "border-black/30 hover:border-black/40";
+  const defaultStyle = "text-text border-black/30 hover:border-black/40";
 
   const handleClick = (e, index) => {
     setActive(index);
