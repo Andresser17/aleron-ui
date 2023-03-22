@@ -1,23 +1,28 @@
 import React from "react";
+import useStyles from "@/hooks/useStyles";
 
 interface Props {
-  palette: string;
+  theme: string;
+  styles: any;
   text: string;
-  rounded: boolean;
-  border: boolean;
 }
 
-export default function Badge({ palette, text, rounded, border }: Props) {
-  // If rounded is not provided, is equal
-  const optRounded = rounded ? "rounded-3xl" : "rounded-sm";
-  // If border is active
-  const optBorder = border ? "border-solid border-border border" : "";
-
-  return (
-    <span
-      className={`bg-bg text-text px-4 py-[0.08rem] shadow-md ${optRounded} ${optBorder} ${palette}`}
-    >
-      {text}
-    </span>
+function Badge({ theme = "primary", styles = {}, text }: Props) {
+  const className = useStyles(
+    {
+      badge: {
+        padding: "px-4 py-2",
+        shadow: "shadow-md",
+        rounded: "rounded",
+        border: "border-solid border-border",
+        text: "text-sm",
+        main: "bg-primary text-prim-text",
+      },
+    },
+    styles
   );
+
+  return <span className={`${className.badge} ${theme}`}>{text}</span>;
 }
+
+export default Badge;
