@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useReducer } from "react";
-import reducer from "./reducer";
+import reducer, {
+  ReducerActionKind,
+  ReducerAction,
+  ReducerState,
+} from "./reducer";
 // Components
 import DragAndDrop from "./DragAndDrop";
 import Uploading from "./Uploading";
@@ -7,18 +11,27 @@ import ListFiles from "./ListFiles";
 // Hooks
 import useStyles from "@/hooks/useStyles";
 // Helpers
-import { printTypes } from "./helpers";
-import moduleStyles from "./SingleFile.module.css";
+import { printTypes, calcFileSize } from "./helpers";
+
+interface ModesProps {
+  dispatch: React.Dispatch<ReducerAction>;
+  data: ReducerState;
+  uploadFiles: () => void;
+  onDelete: () => void;
+  accept: Array<string>;
+  maxFileSize: string;
+  fileInputRef: React.Ref<HTMLInputElement>;
+}
 
 function Modes({
   dispatch,
   data,
   uploadFiles,
   onDelete,
-  fileInputRef,
   accept,
   maxFileSize,
-}) {
+  fileInputRef,
+}: ModesProps) {
   const className = useStyles(
     {
       container: {
@@ -35,6 +48,7 @@ function Modes({
         main: "block col-span-8 justify-self-start row-start-3",
       },
     },
+    {},
     {}
   );
 
@@ -46,7 +60,7 @@ function Modes({
         data={data}
         uploadFiles={uploadFiles}
         deleteFiles={onDelete}
-        fileInput={fileInputRef}
+        fileInputRef={fileInputRef}
       />
     );
 
@@ -82,7 +96,7 @@ interface Props {
 }
 
 function SingleFile({
-  palette = "primary",
+  theme = "primary",
   maxFileSize,
   accept,
   onUpload,
@@ -96,18 +110,29 @@ function SingleFile({
     error: { code: 0, message: "" },
     response: { percent: 0, data: undefined, err: undefined },
   });
+  const className = useStyles(
+    {
+      input: {
+        main: `w-full h-full cursor-pointer absolute top-0 left-0 opacity-0 z-10 [&::file-selector-button]:visibility-none ${
+          data.file ? "hidden" : ""
+        }`,
+      },
+    },
+    {},
+    { data }
+  );
   // Refs
-  const fileInputRef = useRef();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Read file
-  const handleFileInput = (files) => {
+  const handleFileInput = (files: Array<File>) => {
     const [file] = files;
     if (!file) return;
 
     // Compare maxFileSize with new input file size
     if (file.size > calcFileSize(maxFileSize)) {
       dispatch({
-        type: "SET_ERROR",
+        type: ReducerActionKind.SET_ERROR,
         payload: {
           code: 1,
           message: `The file weight more than ${maxFileSize}`,
@@ -119,7 +144,7 @@ function SingleFile({
     // Check if fileType is accepted
     if (!accept.includes(file.type)) {
       dispatch({
-        type: "SET_ERROR",
+        type: ReducerActionKind.SET_ERROR,
         payload: {
           code: 1,
           message: `${file.type} file type is not accepted`,
@@ -131,10 +156,10 @@ function SingleFile({
     if (data.file?.name === file.name) return;
 
     // Update data.file
-    dispatch({ type: "ADD_FILE", payload: file });
+    dispatch({ type: ReducerActionKind.ADD_FILE, payload: file });
 
     // Update component mode
-    dispatch({ type: "SET_MODE", payload: 1 });
+    dispatch({ type: ReducerActionKind.SET_MODE, payload: 1 });
   };
 
   // Upload File
@@ -143,24 +168,27 @@ function SingleFile({
     formData.set("file", data.file);
 
     // Update component mode
-    dispatch({ type: "SET_MODE", payload: 2 });
+    dispatch({ type: ReducerActionKind.SET_MODE, payload: 2 });
 
     // Pass file to handle prop
-    onUpload(formData, (response) => {
-      dispatch({
-        type: "SET_RESPONSE",
-        payload: response,
-      });
-    });
+    // onUpload(formData, (response) => {
+    //   dispatch({
+    //     type: ReducerActionKind.SET_RESPONSE,
+    //     payload: response,
+    //   });
+    // });
   };
 
   const resetComponent = () => {
     dispatch({
-      type: "SET_RESPONSE",
+      type: ReducerActionKind.SET_RESPONSE,
       payload: { percent: 0, data: undefined, err: undefined },
     });
-    dispatch({ type: "SET_MODE", payload: 0 });
-    dispatch({ type: "SET_ERROR", payload: { code: 0, message: "" } });
+    dispatch({ type: ReducerActionKind.SET_MODE, payload: 0 });
+    dispatch({
+      type: ReducerActionKind.SET_ERROR,
+      payload: { code: 0, message: "" },
+    });
   };
 
   // Reset mode
@@ -176,15 +204,23 @@ function SingleFile({
   }, [data.error, data.response.err]);
 
   return (
-    <DragAndDrop {...{ dispatch, data, handleFileInput, palette }}>
-      <Modes data={data} />
+    <DragAndDrop {...{ dispatch, data, handleFileInput, theme }}>
+      <Modes
+        {...{
+          dispatch,
+          data,
+          uploadFiles,
+          onDelete,
+          accept,
+          maxFileSize,
+          fileInputRef,
+        }}
+      />
       <input
         data-testid="upload-input"
         ref={fileInputRef}
         onChange={(e) => handleFileInput([...e.target.files])}
-        className={`${moduleStyles["custom-file-input"]} ${
-          data.file ? "al-hidden" : ""
-        }`}
+        className={className.input}
         type="file"
         id="myFile"
         name="filename"

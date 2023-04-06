@@ -1,6 +1,10 @@
 import React, { useMemo } from "react";
 
-function applyCustom(styles = {}, custom = {}) {
+interface Styles {
+  [key: string]: { [key: string]: string | Function };
+}
+
+function applyCustom(styles: Styles, custom: Styles) {
   for (const [tag, properties] of Object.entries(custom)) {
     if (!styles[tag]) continue;
 
@@ -10,9 +14,13 @@ function applyCustom(styles = {}, custom = {}) {
   return styles;
 }
 
-function useStyles(componentStyles = {}, custom = {}, params = {}) {
+function useStyles(
+  componentStyles: Styles,
+  custom: Styles,
+  params: { [key: string]: any }
+) {
   const className = useMemo(() => {
-    const className = {};
+    const className: { [key: string]: string } = {};
     const styles =
       Object.keys(custom).length > 0
         ? applyCustom(componentStyles, custom)
@@ -21,7 +29,8 @@ function useStyles(componentStyles = {}, custom = {}, params = {}) {
     for (const [tag, properties] of Object.entries(styles)) {
       const cssArr = [];
 
-      for (const [prop, css] of Object.entries(properties)) {
+      for (const prop of Object.keys(properties)) {
+        const css = properties[prop];
         // call function and pass params as argument
         if (typeof css === "function") {
           cssArr.push(css(params));

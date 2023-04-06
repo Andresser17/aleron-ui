@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // Components
 import InputDropdown from "@/components/organisms/InputDropdown";
 
@@ -32,6 +32,14 @@ function Select({
     getSelected(option);
     setValue(props.name, option.label);
   };
+
+  useEffect(() => {
+    if (options.length > 0 && selected.length === 0) {
+      options.forEach((op) => {
+        if (op.selected) handleSelected(op);
+      });
+    }
+  }, [options, selected, handleSelected]);
 
   return (
     <InputDropdown

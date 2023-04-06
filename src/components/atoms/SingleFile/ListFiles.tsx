@@ -1,22 +1,25 @@
 import React from "react";
+import { ReducerAction, ReducerActionKind, ReducerState } from "./reducer";
 // Hooks
 import useStyles from "@/hooks/useStyles";
+// Helpers
+import { convertToUnit } from "./helpers";
 // Icons
 import { AiFillFileAdd as FileIcon } from "react-icons/ai";
 
 interface Props {
-  data: any;
-  uploadFiles: Array<any>;
-  deleteFiles: Array<any>;
-  fileInput: any;
-  dispatch: any;
+  dispatch: React.Dispatch<ReducerAction>;
+  data: ReducerState;
+  deleteFiles: () => void;
+  uploadFiles: () => void;
+  fileInputRef: React.Ref<HTMLInputElement>;
 }
 
 function ListFiles({
   data,
   uploadFiles,
   deleteFiles,
-  fileInput,
+  fileInputRef,
   dispatch,
 }: Props) {
   const className = useStyles(
@@ -44,15 +47,16 @@ function ListFiles({
         main: "block bg-black/5 flex justify-center items-center row-span-2 col-start-12",
       },
     },
+    {},
     {}
   );
 
   const handleDeleteFile = (fileUploaded) => {
     if (fileUploaded) deleteFiles(data.file);
-    dispatch({ type: "DELETE_FILE" });
+    dispatch({ type: ReducerActionKind.DELETE_FILE, payload: null });
   };
 
-  if (!data.file) return;
+  if (!data.file) return <div></div>;
 
   return (
     <div className={className.container}>
@@ -75,14 +79,20 @@ function ListFiles({
           </button>
         ) : (
           <>
-            <button onClick={() => fileInput.current.click()}>
+            <button
+              onClick={() => {
+                if (fileInputRef && fileInputRef.current) {
+                  fileInputRef.current.click();
+                }
+              }}
+            >
               Select file
             </button>
             <button onClick={uploadFiles} className="ml-3">
               Upload
             </button>
             <button
-              onClick={() => handleDeleteFile()}
+              onClick={() => handleDeleteFile(false)}
               className="text-primary ml-3 danger"
             >
               Delete

@@ -48,7 +48,9 @@ function Dropdown({
           return op;
         })
         .map((op) => {
-          const isSelected = optionsSelected.includes(op);
+          const isSelected =
+            optionsSelected.filter((selected) => selected.value === op.value)
+              .length > 0 || false;
 
           return (
             <Option

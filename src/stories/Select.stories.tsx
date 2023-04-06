@@ -21,7 +21,7 @@ const Template = (args) => {
   const onSubmit = (data) => console.log(selected);
 
   return (
-    <form className="al-w-80" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Select
         styles={{ container: { margin: "mb-4" } }}
         {...{ getSelected: setSelected, control, setValue, ...args }}

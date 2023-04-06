@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import SingleFile from "@/components/atoms/SingleFile";
 
@@ -7,29 +7,22 @@ export default {
   component: SingleFile,
 };
 
-const Template = (args) => {
+const Template = (args: {
+  theme: string;
+  maxFileSize: string;
+  accept: Array<string>;
+}) => {
+  const handleUpload = () => {};
+  const handleDelete = () => {};
+
   return (
-    <div className="al-w-80">
-      <SingleFile {...args} />
-    </div>
+    <SingleFile {...args} onUpload={handleUpload} onDelete={handleDelete} />
   );
 };
 
 export const Light = Template.bind({});
 Light.args = {
   theme: "primary",
-  name: "name",
-  placeholder: "Name",
-  options: [
-    { label: "John Doe", value: "john-doe" },
-    { label: "Alex Doe", value: "alex-doe" },
-    { label: "Jane Doe", value: "jane-doe" },
-  ],
-  defaultValue: { label: "John Doe", value: "john-doe" },
-  readOnly: false,
-  disabled: false,
-  rules: {
-    required: true,
-    maxLength: { value: 15, message: "Max length is 15 char" },
-  },
+  maxFileSize: "2MB",
+  accept: ["application/pdf"],
 };

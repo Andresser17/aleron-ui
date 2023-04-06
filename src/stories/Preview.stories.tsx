@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 import Checkbox from "@/components/atoms/Checkbox";
 import Radio from "@/components/atoms/Radio";
 import Input from "@/components/atoms/Input";
-import InputTag from "@/components/atoms/InputTag";
+import InputTag from "@/components/molecules/InputTag";
 import Select from "@/components/organisms/Select";
 
 export default {
@@ -25,7 +25,7 @@ const Template = (args) => {
     },
   });
   const selectOptions = [
-    { label: "New York", value: "new-york" },
+    { label: "New York", value: "new-york", selected: true },
     { label: "Madrid", value: "madrid" },
     { label: "Tokyo", value: "tokyo" },
   ];
@@ -40,71 +40,65 @@ const Template = (args) => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-900 flex justify-center items-center dark">
+    <div className="w-full flex justify-center items-center">
       <form
         onKeyPress={handleKeyPress}
-        className="w-80 dark"
+        className="w-80"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Button */}
         <div className="flex mb-4">
-          <Button styles={{ margin: "mr-[5.5px]" }} text="Submit" />
+          <Button styles={{ button: { margin: "mr-2" } }} text="Submit" />
           <Button
             theme="success"
-            styles={{ margin: "mr-[5.5px]" }}
+            styles={{ button: { margin: "mr-2" } }}
             text="Submit"
           />
           <Button
             theme="danger"
-            styles={{ margin: "mr-[5.5px]" }}
+            styles={{ button: { margin: "mr-2" } }}
             text="Submit"
           />
-          <Button
-            theme="warning"
-            styles={{ margin: "mr-[5.5px]" }}
-            text="Submit"
-          />
+          <Button theme="warning" text="Submit" />
         </div>
         {/* Radio */}
         <div className="flex mb-4">
-          <Radio styles={{ margin: "mr-6" }} options={radioOptions} />
+          <Radio
+            styles={{ container: { margin: "mr-4" } }}
+            options={radioOptions}
+          />
           <Radio
             theme="success"
-            styles={{ margin: "mr-6" }}
+            styles={{ container: { margin: "mr-4" } }}
             options={radioOptions}
           />
           <Radio
             theme="danger"
-            styles={{ margin: "mr-6" }}
+            styles={{ container: { margin: "mr-4" } }}
             options={radioOptions}
           />
-          <Radio
-            theme="info"
-            styles={{ margin: "mr-6" }}
-            options={radioOptions}
-          />
+          <Radio theme="info" options={radioOptions} />
         </div>
         {/* Checkbox */}
         <div className="flex mb-4">
-          <Checkbox styles={{ margin: "mr-6" }} checked label="Dog" />
+          <Checkbox
+            styles={{ container: { margin: "mr-4" } }}
+            checked
+            label="Dog"
+          />
           <Checkbox
             theme="success"
-            styles={{ margin: "mr-6" }}
+            styles={{ container: { margin: "mr-4" } }}
             checked
             label="Cat"
           />
           <Checkbox
             theme="danger"
-            styles={{ margin: "mr-6" }}
+            styles={{ container: { margin: "mr-4" } }}
             checked
             label="Fish"
           />
-          <Checkbox
-            theme="info"
-            styles={{ margin: "mr-6" }}
-            checked
-            label="Snake"
-          />
+          <Checkbox theme="info" checked label="Snake" />
         </div>
         <Input
           name="name"

@@ -1,20 +1,42 @@
-import React, { useReducer } from "react";
+export enum ReducerActionKind {
+  SET_MODE = "SET_MODE",
+  SET_RESPONSE = "SET_RESPONSE",
+  SET_ERROR = "SET_ERROR",
+  SET_DROP_DEPTH = "SET_DROP_DEPTH",
+  SET_IN_DROP_ZONE = "SET_IN_DROP_ZONE",
+  ADD_FILE = "ADD_FILE",
+  DELETE_FILE = "DELETE_FILE",
+}
 
-const reducer = (state, action) => {
+export interface ReducerAction {
+  type: ReducerActionKind;
+  payload: any;
+}
+
+export interface ReducerState {
+  file?: File;
+  mode: number;
+  dropDepth: number;
+  inDropZone: boolean;
+  error: { code: number; message: string };
+  response: { percent: number; data: File; err: Error };
+}
+
+const reducer = (state: ReducerState, action: ReducerAction) => {
   switch (action.type) {
-    case "SET_MODE":
+    case ReducerActionKind.SET_MODE:
       return { ...state, mode: action.payload };
-    case "SET_RESPONSE":
+    case ReducerActionKind.SET_RESPONSE:
       return { ...state, response: { ...state.response, ...action.payload } };
-    case "SET_ERROR":
+    case ReducerActionKind.SET_ERROR:
       return { ...state, error: action.payload };
-    case "SET_DROP_DEPTH":
-      return { ...state, dropDepth: action.dropDepth };
-    case "SET_IN_DROP_ZONE":
-      return { ...state, inDropZone: action.inDropZone };
-    case "ADD_FILE":
+    case ReducerActionKind.SET_DROP_DEPTH:
+      return { ...state, dropDepth: action.payload };
+    case ReducerActionKind.SET_IN_DROP_ZONE:
+      return { ...state, inDropZone: action.payload };
+    case ReducerActionKind.ADD_FILE:
       return { ...state, file: action.payload };
-    case "DELETE_FILE":
+    case ReducerActionKind.DELETE_FILE:
       return {
         ...state,
         file: undefined,

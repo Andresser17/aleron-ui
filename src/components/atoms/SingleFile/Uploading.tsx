@@ -1,11 +1,15 @@
 import React, { useEffect, useRef } from "react";
+import { ReducerAction } from "./reducer";
+// Hooks
 import useStyles from "@/hooks/useStyles";
+// Helpers
+import { printTypes } from "./helpers";
 
 interface Props {
-  dispatch: any;
+  dispatch: React.Dispatch<ReducerAction>;
   data: any;
   accept: Array<string>;
-  maxFileSize: number;
+  maxFileSize: string;
 }
 
 function Uploading({ dispatch, data, accept, maxFileSize }: Props) {
@@ -40,10 +44,10 @@ function Uploading({ dispatch, data, accept, maxFileSize }: Props) {
     {},
     { data }
   );
-  const loadingBarRef = useRef();
+  const loadingBarRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (data.response.percent <= 100) {
+    if (data.response.percent <= 100 && loadingBarRef.current) {
       loadingBarRef.current.style = `width: ${String(data.response.percent)}%;`;
     }
   }, [data.response.percent]);

@@ -1,4 +1,5 @@
 import React from "react";
+import { ReducerAction, ReducerState, ReducerActionKind } from "./reducer";
 // Hooks
 import useStyles from "@/hooks/useStyles";
 // Icons
@@ -6,10 +7,10 @@ import { AiFillFileAdd as FileIcon } from "react-icons/ai";
 
 interface Props {
   theme: string;
-  dispatch: any;
-  data: any;
-  handleFileInput: any;
-  children: React.Node;
+  dispatch: React.Dispatch<ReducerAction>;
+  data: ReducerState;
+  handleFileInput: (files: Array<File>) => void;
+  children: React.ReactNode;
 }
 
 function DragAndDrop({
@@ -27,7 +28,7 @@ function DragAndDrop({
         rounded: "rounded-md",
         shadow: "shadow-md",
         hover: "hover:shadow-xl",
-        main: `flex flex-col justify-center items-center ${
+        main: `relative flex flex-col justify-center items-center ${
           data.inDropZone ? "bg-bg" : "bg-gray-100"
         }`,
       },
@@ -37,7 +38,7 @@ function DragAndDrop({
   );
 
   // Manage file drag and drop
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     // If file is being uploaded or is completed
@@ -49,22 +50,28 @@ function DragAndDrop({
       return;
 
     e.dataTransfer.dropEffect = "copy";
-    dispatch({ type: "SET_IN_DROP_ZONE", inDropZone: true });
+    dispatch({ type: ReducerActionKind.SET_IN_DROP_ZONE, payload: true });
   };
-  const handleDragEnter = (e) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch({ type: "SET_DROP_DEPTH", dropDepth: data.dropDepth + 1 });
+    dispatch({
+      type: ReducerActionKind.SET_DROP_DEPTH,
+      payload: data.dropDepth + 1,
+    });
   };
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (data.dropDepth === 0) return;
-    dispatch({ type: "SET_DROP_DEPTH", dropDepth: data.dropDepth - 1 });
-    dispatch({ type: "SET_IN_DROP_ZONE", inDropZone: false });
+    dispatch({
+      type: ReducerActionKind.SET_DROP_DEPTH,
+      payload: data.dropDepth - 1,
+    });
+    dispatch({ type: ReducerActionKind.SET_IN_DROP_ZONE, payload: false });
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -81,8 +88,8 @@ function DragAndDrop({
     if (files && files.length > 0) {
       handleFileInput(files);
       e.dataTransfer.clearData();
-      dispatch({ type: "SET_DROP_DEPTH", dropDepth: 0 });
-      dispatch({ type: "SET_IN_DROP_ZONE", inDropZone: false });
+      dispatch({ type: ReducerActionKind.SET_DROP_DEPTH, payload: 0 });
+      dispatch({ type: ReducerActionKind.SET_IN_DROP_ZONE, payload: false });
     }
   };
 
